@@ -31,21 +31,31 @@ por tarefa, ou poucos ciclos).
    ser paralelizáveis entre si (cada camada em seu próprio arquivo),
    mas o endpoint/controller normalmente depende do caso de uso e
    segue depois, sequencial.
-4. **Apresente como checklist markdown**, por exemplo:
+4. **Marque a criticidade de cada tarefa**: `[baixa]`, `[média]`
+   (padrão, pode omitir a tag) ou `[alta]`. Alta é para autenticação,
+   autorização, pagamentos, migração/exclusão de dados ou lógica de
+   domínio central; baixa é para tarefa mecânica sem lógica de negócio
+   (ex: ajuste de string, tipagem). Essa tag é o que a skill
+   `using-dev-methodology` ("Modelo por criticidade") usa para decidir
+   se o `Agent` de implementação/revisão da tarefa roda em `haiku`,
+   herda o modelo padrão, ou roda em `opus`.
+5. **Apresente como checklist markdown**, por exemplo:
 
    ```markdown
    - [ ] 1. Criar entidade de domínio `TPedido` + testes unitários
    - [ ] 2. [P1] Implementar caso de uso `CriarPedido` (application) + testes
    - [ ] 3. [P1] Implementar repositório TypeORM (infra) + testes de integração
-   - [ ] 4. Expor endpoint REST no controller + testes e2e (depende de 2 e 3)
+   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento)
    ```
 
    Aqui as tarefas 2 e 3 dependem só da 1 (entidade já existe) e não
    compartilham arquivo entre si, então podem ser disparadas juntas
-   (`[P1]`). A tarefa 4 depende das duas e por isso fica fora do grupo,
-   rodando depois.
+   (`[P1]`), ambas com criticidade média (sem tag). A tarefa 4 depende
+   das duas, fica fora do grupo paralelo, e é `[alta]` porque valida
+   pagamento — o agente que a implementar/revisar deve rodar em
+   `opus`.
 
-5. **Pare e peça confirmação** do plano antes de começar a implementar.
+6. **Pare e peça confirmação** do plano antes de começar a implementar.
 
 ## Regras
 

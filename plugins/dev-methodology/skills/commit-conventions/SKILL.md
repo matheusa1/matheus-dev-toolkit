@@ -71,7 +71,7 @@ diagnóstico do erro.
 2. **Descubra o escopo**: `git branch --show-current`.
 3. **Gere a mensagem com o modelo mais econômico disponível.** Não use
    o modelo principal da conversa para redigir a mensagem — dispare o
-   agente `commit-writer` deste plugin (que já roda em Haiku) passando
+   agente `redator-commit` deste plugin (que já roda em Haiku) passando
    o `git diff --staged` (ou um resumo, se o diff for muito grande) e o
    escopo. Ele devolve `title` + `description` prontos no formato
    acima.

@@ -63,7 +63,7 @@ não pule etapas mesmo que o pedido pareça simples:
 
    Tarefas marcadas como paralelizáveis no plano (mesmo grupo `[P<n>]`
    — ver `writing-plans`) podem ser disparadas ao mesmo tempo, uma
-   `Agent` `dev-methodology:tdd-pairer` por tarefa, em vez de uma de
+   `Agent` `dev-methodology:parceiro-tdd` por tarefa, em vez de uma de
    cada vez. Exemplo típico: implementar um módulo novo com um agente
    para domain, outro para application e outro para infra, todos
    simultâneos, porque nenhum depende do resultado do outro dentro do
@@ -74,7 +74,7 @@ não pule etapas mesmo que o pedido pareça simples:
    domain/application/infra de um módulo novo, seguindo as convenções
    de nomenclatura (T/I/E) e o padrão de DI com Inversify.
 5. **Ao terminar todas as tarefas do plano** → agent
-   `spec-compliance-reviewer`. Compare a implementação final contra o
+   `revisor-conformidade`. Compare a implementação final contra o
    arquivo de spec salvo em `docs/especificacao/`, item a item
    (objetivo, não-objetivos, restrições, casos de borda, critérios de
    aceite). Só considere a feature pronta sem achados críticos
@@ -84,7 +84,7 @@ não pule etapas mesmo que o pedido pareça simples:
 
 Depois que o plano estiver confirmado e as tasks registradas, tarefas
 do mesmo grupo `[P<n>]` podem ser implementadas simultaneamente, cada
-uma em um agente `tdd-pairer` separado (via `Agent`, um por tarefa),
+uma em um agente `parceiro-tdd` separado (via `Agent`, um por tarefa),
 em vez de uma de cada vez.
 
 - **Dispare todas as tarefas do grupo no mesmo turno**, uma chamada
@@ -111,6 +111,33 @@ em vez de uma de cada vez.
   sequencial. Isso deveria já estar decidido no plano (`writing-plans`),
   não improvisado na hora de disparar os agentes.
 
+## Modelo por criticidade
+
+`revisor-arquiteto`, `revisor-conformidade`, `parceiro-tdd` e
+`gerador-modulo` rodam com `model: inherit` por padrão, mas o modelo
+pode e deve variar por tarefa: ao disparar via `Agent`, passe o
+parâmetro `model` explicitamente conforme a criticidade da tarefa
+(avaliada no plano ou no momento do disparo). `redator-commit` é
+exceção — sempre roda em `haiku`, independente da criticidade, porque
+só redige texto.
+
+- **Baixa** (typo, ajuste de string, mudança cosmética, tarefa
+  mecânica sem lógica de negócio) → `haiku`. Mais rápido e barato,
+  suficiente para revisão/implementação de baixo risco.
+- **Média** (tarefa comum do plano, CRUD, lógica de aplicação sem
+  impacto direto em dinheiro/segurança/dados sensíveis) → **não passe
+  `model`**, deixe herdar o modelo da conversa (padrão atual).
+- **Alta** (autenticação, autorização, pagamentos, migração ou
+  exclusão de dados, lógica de domínio central, qualquer coisa que
+  seria caro corrigir depois em produção) → `opus`. Mais capaz, vale o
+  custo extra quando o risco de um erro passar despercebido é alto.
+
+Se a criticidade da tarefa não estiver clara, trate como **média** —
+não force `haiku` para economizar nem `opus` "por segurança" sem
+motivo concreto. Marque a criticidade de cada tarefa já no plano
+(`writing-plans`), para não precisar decidir isso de novo na hora de
+disparar o agente.
+
 ## Quando pular etapas
 
 - Correções triviais (typo, ajuste de string, mudança de uma linha)
@@ -133,20 +160,25 @@ terminal, em tempo real, tarefa por tarefa (ver detalhes em
 ## Subagents disponíveis
 
 Este plugin também inclui subagents que aplicam essas skills de forma
-isolada (contexto separado, ferramentas restritas):
+isolada (contexto separado, ferramentas restritas). Todos respondem
+sempre em português do Brasil:
 
-- `architect-reviewer` — aplica `code-review-gate` como revisor
+- `revisor-arquiteto` — aplica `code-review-gate` como revisor
   read-only.
-- `tdd-pairer` — aplica `test-driven-development` para implementar uma
+- `parceiro-tdd` — aplica `test-driven-development` para implementar uma
   tarefa específica do plano.
-- `module-scaffolder` — aplica `clean-architecture-scaffold` para
+- `gerador-modulo` — aplica `clean-architecture-scaffold` para
   gerar um módulo novo.
-- `spec-compliance-reviewer` — compara a implementação final com o
+- `revisor-conformidade` — compara a implementação final com o
   arquivo de spec em `docs/especificacao/`, ao fim de todas as tarefas
   do plano.
-- `commit-writer` — roda em Haiku, redige título/descrição de commit
+- `redator-commit` — roda em Haiku, redige título/descrição de commit
   em português a partir do diff (usado pela skill `commit-conventions`
   para não gastar o modelo principal com isso).
+
+O modelo dos quatro primeiros não é fixo — veja "Modelo por
+criticidade" acima para saber quando passar `haiku` ou `opus` em vez
+de herdar o padrão.
 
 Use os subagents quando quiser manter o contexto da tarefa isolado da
 conversa principal (por exemplo, revisar um diff grande sem poluir o

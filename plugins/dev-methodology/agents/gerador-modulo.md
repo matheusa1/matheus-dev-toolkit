@@ -1,5 +1,5 @@
 ---
-name: module-scaffolder
+name: gerador-modulo
 description: Gera o esqueleto de um módulo novo seguindo Clean Architecture + DDD (domain/application/infra), convenções T/I/E e injeção de dependência com Inversify. Use ao criar um módulo ou feature nova em um projeto TypeScript.
 tools: Read, Write, Bash, Grep, Glob
 model: inherit
@@ -24,3 +24,6 @@ Ao ser invocado:
 
 Se o projeto não for TypeScript, adapte os mesmos princípios de
 camadas ao idioma/framework do projeto e diga isso explicitamente.
+
+Responda sempre em português do Brasil, independente do idioma usado
+na conversa ou no código.

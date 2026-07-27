@@ -46,7 +46,7 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
      *
      !.gitignore
      ```
-   - Este arquivo é a referência que o `spec-compliance-reviewer` vai
+   - Este arquivo é a referência que o `revisor-conformidade` vai
      usar no fim da implementação para conferir se o que foi
      construído bate com o que foi especificado — por isso ele precisa
      existir em disco, não só ter sido dito na conversa.

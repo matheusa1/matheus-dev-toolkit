@@ -24,16 +24,22 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
     com convenções T/I/E e DI via Inversify.
   - `commit-conventions` — Conventional Commits + emoji, escopo =
     branch, mensagem em português, sem trailer de co-autoria.
-- **Subagents** (contexto isolado, mesmas regras das skills acima):
-  - `architect-reviewer` — revisor read-only.
-  - `tdd-pairer` — implementa uma tarefa em TDD estrito.
-  - `module-scaffolder` — gera o esqueleto de um módulo novo.
-  - `spec-compliance-reviewer` — ao fim da implementação, compara o
+- **Subagents** (contexto isolado, mesmas regras das skills acima,
+  sempre respondem em português do Brasil):
+  - `revisor-arquiteto` — revisor read-only.
+  - `parceiro-tdd` — implementa uma tarefa em TDD estrito.
+  - `gerador-modulo` — gera o esqueleto de um módulo novo.
+  - `revisor-conformidade` — ao fim da implementação, compara o
     resultado com o arquivo de spec salvo em `docs/especificacao/`.
-  - `commit-writer` — roda em Haiku, redige o texto do commit
+  - `redator-commit` — roda em Haiku, redige o texto do commit
     (título/descrição) sem gastar o modelo principal.
 - **Hook**: lembrete no início da sessão apontando para
   `using-dev-methodology`.
+- **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
+  `parceiro-tdd`, `gerador-modulo` e `revisor-conformidade` não é
+  fixo — varia entre `haiku` (baixa), padrão da conversa (média) e
+  `opus` (alta), conforme a criticidade marcada na tarefa do plano.
+  Ver "Modelo por criticidade" em `using-dev-methodology`.
 
 ## Fluxo
 
@@ -42,13 +48,13 @@ brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
   → writing-plans (marca tarefas independentes com [P<n>])
   → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD → code-review-gate → commit-conventions ]
   → (opcional) clean-architecture-scaffold
-  → spec-compliance-reviewer (compara implementação final x spec)
+  → revisor-conformidade (compara implementação final x spec)
 ```
 
 Tarefas do mesmo grupo `[P<n>]` no plano — ex: domain/application/infra
 de um módulo novo, quando não dependem uma da outra nem tocam nos
 mesmos arquivos — podem ser disparadas ao mesmo tempo, um agente
-`tdd-pairer` por tarefa. Veja "Execução em paralelo" em
+`parceiro-tdd` por tarefa. Veja "Execução em paralelo" em
 `using-dev-methodology`.
 
 Specs ficam em `docs/especificacao/` no projeto onde a metodologia é
