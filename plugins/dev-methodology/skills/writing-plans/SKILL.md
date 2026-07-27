@@ -39,3 +39,21 @@ por tarefa, ou poucos ciclos).
   silenciosamente.
 - Marque cada tarefa como concluída somente depois que o code review
   da tarefa (`code-review-gate`) não tiver mais problemas críticos.
+
+## Use a interface do Claude Code para rastrear o progresso
+
+Assim que o plano for confirmado, registre as tarefas com a ferramenta
+`TaskCreate` (não só no markdown da conversa). Isso faz o progresso
+aparecer tanto na interface do app quanto no terminal, permitindo que
+o Matheus acompanhe em tempo real sem precisar reler a conversa.
+
+- Crie uma task por item do checklist, na mesma ordem/dependência do
+  plano.
+- Ao começar uma tarefa, marque-a como em andamento antes de escrever
+  qualquer código.
+- Ao terminar uma tarefa (TDD completo + code review sem críticos),
+  marque-a como concluída imediatamente — não acumule várias tarefas
+  prontas para marcar todas de uma vez no final.
+- Se o plano mudar durante a execução (nova tarefa, tarefa quebrada em
+  duas, tarefa cancelada), atualize as tasks correspondentes junto com
+  o checklist markdown, para as duas fontes não ficarem divergentes.

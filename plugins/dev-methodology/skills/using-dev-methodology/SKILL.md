@@ -17,7 +17,9 @@ não pule etapas mesmo que o pedido pareça simples:
 1. **Spec primeiro** → skill `brainstorming`. Nunca comece a escrever
    código a partir de um pedido vago. Refine o pedido em uma
    especificação curta (objetivo, não-objetivos, restrições, critérios
-   de aceite) e peça confirmação antes de seguir.
+   de aceite), salve em
+   `docs/especificacao/AAAA-MM-DD-nome-tarefa.md` e peça confirmação
+   antes de seguir.
 2. **Plano** → skill `writing-plans`. Quebre a spec aprovada em tarefas
    pequenas, testáveis e ordenadas. Apresente como checklist e confirme
    antes de executar.
@@ -33,6 +35,12 @@ não pule etapas mesmo que o pedido pareça simples:
    `clean-architecture-scaffold`. Use para gerar o esqueleto
    domain/application/infra de um módulo novo, seguindo as convenções
    de nomenclatura (T/I/E) e o padrão de DI com Inversify.
+5. **Ao terminar todas as tarefas do plano** → agent
+   `spec-compliance-reviewer`. Compare a implementação final contra o
+   arquivo de spec salvo em `docs/especificacao/`, item a item
+   (objetivo, não-objetivos, restrições, casos de borda, critérios de
+   aceite). Só considere a feature pronta sem achados críticos
+   pendentes.
 
 ## Quando pular etapas
 
@@ -43,6 +51,15 @@ não pule etapas mesmo que o pedido pareça simples:
   siga para o plano ou para o TDD.
 - Se o Matheus pedir explicitamente para pular uma etapa ("sem TDD
   dessa vez", "pode ir direto"), respeite o pedido para aquela tarefa.
+
+## Progresso visível na interface
+
+Sempre que houver um plano com mais de uma tarefa, use a ferramenta
+`TaskCreate`/`TaskUpdate` do Claude Code para registrar e atualizar o
+progresso — não deixe o acompanhamento só no texto da conversa. Isso
+garante que o progresso apareça tanto na interface do app quanto no
+terminal, em tempo real, tarefa por tarefa (ver detalhes em
+`writing-plans`).
 
 ## Subagents disponíveis
 
@@ -55,6 +72,9 @@ isolada (contexto separado, ferramentas restritas):
   tarefa específica do plano.
 - `module-scaffolder` — aplica `clean-architecture-scaffold` para
   gerar um módulo novo.
+- `spec-compliance-reviewer` — compara a implementação final com o
+  arquivo de spec em `docs/especificacao/`, ao fim de todas as tarefas
+  do plano.
 
 Use os subagents quando quiser manter o contexto da tarefa isolado da
 conversa principal (por exemplo, revisar um diff grande sem poluir o

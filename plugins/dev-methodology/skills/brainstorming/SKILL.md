@@ -34,7 +34,24 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
    ...
    ```
 
-4. **Pare e peça confirmação** antes de seguir para o plano
+4. **Salve a spec em arquivo**, não só na conversa:
+   `docs/especificacao/AAAA-MM-DD-nome-tarefa.md`, usando a data atual
+   e um nome curto em kebab-case para a tarefa (ex:
+   `docs/especificacao/2026-07-27-login-social.md`).
+   - Se `docs/especificacao/` ainda não existe no projeto, crie-a e
+     adicione um `docs/especificacao/.gitignore` com este conteúdo,
+     para as specs ficarem no disco mas fora do versionamento:
+
+     ```gitignore
+     *
+     !.gitignore
+     ```
+   - Este arquivo é a referência que o `spec-compliance-reviewer` vai
+     usar no fim da implementação para conferir se o que foi
+     construído bate com o que foi especificado — por isso ele precisa
+     existir em disco, não só ter sido dito na conversa.
+
+5. **Pare e peça confirmação** antes de seguir para o plano
    (`writing-plans`). Não implemente nada nesta etapa.
 
 ## Regras
@@ -43,5 +60,9 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
   marque como suposição e confirme.
 - Prefira poucas perguntas de alto impacto a um questionário longo.
 - Se o pedido já é uma spec completa (o Matheus já detalhou tudo),
-  resuma de volta em 3-4 linhas para confirmar entendimento e siga
-  direto para o plano, sem reabrir perguntas já respondidas.
+  resuma de volta em 3-4 linhas para confirmar entendimento, salve o
+  arquivo da mesma forma e siga direto para o plano, sem reabrir
+  perguntas já respondidas.
+- Se a spec mudar depois de confirmada (novo requisito descoberto
+  durante o plano ou a implementação), atualize o mesmo arquivo em vez
+  de criar um segundo — a spec em disco deve refletir a versão vigente.
