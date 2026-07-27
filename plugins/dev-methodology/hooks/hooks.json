@@ -1,0 +1,17 @@
+{
+  "description": "Reforça a metodologia de desenvolvimento no início de cada sessão.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/session-start-note.md"]
+          }
+        ]
+      }
+    ]
+  }
+}

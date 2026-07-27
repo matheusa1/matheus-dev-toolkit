@@ -1,0 +1,16 @@
+{
+  "name": "matheus-toolkit",
+  "owner": {
+    "name": "Matheus"
+  },
+  "description": "Marketplace pessoal de plugins para o Claude Code.",
+  "plugins": [
+    {
+      "name": "dev-methodology",
+      "source": "./plugins/dev-methodology",
+      "description": "Metodologia de desenvolvimento agnóstica de projeto: brainstorm→spec, TDD forçado (RED-GREEN-REFACTOR), code review com gate de severidade e scaffolding de Clean Architecture/DDD.",
+      "category": "development-workflows",
+      "keywords": ["tdd", "clean-architecture", "ddd", "code-review", "brainstorming", "superpowers"]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "dev-methodology",
+  "description": "Metodologia de desenvolvimento: brainstorm→spec, TDD (RED-GREEN-REFACTOR), code review com gate de severidade e scaffolding de Clean Architecture/DDD. Agnóstico de projeto.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Matheus"
+  }
+}
