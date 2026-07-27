@@ -50,35 +50,67 @@ não pule etapas mesmo que o pedido pareça simples:
    pequenas, testáveis e ordenadas. Apresente como checklist e confirme
    antes de executar.
 3. **Para cada tarefa do plano**:
-   a. **TDD** → skill `test-driven-development`. RED (teste falhando) →
-      GREEN (implementação mínima) → REFACTOR. Nunca escreva código de
-      implementação antes de existir um teste falhando para ele.
-   b. **Code review com gate** → skill `code-review-gate`. Ao terminar
-      a tarefa, revise o diff contra o plano e as convenções do
-      projeto, classificando problemas por severidade. Problemas
-      críticos bloqueiam a próxima tarefa até serem corrigidos.
+   a. **TDD** → skill `test-driven-development`, aplicada **inline** ou
+      pelo agent `parceiro-tdd` isolado — pergunte antes (ver "Pergunte
+      antes de decidir inline vs. subagent" abaixo). RED (teste
+      falhando) → GREEN (implementação mínima) → REFACTOR. Nunca
+      escreva código de implementação antes de existir um teste
+      falhando para ele.
+   b. **Code review com gate** → skill `code-review-gate`, aplicada
+      **inline** ou pelo agent `revisor-arquiteto` isolado — pergunte
+      antes, do mesmo jeito. Ao terminar a tarefa, revise o diff
+      contra o plano e as convenções do projeto, classificando
+      problemas por severidade. Problemas críticos bloqueiam a
+      próxima tarefa até serem corrigidos.
    c. **Commit** → skill `commit-conventions`, se o Matheus pedir para
       commitar. Um commit atômico por tarefa, Conventional Commits com
       emoji, escopo = branch atual, mensagem em português.
 
    Tarefas marcadas como paralelizáveis no plano (mesmo grupo `[P<n>]`
-   — ver `writing-plans`) podem ser disparadas ao mesmo tempo, uma
-   `Agent` `dev-methodology:parceiro-tdd` por tarefa, em vez de uma de
-   cada vez. Exemplo típico: implementar um módulo novo com um agente
-   para domain, outro para application e outro para infra, todos
-   simultâneos, porque nenhum depende do resultado do outro dentro do
-   mesmo disparo. Veja a seção "Execução em paralelo" abaixo antes de
-   disparar.
+   — ver `writing-plans`) são a exceção à pergunta: dispare
+   automaticamente, sem perguntar, uma `Agent`
+   `dev-methodology:parceiro-tdd` por tarefa, ao mesmo tempo, em vez
+   de uma de cada vez — a marcação `[P<n>]` no plano já é a decisão
+   tomada antecipadamente. Exemplo típico: implementar um módulo novo
+   com um agente para domain, outro para application e outro para
+   infra, todos simultâneos, porque nenhum depende do resultado do
+   outro dentro do mesmo disparo. Veja a seção "Execução em paralelo"
+   abaixo antes de disparar.
 4. **Módulo novo em projeto TypeScript?** → skill
-   `clean-architecture-scaffold`. Use para gerar o esqueleto
+   `clean-architecture-scaffold`, aplicada **inline** ou pelo agent
+   `gerador-modulo` isolado — pergunte antes. Gera o esqueleto
    domain/application/infra de um módulo novo, seguindo as convenções
    de nomenclatura (T/I/E) e o padrão de DI com Inversify.
-5. **Ao terminar todas as tarefas do plano** → agent
-   `revisor-conformidade`. Compare a implementação final contra o
-   arquivo de spec salvo em `docs/especificacao/`, item a item
-   (objetivo, não-objetivos, restrições, casos de borda, critérios de
-   aceite). Só considere a feature pronta sem achados críticos
-   pendentes.
+5. **Ao terminar todas as tarefas do plano**: pergunte se a
+   comparação final entre a implementação e a spec deve rodar
+   **inline** ou pelo agent `revisor-conformidade` isolado (a
+   recomendação padrão é o agent, para não poluir o contexto principal
+   com o diff inteiro do plano). Compare item a item contra o arquivo
+   de spec salvo em `docs/especificacao/` (objetivo, não-objetivos,
+   restrições, casos de borda, critérios de aceite). Só considere a
+   feature pronta sem achados críticos pendentes.
+
+## Pergunte antes de decidir inline vs. subagent
+
+Sempre que uma etapa do fluxo (TDD, code review, scaffold, revisão de
+conformidade) puder rodar tanto inline nesta conversa quanto por um
+subagent isolado, **pergunte ao Matheus antes de escolher** — não
+decida sozinho e não assuma que inline é o padrão. Use `AskUserQuestion`
+(ou pergunta direta em texto) com uma recomendação clara e o motivo
+(ex: "revisor-arquiteto isolado evita poluir o contexto com o diff
+inteiro; prefiro esse — pode ser inline se preferir rapidez").
+
+- Pergunte **por etapa/tarefa**, não uma vez só no início do plano — a
+  escolha certa pode mudar tarefa a tarefa (uma tarefa trivial pode ir
+  inline, uma tarefa de autenticação pode pedir isolamento).
+- **Exceção**: tarefas do mesmo grupo `[P<n>]` (paralelas) não entram
+  nessa pergunta — a paralelização já implica agents, dispare direto.
+- Brainstorming (`brainstorming`) fica sempre inline — é conversa e
+  decisão de design com o Matheus, não há agent equivalente e não faz
+  sentido isolar essa etapa.
+- Se o Matheus já disse nesta conversa como prefere (ex: "sempre usa
+  subagent pra review", "pode ir tudo inline dessa vez"), respeite a
+  preferência dada e não repita a pergunta por tarefa.
 
 ## Execução em paralelo
 
