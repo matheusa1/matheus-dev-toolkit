@@ -8,9 +8,9 @@
     {
       "name": "dev-methodology",
       "source": "./plugins/dev-methodology",
-      "description": "Metodologia de desenvolvimento agnóstica de projeto: brainstorm→spec, TDD forçado (RED-GREEN-REFACTOR), code review com gate de severidade e scaffolding de Clean Architecture/DDD.",
+      "description": "Metodologia de desenvolvimento agnóstica de projeto: brainstorm→spec, TDD forçado (RED-GREEN-REFACTOR), code review com gate de severidade, execução paralela de tarefas independentes, commits em Conventional Commits e scaffolding de Clean Architecture/DDD.",
       "category": "development-workflows",
-      "keywords": ["tdd", "clean-architecture", "ddd", "code-review", "brainstorming", "superpowers"]
+      "keywords": ["tdd", "clean-architecture", "ddd", "code-review", "brainstorming", "superpowers", "conventional-commits"]
     }
   ]
 }

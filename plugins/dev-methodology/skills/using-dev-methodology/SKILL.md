@@ -1,5 +1,5 @@
 ---
-description: Explica a metodologia de desenvolvimento pessoal do Matheus e a ordem em que as outras skills deste plugin devem ser usadas. Consulte sempre que uma tarefa de desenvolvimento nova estiver começando, especialmente quando o pedido for algo como "implementa X", "adiciona a feature Y" ou "corrige Z", ou quando não estiver claro por onde começar.
+description: Explica a metodologia de desenvolvimento pessoal do Matheus e a ordem em que as outras skills deste plugin devem ser usadas. É o padrão para QUALQUER tarefa de desenvolvimento (implementar, corrigir, refatorar, revisar, commitar) neste projeto — consulte sempre no início da tarefa, mesmo que o pedido não mencione spec, plano ou TDD explicitamente. Só não se aplica se o Matheus disser explicitamente para não usar a metodologia/o plugin desta vez.
 ---
 
 # Metodologia de desenvolvimento (dev-methodology)
@@ -8,6 +8,32 @@ Este plugin é uma metodologia pessoal, inspirada no framework Superpowers
 (obra/superpowers), mas ajustada ao jeito de trabalhar do Matheus:
 full-stack TypeScript (NestJS, React, React Native), Clean Architecture +
 DDD, TDD, e disciplina de processo antes de "sair codando".
+
+## Regra padrão: use sempre
+
+Este plugin é o modo **padrão** de trabalhar em qualquer projeto onde
+ele está instalado — não uma opção entre outras. Isso significa:
+
+- **Use por padrão em toda tarefa de desenvolvimento**, mesmo que o
+  pedido do Matheus não mencione spec, plano, TDD ou qualquer termo da
+  metodologia. Um pedido simples como "implementa X" ou "corrige Y" já
+  é gatilho suficiente — não espere ele pedir o processo explicitamente.
+- **A única exceção é pedido explícito de não usar**, dito na mesma
+  conversa, algo como "sem a metodologia dessa vez", "pode ir direto
+  ao código", "não usa o plugin agora", "sem processo, só resolve
+  rápido". Nesse caso, siga o pedido para aquela tarefa específica —
+  isso não desativa o plugin para o resto da sessão nem para tarefas
+  futuras, só para a que foi pedida.
+- Não confunda isto com a seção "Quando pular etapas" abaixo: aquilo é
+  sobre pular uma etapa específica dentro do fluxo (ex: sem TDD desta
+  vez, mas ainda com spec e plano). Este bloco aqui é sobre usar o
+  fluxo como um todo por padrão, a menos que o Matheus opte por sair
+  dele.
+- Na dúvida se o pedido é trivial o suficiente para pular o fluxo
+  inteiro, não assuma que sim — trate como tarefa normal e siga a
+  metodologia. É mais barato perguntar ou seguir o processo do que
+  descobrir depois que faltou spec, teste ou review numa mudança que
+  não era tão trivial assim.
 
 ## Ordem do fluxo
 
@@ -31,6 +57,18 @@ não pule etapas mesmo que o pedido pareça simples:
       a tarefa, revise o diff contra o plano e as convenções do
       projeto, classificando problemas por severidade. Problemas
       críticos bloqueiam a próxima tarefa até serem corrigidos.
+   c. **Commit** → skill `commit-conventions`, se o Matheus pedir para
+      commitar. Um commit atômico por tarefa, Conventional Commits com
+      emoji, escopo = branch atual, mensagem em português.
+
+   Tarefas marcadas como paralelizáveis no plano (mesmo grupo `[P<n>]`
+   — ver `writing-plans`) podem ser disparadas ao mesmo tempo, uma
+   `Agent` `dev-methodology:tdd-pairer` por tarefa, em vez de uma de
+   cada vez. Exemplo típico: implementar um módulo novo com um agente
+   para domain, outro para application e outro para infra, todos
+   simultâneos, porque nenhum depende do resultado do outro dentro do
+   mesmo disparo. Veja a seção "Execução em paralelo" abaixo antes de
+   disparar.
 4. **Módulo novo em projeto TypeScript?** → skill
    `clean-architecture-scaffold`. Use para gerar o esqueleto
    domain/application/infra de um módulo novo, seguindo as convenções
@@ -41,6 +79,37 @@ não pule etapas mesmo que o pedido pareça simples:
    (objetivo, não-objetivos, restrições, casos de borda, critérios de
    aceite). Só considere a feature pronta sem achados críticos
    pendentes.
+
+## Execução em paralelo
+
+Depois que o plano estiver confirmado e as tasks registradas, tarefas
+do mesmo grupo `[P<n>]` podem ser implementadas simultaneamente, cada
+uma em um agente `tdd-pairer` separado (via `Agent`, um por tarefa),
+em vez de uma de cada vez.
+
+- **Dispare todas as tarefas do grupo no mesmo turno**, uma chamada
+  `Agent` por tarefa, para elas rodarem em paralelo de fato — chamadas
+  sequenciais em turnos separados não paralelizam.
+- Cada agente recebe só a sua tarefa (descrição, critérios de aceite,
+  arquivos que deve tocar) — não o plano inteiro. Ele não tem contexto
+  desta conversa.
+- Marque cada task como em andamento (`TaskUpdate`) no momento em que
+  o agente correspondente é disparado, não todas de uma vez no início.
+- **Rode o `code-review-gate` de cada tarefa separadamente**, assim
+  que o respectivo agente termina — não espere o grupo inteiro para
+  revisar tudo junto.
+- Só avance para as tarefas que dependem do grupo (ex: o endpoint que
+  depende de application + infra) depois que **todas** as tarefas do
+  grupo passaram no code review sem crítico pendente.
+- Se, ao ver os diffs, dois agentes do mesmo grupo tocaram no mesmo
+  arquivo apesar do plano dizer que não deveriam (import cruzado,
+  mesmo arquivo de DI, etc.), trate como achado crítico do code
+  review: resolva o conflito manualmente antes de seguir, e ajuste o
+  plano/checklist para não repetir o agrupamento errado nas próximas
+  tarefas.
+- Na dúvida se algo pode rodar em paralelo, não force — dispare
+  sequencial. Isso deveria já estar decidido no plano (`writing-plans`),
+  não improvisado na hora de disparar os agentes.
 
 ## Quando pular etapas
 
@@ -75,6 +144,9 @@ isolada (contexto separado, ferramentas restritas):
 - `spec-compliance-reviewer` — compara a implementação final com o
   arquivo de spec em `docs/especificacao/`, ao fim de todas as tarefas
   do plano.
+- `commit-writer` — roda em Haiku, redige título/descrição de commit
+  em português a partir do diff (usado pela skill `commit-conventions`
+  para não gastar o modelo principal com isso).
 
 Use os subagents quando quiser manter o contexto da tarefa isolado da
 conversa principal (por exemplo, revisar um diff grande sem poluir o
