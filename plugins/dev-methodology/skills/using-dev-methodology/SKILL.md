@@ -124,7 +124,9 @@ em vez de uma de cada vez.
   sequenciais em turnos separados não paralelizam.
 - Cada agente recebe só a sua tarefa (descrição, critérios de aceite,
   arquivos que deve tocar) — não o plano inteiro. Ele não tem contexto
-  desta conversa.
+  desta conversa (ver "O que os subagents herdam automaticamente"
+  abaixo) — qualquer decisão combinada só verbalmente precisa ir no
+  prompt de disparo.
 - Marque cada task como em andamento (`TaskUpdate`) no momento em que
   o agente correspondente é disparado, não todas de uma vez no início.
 - **Rode o `code-review-gate` de cada tarefa separadamente**, assim
@@ -169,6 +171,37 @@ não force `haiku` para economizar nem `opus` "por segurança" sem
 motivo concreto. Marque a criticidade de cada tarefa já no plano
 (`writing-plans`), para não precisar decidir isso de novo na hora de
 disparar o agente.
+
+## O que os subagents herdam automaticamente
+
+Sempre que uma etapa rodar por subagent (`parceiro-tdd`,
+`revisor-arquiteto`, `gerador-modulo`, `revisor-conformidade`,
+`redator-commit`), ele segue as regras do projeto — mas não todas pela
+mesma via:
+
+- **Automático, sem precisar passar nada**: o `CLAUDE.md` do projeto
+  (e qualquer `CLAUDE.md` aninhado) é carregado pelo Claude Code para
+  qualquer sessão que rode no diretório do projeto, incluindo a de
+  subagents. Convenções documentadas ali chegam sozinhas.
+- **Automático, mas exige que o agente vá olhar**: padrões que só
+  existem no código (nomenclatura observada, estrutura de pastas, lint
+  config) não são "empurrados" para o contexto do agente — ele precisa
+  ler o repositório. Por isso os subagents deste plugin têm
+  `Read`/`Grep`/`Glob` e as skills que eles carregam (`code-review-gate`,
+  `clean-architecture-scaffold`) mandam explicitamente checar contra
+  "as convenções do projeto" antes de aprovar ou gerar algo.
+- **Não é herdado — precisa ir no prompt**: o histórico desta
+  conversa. Um subagent começa sem nenhuma memória do que foi dito
+  aqui. Se uma decisão foi combinada só verbalmente comigo e ainda não
+  está no `CLAUDE.md` nem no código (ex: "usa Zod em vez de
+  class-validator nesse módulo", uma exceção combinada para essa
+  tarefa), ela só chega ao agente se for escrita explicitamente no
+  prompt de disparo.
+
+Regra prática ao montar o prompt de qualquer `Agent` deste plugin:
+pergunte-se "isso está em um arquivo que o agente vai ler sozinho, ou
+foi combinado só na conversa?" — se for só conversa, inclua no prompt;
+não assuma que o agente vai "simplesmente saber".
 
 ## Quando pular etapas
 
