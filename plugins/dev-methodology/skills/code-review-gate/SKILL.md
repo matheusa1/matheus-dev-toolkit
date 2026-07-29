@@ -23,6 +23,10 @@ seguro seguir em frente.
    - **Segurança básica**: segredos expostos, entrada não validada,
      SQL/queries não parametrizadas.
    - **Legibilidade**: nomes claros, sem duplicação óbvia.
+   - **Se o diff é de frontend** (componentes de UI): aplique também a
+     skill `convencoes-frontend` — teste unitário restrito à camada
+     core, tokens do antd em vez de valores fixos, sem ternário/
+     condicional no `return`, componentes simples, sem estilo inline.
 3. **Classifique cada achado por severidade:**
    - 🔴 **Crítico** — quebra a arquitetura, falta teste para lógica de
      negócio, bug real, segredo exposto. **Bloqueia** a próxima

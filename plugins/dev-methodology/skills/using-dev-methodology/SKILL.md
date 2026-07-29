@@ -81,14 +81,21 @@ não pule etapas mesmo que o pedido pareça simples:
    `gerador-modulo` isolado — pergunte antes. Gera o esqueleto
    domain/application/infra de um módulo novo, seguindo as convenções
    de nomenclatura (T/I/E) e o padrão de DI com Inversify.
+   - **Tarefa é de frontend (componente de UI)?** → skill
+     `convencoes-frontend`, sempre inline, junto com o TDD/code review
+     da tarefa (não é uma etapa separada a perguntar) — teste unitário
+     restrito à camada core, tokens do antd, sem ternário/condicional
+     no `return`, componentes simples, sem estilo inline.
 5. **Ao terminar todas as tarefas do plano**: pergunte se a
    comparação final entre a implementação e a spec deve rodar
    **inline** ou pelo agent `revisor-conformidade` isolado (a
    recomendação padrão é o agent, para não poluir o contexto principal
    com o diff inteiro do plano). Compare item a item contra o arquivo
    de spec salvo em `docs/especificacao/` (objetivo, não-objetivos,
-   restrições, casos de borda, critérios de aceite). Só considere a
-   feature pronta sem achados críticos pendentes.
+   restrições, casos de borda, critérios de aceite) e confira contra o
+   arquivo de plano em `docs/planos/` que todas as tarefas previstas
+   foram implementadas. Só considere a feature pronta sem achados
+   críticos pendentes.
 
 ## Pergunte antes de decidir inline vs. subagent
 

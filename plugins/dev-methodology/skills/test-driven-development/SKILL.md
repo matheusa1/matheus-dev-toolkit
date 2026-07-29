@@ -34,6 +34,9 @@ burocracia — é a garantia de que o teste realmente testa algo.
 - Em projetos TypeScript/NestJS: teste unitário para domain/application
   (mocks para os ports/interfaces `I*`), teste de integração para
   infra (banco real ou testcontainer), teste e2e para os endpoints.
+- Em projetos frontend: teste unitário se limita à camada `core`
+  (lógica de negócio, hooks com lógica, services, utils). Componentes
+  de apresentação não recebem teste unitário — ver `convencoes-frontend`.
 - Não pule o passo RED "porque já sei que vai passar" — o objetivo é
   confirmar que o teste falha do jeito certo antes de confiar nele.
 
