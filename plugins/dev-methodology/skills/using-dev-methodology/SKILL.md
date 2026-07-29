@@ -35,6 +35,19 @@ ele está instalado — não uma opção entre outras. Isso significa:
   descobrir depois que faltou spec, teste ou review numa mudança que
   não era tão trivial assim.
 
+## Bug relatado? Investigue antes de corrigir
+
+Se o pedido é um bug, erro ou comportamento inesperado relatado pelo
+Matheus (não uma feature nova), o fluxo abaixo não se aplica direto —
+use primeiro a skill `debugging-sistematico`, aplicada **inline** ou
+pelo agent `investigador-bugs` isolado (pergunte antes, mesma lógica
+de "Pergunte antes de decidir inline vs. subagent"). Reproduza, colete
+evidência, teste hipóteses e confirme a causa raiz antes de escrever
+qualquer correção. Só depois da causa raiz confirmada entre no fluxo
+normal a partir do passo 3a (TDD) para a correção em si — não é
+preciso brainstorming/plano para um bug pontual, a menos que a
+investigação revele que o problema é maior do que um bug isolado.
+
 ## Ordem do fluxo
 
 Para qualquer tarefa de desenvolvimento não-trivial, siga esta ordem —
@@ -157,8 +170,9 @@ em vez de uma de cada vez.
 
 ## Modelo por criticidade
 
-`revisor-arquiteto`, `revisor-conformidade`, `parceiro-tdd` e
-`gerador-modulo` rodam com `model: inherit` por padrão, mas o modelo
+`revisor-arquiteto`, `revisor-conformidade`, `parceiro-tdd`,
+`gerador-modulo` e `investigador-bugs` rodam com `model: inherit` por
+padrão, mas o modelo
 pode e deve variar por tarefa: ao disparar via `Agent`, passe o
 parâmetro `model` explicitamente conforme a criticidade da tarefa
 (avaliada no plano ou no momento do disparo). `redator-commit` é
@@ -186,8 +200,8 @@ disparar o agente.
 
 Sempre que uma etapa rodar por subagent (`parceiro-tdd`,
 `revisor-arquiteto`, `gerador-modulo`, `revisor-conformidade`,
-`redator-commit`), ele segue as regras do projeto — mas não todas pela
-mesma via:
+`investigador-bugs`, `redator-commit`), ele segue as regras do projeto
+— mas não todas pela mesma via:
 
 - **Automático, sem precisar passar nada**: o `CLAUDE.md` do projeto
   (e qualquer `CLAUDE.md` aninhado) é carregado pelo Claude Code para
@@ -247,11 +261,14 @@ sempre em português do Brasil:
 - `revisor-conformidade` — compara a implementação final com o
   arquivo de spec em `docs/especificacao/`, ao fim de todas as tarefas
   do plano.
+- `investigador-bugs` — aplica `debugging-sistematico` para investigar
+  um bug relatado até a causa raiz confirmada, antes de qualquer
+  correção.
 - `redator-commit` — roda em Haiku, redige título/descrição de commit
   em português a partir do diff (usado pela skill `commit-conventions`
   para não gastar o modelo principal com isso).
 
-O modelo dos quatro primeiros não é fixo — veja "Modelo por
+O modelo dos cinco primeiros não é fixo — veja "Modelo por
 criticidade" acima para saber quando passar `haiku` ou `opus` em vez
 de herdar o padrão.
 

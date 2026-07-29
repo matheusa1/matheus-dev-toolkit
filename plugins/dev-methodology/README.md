@@ -29,6 +29,9 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
     estilo inline.
   - `commit-conventions` — Conventional Commits + emoji, escopo =
     branch, mensagem em português, sem trailer de co-autoria.
+  - `debugging-sistematico` — investiga um bug relatado (reproduzir,
+    coletar evidência, testar hipóteses, isolar causa raiz) antes de
+    qualquer correção.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.
@@ -37,15 +40,18 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
   - `revisor-conformidade` — ao fim da implementação, compara o
     resultado com o arquivo de spec salvo em `docs/especificacao/` e
     o plano salvo em `docs/planos/`.
+  - `investigador-bugs` — investiga um bug relatado até a causa raiz
+    confirmada, sem sair corrigindo por tentativa e erro.
   - `redator-commit` — roda em Haiku, redige o texto do commit
     (título/descrição) sem gastar o modelo principal.
 - **Hook**: lembrete no início da sessão apontando para
   `using-dev-methodology`.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
-  `parceiro-tdd`, `gerador-modulo` e `revisor-conformidade` não é
-  fixo — varia entre `haiku` (baixa), padrão da conversa (média) e
-  `opus` (alta), conforme a criticidade marcada na tarefa do plano.
-  Ver "Modelo por criticidade" em `using-dev-methodology`.
+  `parceiro-tdd`, `gerador-modulo`, `revisor-conformidade` e
+  `investigador-bugs` não é fixo — varia entre `haiku` (baixa), padrão
+  da conversa (média) e `opus` (alta), conforme a criticidade marcada
+  na tarefa do plano. Ver "Modelo por criticidade" em
+  `using-dev-methodology`.
 
 ## Fluxo
 
@@ -55,6 +61,14 @@ brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
   → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD → code-review-gate → commit-conventions ]
   → (opcional) clean-architecture-scaffold
   → revisor-conformidade (compara implementação final x spec e x plano)
+```
+
+Para um **bug relatado** (em vez de feature nova), o fluxo entra por
+`debugging-sistematico` em vez de `brainstorming`:
+
+```
+debugging-sistematico (reproduzir → evidência → hipóteses → isolar → causa raiz confirmada)
+  → TDD (teste que reproduz o bug → correção) → code-review-gate → commit-conventions
 ```
 
 Tarefas do mesmo grupo `[P<n>]` no plano — ex: domain/application/infra
