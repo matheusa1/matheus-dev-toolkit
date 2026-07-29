@@ -18,6 +18,15 @@ por tarefa, ou poucos ciclos).
 2. **Aponte decisões arquiteturais que a tarefa afeta** (nova camada,
    novo módulo, mudança de contrato) para que o code review saiba o
    que checar depois.
+   - **Se a tarefa é de frontend** (componente de UI), registre no
+     próprio item do plano que ela deve seguir a skill
+     `dev-methodology:convencoes-frontend`, e carregue essa skill antes
+     de implementar — componentes do antd (`Flex`, `Space`,
+     `Typography`…) em vez de `<div>`/`<span>` crus, tokens do antd em
+     vez de valores fixos, sem ternário/condicional no `return`, sem
+     estilo inline, teste unitário restrito à camada `core`. Isso não é
+     uma tarefa separada do checklist nem entra na pergunta inline vs.
+     subagent: é uma convenção que acompanha a tarefa.
 3. **Marque quais tarefas podem rodar em paralelo.** Duas tarefas só
    podem ser paralelas se, ao mesmo tempo:
    - Nenhuma depende do resultado da outra (não há import, contrato ou
@@ -74,6 +83,29 @@ por tarefa, ou poucos ciclos).
      compactação de contexto ou a uma nova sessão.
 
 7. **Pare e peça confirmação** do plano antes de começar a implementar.
+
+## Antes de executar cada tarefa: pergunte inline vs. subagent
+
+Com o plano confirmado, cada tarefa pode ser implementada e revisada
+**inline** nesta conversa ou por um subagent isolado (`parceiro-tdd`
+para a implementação, `revisor-arquiteto` para o code review).
+**Pergunte ao Matheus antes de escolher, tarefa a tarefa** — não
+decida sozinho e não assuma que inline é o padrão. Apresente uma
+recomendação com o motivo (ex: "revisor-arquiteto isolado evita poluir
+o contexto com o diff inteiro").
+
+- Exceção: tarefas do mesmo grupo `[P<n>]` já implicam agents em
+  paralelo — dispare direto, sem perguntar.
+- Se o Matheus já disse nesta conversa como prefere, respeite e não
+  repita a pergunta.
+- Ao terminar **todas** as tarefas, pergunte também se a comparação
+  final com a spec roda inline ou pelo agent
+  `dev-methodology:revisor-conformidade`
+  (recomendação padrão: o agent).
+
+O detalhamento completo está em `dev-methodology:using-dev-methodology`
+— se essa skill ainda não foi carregada nesta sessão, carregue-a antes
+de começar a implementar.
 
 ## Regras
 

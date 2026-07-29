@@ -1,5 +1,5 @@
 ---
-description: Convenções de código para frontend (React/antd) — escopo de teste unitário, tokens do antd em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Use ao implementar ou revisar componentes de UI em projetos frontend.
+description: Convenções de código para frontend (React/antd) — escopo de teste unitário, preferência pelos componentes do antd em vez de elementos HTML crus, tokens do antd em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Use ao implementar ou revisar componentes de UI em projetos frontend.
 ---
 
 # Convenções de frontend
@@ -77,3 +77,35 @@ antd, tokens via `theme.useToken()` combinados com CSS/classe).
 - Se a única forma de aplicar um valor dinâmico parecer ser `style`
   inline, prefira variável CSS custom property atualizada via classe,
   ou o mecanismo de estilização dinâmica do próprio design system.
+
+## 6. Prefira sempre os componentes do antd a elementos HTML crus
+
+Antes de escrever `<div>`, `<span>`, `<p>`, `<h1>` ou qualquer elemento
+HTML solto, pergunte-se: **"existe um componente do antd que faz
+isso?"** Quase sempre existe — e ele já traz tokens, tema (dark mode),
+acessibilidade e espaçamento consistentes de graça.
+
+Equivalências mais comuns:
+
+| Em vez de | Use |
+| --- | --- |
+| `<div>` com `display: flex` / `gap` | `<Flex>` (`align`, `justify`, `gap`, `vertical`) |
+| `<div>` só para espaçar filhos | `<Space>` (`direction`, `size`) |
+| `<span>` / `<p>` / `<h1>` com texto | `<Typography.Text>` / `<Typography.Paragraph>` / `<Typography.Title>` |
+| `<div>` com grid de colunas | `<Row>` + `<Col>` |
+| `<div>` com borda/fundo de cartão | `<Card>` |
+| `<div>` como separador | `<Divider>` |
+| `<span>` com fundo colorido de rótulo | `<Tag>` ou `<Badge>` |
+| `<img>` | `<Image>` (ou `<Avatar>` para foto/ícone circular) |
+| `<button>` / `<a>` | `<Button>` (`type="link"` quando for link) |
+
+- Um `<div>` só se justifica quando **nenhum** componente do antd cobre
+  o caso (um wrapper de posicionamento absoluto, um overlay
+  específico). Nesse caso, deixe claro no código/review que foi uma
+  escolha consciente, não descuido.
+- Isso vale junto com a regra 5: trocar `<div style={{ display: 'flex',
+  gap: 8 }}>` por `<Flex gap="small">` resolve estilo inline **e** uso
+  de valor fixo de uma vez.
+- Regra prática para o code review: se o diff introduziu `<div>` ou
+  `<span>` novos em um projeto antd, isso é um achado — pelo menos
+  🟡 aviso — a menos que a tabela acima realmente não cubra o caso.

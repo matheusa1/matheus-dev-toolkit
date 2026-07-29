@@ -7,6 +7,15 @@ description: Força o ciclo RED-GREEN-REFACTOR ao implementar qualquer lógica d
 Regra central: **nunca escreva código de implementação antes de existir
 um teste que falhe por causa da ausência desse código.**
 
+## Antes de começar: inline ou subagent?
+
+Esta skill pode ser aplicada inline nesta conversa ou pelo agent
+`dev-methodology:parceiro-tdd` isolado. **Pergunte ao Matheus antes de
+escolher** — não assuma inline. Exceções: tarefas do mesmo grupo
+`[P<n>]` do plano (já implicam agents em paralelo, dispare direto) e
+preferência que ele já tenha declarado nesta conversa. Detalhes em
+`dev-methodology:using-dev-methodology`.
+
 ## Ciclo
 
 1. **RED** — Escreva o teste que descreve o comportamento esperado.

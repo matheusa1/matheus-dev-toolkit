@@ -7,6 +7,16 @@ description: Revisa o código de uma tarefa recém-concluída contra o plano e a
 Objetivo: revisar o diff da tarefa recém-implementada e decidir se é
 seguro seguir em frente.
 
+## Antes de começar: inline ou subagent?
+
+Esta revisão pode rodar inline nesta conversa ou pelo agent
+`dev-methodology:revisor-arquiteto` isolado. **Pergunte ao Matheus
+antes de escolher** — não assuma inline. A recomendação padrão é o
+agent isolado, que evita poluir o contexto principal com o diff
+inteiro. Exceções: tarefas do mesmo grupo `[P<n>]` do plano e
+preferência que ele já tenha declarado nesta conversa. Detalhes em
+`dev-methodology:using-dev-methodology`.
+
 ## Processo
 
 1. Rode `git diff` (ou `git diff --staged`) para ver exatamente o que
@@ -24,9 +34,11 @@ seguro seguir em frente.
      SQL/queries não parametrizadas.
    - **Legibilidade**: nomes claros, sem duplicação óbvia.
    - **Se o diff é de frontend** (componentes de UI): aplique também a
-     skill `convencoes-frontend` — teste unitário restrito à camada
-     core, tokens do antd em vez de valores fixos, sem ternário/
-     condicional no `return`, componentes simples, sem estilo inline.
+     skill `dev-methodology:convencoes-frontend` — componentes do antd
+     (`Flex`, `Space`, `Typography`…) em vez de `<div>`/`<span>` crus,
+     teste unitário restrito à camada core, tokens do antd em vez de
+     valores fixos, sem ternário/condicional no `return`, componentes
+     simples, sem estilo inline.
 3. **Classifique cada achado por severidade:**
    - 🔴 **Crítico** — quebra a arquitetura, falta teste para lógica de
      negócio, bug real, segredo exposto. **Bloqueia** a próxima
