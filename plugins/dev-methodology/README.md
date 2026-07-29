@@ -22,11 +22,11 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
   - `code-review-gate` — revisa cada tarefa com gate de severidade.
   - `clean-architecture-scaffold` — gera módulos domain/application/infra
     com convenções T/I/E e DI via Inversify.
-  - `convencoes-frontend` — componentes do antd (`Flex`, `Space`,
-    `Typography`…) em vez de `<div>`/`<span>` crus, teste unitário
-    restrito à camada core, tokens do antd em vez de valores fixos,
-    sem ternário/condicional no `return`, componentes simples, sem
-    estilo inline.
+  - `convencoes-frontend` — componentes do design system (antd ou
+    tailwind+shadcn, detectado por projeto) em vez de `<div>`/`<span>`
+    crus, teste unitário restrito à camada core, tokens de tema em vez
+    de valores fixos, sem ternário/condicional no `return`,
+    componentes simples, sem estilo inline.
   - `commit-conventions` — Conventional Commits + emoji, escopo =
     branch, mensagem em português, sem trailer de co-autoria.
   - `debugging-sistematico` — investiga um bug relatado (reproduzir,

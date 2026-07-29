@@ -98,10 +98,11 @@ não pule etapas mesmo que o pedido pareça simples:
    - **Tarefa é de frontend (componente de UI)?** → skill
      `dev-methodology:convencoes-frontend`, sempre inline, junto com o
      TDD/code review da tarefa (não é uma etapa separada a perguntar)
-     — componentes do antd (`Flex`, `Space`, `Typography`…) em vez de
-     `<div>`/`<span>` crus, teste unitário restrito à camada core,
-     tokens do antd, sem ternário/condicional no `return`, componentes
-     simples, sem estilo inline.
+     — componentes do design system do projeto (antd ou
+     tailwind+shadcn, a skill detecta qual) em vez de `<div>`/`<span>`
+     crus, teste unitário restrito à camada core, tokens de tema, sem
+     ternário/condicional no `return`, componentes simples, sem
+     estilo inline.
 5. **Ao terminar todas as tarefas do plano**: pergunte se a
    comparação final entre a implementação e a spec deve rodar
    **inline** ou pelo agent `revisor-conformidade` isolado (a

@@ -34,11 +34,12 @@ preferência que ele já tenha declarado nesta conversa. Detalhes em
      SQL/queries não parametrizadas.
    - **Legibilidade**: nomes claros, sem duplicação óbvia.
    - **Se o diff é de frontend** (componentes de UI): aplique também a
-     skill `dev-methodology:convencoes-frontend` — componentes do antd
-     (`Flex`, `Space`, `Typography`…) em vez de `<div>`/`<span>` crus,
-     teste unitário restrito à camada core, tokens do antd em vez de
-     valores fixos, sem ternário/condicional no `return`, componentes
-     simples, sem estilo inline.
+     skill `dev-methodology:convencoes-frontend` — componentes do
+     design system do projeto (antd ou tailwind+shadcn, a skill
+     detecta qual) em vez de `<div>`/`<span>` crus, teste unitário
+     restrito à camada core, tokens de tema em vez de valores fixos,
+     sem ternário/condicional no `return`, componentes simples, sem
+     estilo inline.
 3. **Classifique cada achado por severidade:**
    - 🔴 **Crítico** — quebra a arquitetura, falta teste para lógica de
      negócio, bug real, segredo exposto. **Bloqueia** a próxima

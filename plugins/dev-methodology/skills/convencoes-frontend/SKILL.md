@@ -1,11 +1,26 @@
 ---
-description: Convenções de código para frontend (React/antd) — escopo de teste unitário, preferência pelos componentes do antd em vez de elementos HTML crus, tokens do antd em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Use ao implementar ou revisar componentes de UI em projetos frontend.
+description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend.
 ---
 
 # Convenções de frontend
 
 Objetivo: manter componentes de apresentação simples, testáveis onde
 importa e consistentes com o design system do projeto.
+
+## 0. Detecte o design system do projeto primeiro
+
+Antes de aplicar as regras 2 e 6 (tokens e componentes), identifique
+qual design system o projeto usa — não assuma antd por padrão.
+
+- Olhe `package.json`: `antd` presente → convenções antd. `tailwindcss`
+  + `shadcn`/`@radix-ui`/componentes em `components/ui/` → convenções
+  tailwind+shadcn.
+- Projetos de trabalho (ex: repositórios da empresa) tendem a usar
+  antd; projetos pessoais tendem a usar tailwind+shadcn — mas confirme
+  sempre pelo `package.json`/imports reais do projeto, nunca por
+  suposição de contexto.
+- Se nenhum dos dois for detectado, pergunte ou siga o padrão que já
+  aparece no código existente do projeto.
 
 ## 1. Teste unitário só na camada core
 
@@ -25,16 +40,22 @@ customizados com lógica, services, utils, reducers, use cases).
 - Isso não dispensa TDD (`test-driven-development`) para a lógica que
   vive em `core` — o ciclo RED-GREEN-REFACTOR continua valendo ali.
 
-## 2. Tokens do antd, nunca valores fixos
+## 2. Tokens do tema, nunca valores fixos
 
-Em projetos que usam antd, cores, espaçamentos, tamanhos de fonte,
-border-radius, etc. vêm sempre dos tokens do tema (`theme.useToken()`,
-`token.colorPrimary`, `token.marginMD`, etc.), nunca hardcoded
+Cores, espaçamentos, tamanhos de fonte, border-radius, etc. vêm sempre
+dos tokens do tema do design system em uso, nunca hardcoded
 (`#1677ff`, `16px`, `'red'`).
 
-- Antes de escrever um valor, pergunte-se: "existe um token do antd
-  para isso?" Cores, espaçamentos, tipografia e border-radius quase
-  sempre têm.
+- **antd**: `theme.useToken()`, `token.colorPrimary`, `token.marginMD`,
+  etc.
+- **tailwind + shadcn**: classes utilitárias/tokens do tema
+  (`bg-primary`, `text-muted-foreground`, `p-4`, `rounded-md`) e
+  variáveis CSS definidas em `globals.css`/`tailwind.config` (ex:
+  `--primary`, `--radius`), nunca valores arbitrários fora da escala
+  (`className="p-[13px]"`, cor hex direto na classe).
+- Antes de escrever um valor, pergunte-se: "existe um token/classe do
+  design system para isso?" Cores, espaçamentos, tipografia e
+  border-radius quase sempre têm.
 - Se o valor realmente não existe como token (caso raro), documente
   brevemente o motivo em vez de simplesmente hardcodar sem explicação.
 
@@ -69,23 +90,27 @@ menores e mais específicos sempre que possível.
 ## 5. Nunca use estilo inline
 
 Sem `style={{ ... }}` em elementos JSX. Use os mecanismos de
-estilização do projeto (styled-components, CSS Modules, classes do
-antd, tokens via `theme.useToken()` combinados com CSS/classe).
+estilização do projeto: styled-components, CSS Modules, classes do
+antd + tokens via `theme.useToken()`, ou classes utilitárias do
+tailwind combinadas com os tokens de tema do shadcn.
 
-- Estilo inline não usa tokens do antd (contradiz a regra 2), não é
-  reaproveitável e dificulta manutenção de tema (ex: dark mode).
+- Estilo inline não usa os tokens do design system (contradiz a regra
+  2), não é reaproveitável e dificulta manutenção de tema (ex: dark
+  mode).
 - Se a única forma de aplicar um valor dinâmico parecer ser `style`
-  inline, prefira variável CSS custom property atualizada via classe,
-  ou o mecanismo de estilização dinâmica do próprio design system.
+  inline, prefira variável CSS custom property atualizada via classe
+  (ou `cn()`/`clsx` condicional no caso de tailwind), ou o mecanismo de
+  estilização dinâmica do próprio design system.
 
-## 6. Prefira sempre os componentes do antd a elementos HTML crus
+## 6. Prefira sempre os componentes do design system a elementos HTML crus
 
 Antes de escrever `<div>`, `<span>`, `<p>`, `<h1>` ou qualquer elemento
-HTML solto, pergunte-se: **"existe um componente do antd que faz
-isso?"** Quase sempre existe — e ele já traz tokens, tema (dark mode),
-acessibilidade e espaçamento consistentes de graça.
+HTML solto, pergunte-se: **"existe um componente do design system que
+faz isso?"** Quase sempre existe — e ele já traz tokens, tema (dark
+mode), acessibilidade e espaçamento consistentes de graça. Use a
+detecção da regra 0 para saber qual tabela aplicar.
 
-Equivalências mais comuns:
+### antd
 
 | Em vez de | Use |
 | --- | --- |
@@ -99,13 +124,39 @@ Equivalências mais comuns:
 | `<img>` | `<Image>` (ou `<Avatar>` para foto/ícone circular) |
 | `<button>` / `<a>` | `<Button>` (`type="link"` quando for link) |
 
-- Um `<div>` só se justifica quando **nenhum** componente do antd cobre
-  o caso (um wrapper de posicionamento absoluto, um overlay
-  específico). Nesse caso, deixe claro no código/review que foi uma
-  escolha consciente, não descuido.
+### tailwind + shadcn
+
+| Em vez de | Use |
+| --- | --- |
+| `<div>` com `display: flex` / `gap` | `<div className="flex gap-*">` (tailwind cobre isso nativamente — não existe componente shadcn dedicado) |
+| `<span>` / `<p>` / `<h1>` com texto | componentes de `components/ui/typography` se o projeto tiver, senão elemento HTML com classes de tema (`text-muted-foreground`, etc.) |
+| `<div>` com grid de colunas | `<div className="grid grid-cols-*">` |
+| `<div>` com borda/fundo de cartão | `<Card>` / `<CardHeader>` / `<CardContent>` (shadcn) |
+| `<div>` como separador | `<Separator>` (shadcn) |
+| `<span>` com fundo colorido de rótulo | `<Badge>` (shadcn) |
+| `<img>` | `<Avatar>` (shadcn) quando for foto/ícone circular; caso contrário `<img>` com classes de tema é aceitável — tailwind não força um wrapper |
+| `<button>` / `<a>` | `<Button>` (shadcn, `variant="link"` quando for link) |
+| dialog/modal, tooltip, dropdown, select | componente shadcn correspondente (`<Dialog>`, `<Tooltip>`, `<DropdownMenu>`, `<Select>`) em vez de HTML/lib crua |
+
+- No stack tailwind+shadcn, `<div>`/`<span>` com classes utilitárias
+  **não** é uma violação por si só — tailwind é utility-first e não tem
+  componente para todo elemento de layout, diferente do antd. A regra
+  6 se aplica principalmente quando existe um componente shadcn
+  equivalente (Card, Button, Badge, Dialog, etc.) e o código usa HTML
+  cru + estilização manual em vez dele.
+- Um `<div>` cru só se justifica quando **nenhum** componente do design
+  system cobre o caso (um wrapper de posicionamento absoluto, um
+  overlay específico, ou — no caso tailwind — layout puro sem
+  componente correspondente). Nesse caso, em projetos antd, deixe
+  claro no código/review que foi uma escolha consciente, não descuido.
 - Isso vale junto com a regra 5: trocar `<div style={{ display: 'flex',
-  gap: 8 }}>` por `<Flex gap="small">` resolve estilo inline **e** uso
-  de valor fixo de uma vez.
-- Regra prática para o code review: se o diff introduziu `<div>` ou
-  `<span>` novos em um projeto antd, isso é um achado — pelo menos
-  🟡 aviso — a menos que a tabela acima realmente não cubra o caso.
+  gap: 8 }}>` por `<Flex gap="small">` (antd) ou por
+  `<div className="flex gap-2">` (tailwind) resolve estilo inline **e**
+  uso de valor fixo de uma vez.
+- Regra prática para o code review: em projeto antd, se o diff
+  introduziu `<div>` ou `<span>` novos onde a tabela antd tem
+  equivalente, isso é um achado — pelo menos 🟡 aviso. Em projeto
+  tailwind+shadcn, o achado só vale quando existe componente shadcn
+  equivalente disponível e não usado (Card, Button, Badge, Dialog,
+  Separator, etc.) — `<div>` com classes utilitárias de layout é
+  normal.

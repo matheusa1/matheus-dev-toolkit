@@ -26,13 +26,18 @@ Ao ser invocado:
    - Cobertura de teste para a lógica de negócio nova (camada core;
      componentes de apresentação de frontend não precisam de teste
      unitário — ver `convencoes-frontend`).
-   - Se o diff é de frontend: componentes do antd em vez de elementos
-     HTML crus (`<Flex>`/`<Space>` no lugar de `<div>` com flex,
+   - Se o diff é de frontend: componentes do design system do projeto
+     em vez de elementos HTML crus — em projetos antd:
+     `<Flex>`/`<Space>` no lugar de `<div>` com flex,
      `<Typography.Text>` no lugar de `<span>`, `<Row>`/`<Col>`,
-     `<Card>`, `<Divider>`, `<Button>`), tokens do antd em vez de
-     valores fixos, sem ternário/condicional no `return`, componentes
-     simples e específicos, sem estilo inline (`style={{ ... }}`) —
-     aplique a skill `convencoes-frontend`.
+     `<Card>`, `<Divider>`, `<Button>`; em projetos tailwind+shadcn:
+     `<Card>`, `<Badge>`, `<Separator>`, `<Button>`, `<Dialog>` etc. no
+     lugar de HTML cru quando existir componente equivalente (classes
+     utilitárias de layout puro não são achado). Tokens de tema em vez
+     de valores fixos, sem ternário/condicional no `return`,
+     componentes simples e específicos, sem estilo inline
+     (`style={{ ... }}`) — aplique a skill `convencoes-frontend`, que
+     detecta qual design system o projeto usa.
 3. Classifique cada achado como 🔴 Crítico, 🟡 Aviso ou 🟢 Sugestão,
    com arquivo/trecho e sugestão de correção.
 4. Não edite nada — você é somente leitura. Reporte os achados para

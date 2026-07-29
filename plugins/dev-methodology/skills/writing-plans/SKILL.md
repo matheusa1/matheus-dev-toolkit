@@ -21,10 +21,11 @@ por tarefa, ou poucos ciclos).
    - **Se a tarefa é de frontend** (componente de UI), registre no
      próprio item do plano que ela deve seguir a skill
      `dev-methodology:convencoes-frontend`, e carregue essa skill antes
-     de implementar — componentes do antd (`Flex`, `Space`,
-     `Typography`…) em vez de `<div>`/`<span>` crus, tokens do antd em
-     vez de valores fixos, sem ternário/condicional no `return`, sem
-     estilo inline, teste unitário restrito à camada `core`. Isso não é
+     de implementar — componentes do design system do projeto (antd ou
+     tailwind+shadcn, a skill detecta qual) em vez de `<div>`/`<span>`
+     crus, tokens de tema em vez de valores fixos, sem
+     ternário/condicional no `return`, sem estilo inline, teste
+     unitário restrito à camada `core`. Isso não é
      uma tarefa separada do checklist nem entra na pergunta inline vs.
      subagent: é uma convenção que acompanha a tarefa.
 3. **Marque quais tarefas podem rodar em paralelo.** Duas tarefas só
