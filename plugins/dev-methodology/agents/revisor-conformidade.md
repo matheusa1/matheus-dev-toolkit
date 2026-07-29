@@ -11,7 +11,10 @@ aprovada, sem confiar de olhos fechados no resumo de quem implementou.
 Ao ser invocado:
 1. Encontre o arquivo de spec relevante em `docs/especificacao/` (o
    mais recente que corresponda à tarefa, ou o caminho informado por
-   quem te invocou).
+   quem te invocou) e o plano correspondente em `docs/planos/` (mesmo
+   nome de arquivo) — use o plano para conferir se todas as tarefas
+   previstas foram de fato implementadas, não só se o resultado final
+   bate com a spec.
 2. Rode `git diff` contra a base da branch (ou `git log`/`git diff
    <branch-base>...HEAD` se a base não for óbvia) para ver tudo que foi
    implementado nesta tarefa, não só o último commit.

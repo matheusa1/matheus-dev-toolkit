@@ -55,7 +55,25 @@ por tarefa, ou poucos ciclos).
    pagamento — o agente que a implementar/revisar deve rodar em
    `opus`.
 
-6. **Pare e peça confirmação** do plano antes de começar a implementar.
+6. **Salve o plano em arquivo**, não só na conversa:
+   `docs/planos/AAAA-MM-DD-nome-tarefa.md`, usando a data atual e o
+   mesmo nome curto em kebab-case da spec correspondente (ex:
+   `docs/planos/2026-07-27-login-social.md`), com o checklist markdown
+   do passo 5 (incluindo tags `[P<n>]` e criticidade).
+   - Se `docs/planos/` ainda não existe no projeto, crie-a e adicione
+     um `docs/planos/.gitignore` com este conteúdo, para os planos
+     ficarem no disco mas fora do versionamento:
+
+     ```gitignore
+     *
+     !.gitignore
+     ```
+   - Este arquivo é a fonte de verdade do plano durante toda a
+     implementação — as tasks do `TaskCreate`/`TaskUpdate` espelham
+     esse checklist, mas o arquivo é o que sobrevive a uma
+     compactação de contexto ou a uma nova sessão.
+
+7. **Pare e peça confirmação** do plano antes de começar a implementar.
 
 ## Regras
 
@@ -64,7 +82,8 @@ por tarefa, ou poucos ciclos).
   sentido para a arquitetura do projeto.
 - Se o plano mudar durante a implementação (descoberta de algo novo),
   atualize o checklist explicitamente antes de continuar, não
-  silenciosamente.
+  silenciosamente — no arquivo em `docs/planos/` e nas tasks, não só
+  na conversa.
 - Marque cada tarefa como concluída somente depois que o code review
   da tarefa (`code-review-gate`) não tiver mais problemas críticos.
 - Na dúvida se duas tarefas podem ser paralelas, não marque — trate
@@ -87,4 +106,5 @@ o Matheus acompanhe em tempo real sem precisar reler a conversa.
   prontas para marcar todas de uma vez no final.
 - Se o plano mudar durante a execução (nova tarefa, tarefa quebrada em
   duas, tarefa cancelada), atualize as tasks correspondentes junto com
-  o checklist markdown, para as duas fontes não ficarem divergentes.
+  o checklist markdown **e** o arquivo em `docs/planos/`, para as três
+  fontes não ficarem divergentes.

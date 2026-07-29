@@ -47,8 +47,9 @@ não pule etapas mesmo que o pedido pareça simples:
    `docs/especificacao/AAAA-MM-DD-nome-tarefa.md` e peça confirmação
    antes de seguir.
 2. **Plano** → skill `writing-plans`. Quebre a spec aprovada em tarefas
-   pequenas, testáveis e ordenadas. Apresente como checklist e confirme
-   antes de executar.
+   pequenas, testáveis e ordenadas. Apresente como checklist, salve em
+   `docs/planos/AAAA-MM-DD-nome-tarefa.md` (mesmo nome da spec
+   correspondente) e confirme antes de executar.
 3. **Para cada tarefa do plano**:
    a. **TDD** → skill `test-driven-development`, aplicada **inline** ou
       pelo agent `parceiro-tdd` isolado — pergunte antes (ver "Pergunte

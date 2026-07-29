@@ -33,7 +33,8 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
   - `parceiro-tdd` — implementa uma tarefa em TDD estrito.
   - `gerador-modulo` — gera o esqueleto de um módulo novo.
   - `revisor-conformidade` — ao fim da implementação, compara o
-    resultado com o arquivo de spec salvo em `docs/especificacao/`.
+    resultado com o arquivo de spec salvo em `docs/especificacao/` e
+    o plano salvo em `docs/planos/`.
   - `redator-commit` — roda em Haiku, redige o texto do commit
     (título/descrição) sem gastar o modelo principal.
 - **Hook**: lembrete no início da sessão apontando para
@@ -48,10 +49,10 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
 
 ```
 brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
-  → writing-plans (marca tarefas independentes com [P<n>])
+  → writing-plans (plano em docs/planos/AAAA-MM-DD-nome-tarefa.md, marca tarefas independentes com [P<n>])
   → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD → code-review-gate → commit-conventions ]
   → (opcional) clean-architecture-scaffold
-  → revisor-conformidade (compara implementação final x spec)
+  → revisor-conformidade (compara implementação final x spec e x plano)
 ```
 
 Tarefas do mesmo grupo `[P<n>]` no plano — ex: domain/application/infra
@@ -60,9 +61,10 @@ mesmos arquivos — podem ser disparadas ao mesmo tempo, um agente
 `parceiro-tdd` por tarefa. Veja "Execução em paralelo" em
 `using-dev-methodology`.
 
-Specs ficam em `docs/especificacao/` no projeto onde a metodologia é
-usada, com um `.gitignore` (`*` + `!.gitignore`) para não entrarem no
-versionamento do projeto.
+Specs ficam em `docs/especificacao/` e planos em `docs/planos/` no
+projeto onde a metodologia é usada, cada um com seu próprio
+`.gitignore` (`*` + `!.gitignore`) para não entrarem no versionamento
+do projeto.
 
 ## Instalar localmente para testar
 
