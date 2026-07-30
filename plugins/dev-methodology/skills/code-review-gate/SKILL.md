@@ -10,12 +10,13 @@ seguro seguir em frente.
 ## Antes de começar: inline ou subagent?
 
 Esta revisão pode rodar inline nesta conversa ou pelo agent
-`dev-methodology:revisor-arquiteto` isolado. **Pergunte ao Matheus
-antes de escolher** — não assuma inline. A recomendação padrão é o
-agent isolado, que evita poluir o contexto principal com o diff
-inteiro. Exceções: tarefas do mesmo grupo `[P<n>]` do plano e
-preferência que ele já tenha declarado nesta conversa. Detalhes em
-`dev-methodology:using-dev-methodology`.
+`dev-methodology:revisor-arquiteto` isolado. Se essa decisão ainda não
+foi tomada nesta conversa, **é obrigatório perguntar ao Matheus** —
+não assuma inline. A recomendação padrão é o agent isolado, que evita
+poluir o contexto principal com o diff inteiro. Se já foi perguntado e
+respondido antes (mesmo para outra tarefa), reaproveite essa resposta
+sem perguntar de novo. Exceção: tarefas do mesmo grupo `[P<n>]` do
+plano. Detalhes em `dev-methodology:using-dev-methodology`.
 
 ## Processo
 

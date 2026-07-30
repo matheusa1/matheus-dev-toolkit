@@ -85,16 +85,19 @@ por tarefa, ou poucos ciclos).
 
 7. **Pare e peça confirmação** do plano antes de começar a implementar.
 
-## Antes de executar cada tarefa: pergunte inline vs. subagent
+## Antes de executar o plano: pergunte inline vs. subagent, uma vez
 
 Com o plano confirmado, cada tarefa pode ser implementada e revisada
 **inline** nesta conversa ou por um subagent isolado (`parceiro-tdd`
-para a implementação, `revisor-arquiteto` para o code review).
-**Pergunte ao Matheus antes de escolher, tarefa a tarefa** — não
-decida sozinho e não assuma que inline é o padrão. Apresente uma
-recomendação com o motivo (ex: "revisor-arquiteto isolado evita poluir
-o contexto com o diff inteiro").
+para a implementação, `revisor-arquiteto` para o code review). **É
+obrigatório perguntar ao Matheus**, mas só **uma vez**, antes de
+começar a primeira tarefa do plano — não decida sozinho e não assuma
+que inline é o padrão. Apresente uma recomendação com o motivo (ex:
+"revisor-arquiteto isolado evita poluir o contexto com o diff
+inteiro").
 
+- Reaproveite a resposta para todas as tarefas seguintes do plano
+  (TDD e code review) sem perguntar de novo tarefa a tarefa.
 - Exceção: tarefas do mesmo grupo `[P<n>]` já implicam agents em
   paralelo — dispare direto, sem perguntar.
 - Se o Matheus já disse nesta conversa como prefere, respeite e não
@@ -102,7 +105,8 @@ o contexto com o diff inteiro").
 - Ao terminar **todas** as tarefas, pergunte também se a comparação
   final com a spec roda inline ou pelo agent
   `dev-methodology:revisor-conformidade`
-  (recomendação padrão: o agent).
+  (recomendação padrão: o agent) — essa é uma pergunta separada, feita
+  uma única vez ao final.
 
 O detalhamento completo está em `dev-methodology:using-dev-methodology`
 — se essa skill ainda não foi carregada nesta sessão, carregue-a antes
