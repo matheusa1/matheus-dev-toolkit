@@ -1,0 +1,21 @@
+{
+  "name": "matheus-toolkit",
+  "description": "Marketplace pessoal de plugins para o Codex CLI.",
+  "interface": {
+    "displayName": "Matheus Toolkit"
+  },
+  "plugins": [
+    {
+      "name": "dev-methodology",
+      "source": {
+        "source": "local",
+        "path": "../../plugins/dev-methodology"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "development-workflows"
+    }
+  ]
+}
