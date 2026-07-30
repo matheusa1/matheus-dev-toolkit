@@ -10,10 +10,12 @@ um teste que falhe por causa da ausência desse código.**
 ## Antes de começar: inline ou subagent?
 
 Esta skill pode ser aplicada inline nesta conversa ou pelo agent
-`dev-methodology:parceiro-tdd` isolado. **Pergunte ao Matheus antes de
-escolher** — não assuma inline. Exceções: tarefas do mesmo grupo
-`[P<n>]` do plano (já implicam agents em paralelo, dispare direto) e
-preferência que ele já tenha declarado nesta conversa. Detalhes em
+`dev-methodology:parceiro-tdd` isolado. Se essa decisão ainda não foi
+tomada nesta conversa, **é obrigatório perguntar ao Matheus** — não
+assuma inline. Se já foi perguntado e respondido antes (mesmo para
+outra tarefa), reaproveite essa resposta sem perguntar de novo.
+Exceções: tarefas do mesmo grupo `[P<n>]` do plano (já implicam agents
+em paralelo, dispare direto). Detalhes em
 `dev-methodology:using-dev-methodology`.
 
 ## Ciclo

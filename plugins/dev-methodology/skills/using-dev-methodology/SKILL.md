@@ -114,19 +114,24 @@ não pule etapas mesmo que o pedido pareça simples:
    foram implementadas. Só considere a feature pronta sem achados
    críticos pendentes.
 
-## Pergunte antes de decidir inline vs. subagent
+## Pergunte uma vez: inline vs. subagent
 
 Sempre que uma etapa do fluxo (TDD, code review, scaffold, revisão de
 conformidade) puder rodar tanto inline nesta conversa quanto por um
-subagent isolado, **pergunte ao Matheus antes de escolher** — não
-decida sozinho e não assuma que inline é o padrão. Use `AskUserQuestion`
-(ou pergunta direta em texto) com uma recomendação clara e o motivo
-(ex: "revisor-arquiteto isolado evita poluir o contexto com o diff
-inteiro; prefiro esse — pode ser inline se preferir rapidez").
+subagent isolado, **é obrigatório perguntar ao Matheus** — não decida
+sozinho e não assuma que inline é o padrão. Use `AskUserQuestion` (ou
+pergunta direta em texto) com uma recomendação clara e o motivo (ex:
+"revisor-arquiteto isolado evita poluir o contexto com o diff inteiro;
+prefiro esse — pode ser inline se preferir rapidez").
 
-- Pergunte **por etapa/tarefa**, não uma vez só no início do plano — a
-  escolha certa pode mudar tarefa a tarefa (uma tarefa trivial pode ir
-  inline, uma tarefa de autenticação pode pedir isolamento).
+- Pergunte **uma única vez por conversa**, na primeira oportunidade em
+  que a decisão for necessária (ex: antes da primeira tarefa do plano,
+  ou antes da primeira etapa aplicável se não houver plano formal) —
+  não é preciso perguntar de novo a cada tarefa/etapa seguinte.
+- Depois de obter a resposta, aplique essa preferência a todas as
+  etapas seguintes da mesma conversa (TDD, code review, scaffold,
+  investigação de bug, revisão de conformidade) sem repetir a
+  pergunta.
 - **Exceção**: tarefas do mesmo grupo `[P<n>]` (paralelas) não entram
   nessa pergunta — a paralelização já implica agents, dispare direto.
 - Brainstorming (`brainstorming`) fica sempre inline — é conversa e
@@ -134,7 +139,11 @@ inteiro; prefiro esse — pode ser inline se preferir rapidez").
   sentido isolar essa etapa.
 - Se o Matheus já disse nesta conversa como prefere (ex: "sempre usa
   subagent pra review", "pode ir tudo inline dessa vez"), respeite a
-  preferência dada e não repita a pergunta por tarefa.
+  preferência dada e não repita a pergunta.
+- Se o Matheus pedir explicitamente para variar por tarefa (ex:
+  "prefiro decidir tarefa a tarefa"), siga esse pedido e volte a
+  perguntar a cada etapa — a regra de "uma vez só" é o padrão, não uma
+  proibição.
 
 ## Execução em paralelo
 
