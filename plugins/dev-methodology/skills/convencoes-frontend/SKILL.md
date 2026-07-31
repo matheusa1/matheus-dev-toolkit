@@ -1,5 +1,5 @@
 ---
-description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend.
+description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
 ---
 
 # Convenções de frontend
@@ -38,7 +38,10 @@ customizados com lógica, services, utils, reducers, use cases).
   observável pelo usuário, Cypress/Playwright), não teste unitário do
   componente isolado.
 - Isso não dispensa TDD (`test-driven-development`) para a lógica que
-  vive em `core` — o ciclo RED-GREEN-REFACTOR continua valendo ali.
+  vive em `core` — o ciclo RED-GREEN-REFACTOR continua valendo ali,
+  aplicado pelo agent `parceiro-tdd`. A implementação da camada de
+  apresentação em si (o que esta skill cobre) é feita pelo agent
+  `implementador-frontend`, sem teste e sem ciclo TDD.
 
 ## 2. Tokens do tema, nunca valores fixos
 

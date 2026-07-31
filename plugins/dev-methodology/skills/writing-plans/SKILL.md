@@ -18,16 +18,20 @@ por tarefa, ou poucos ciclos).
 2. **Aponte decisões arquiteturais que a tarefa afeta** (nova camada,
    novo módulo, mudança de contrato) para que o code review saiba o
    que checar depois.
-   - **Se a tarefa é de frontend** (componente de UI), registre no
-     próprio item do plano que ela deve seguir a skill
-     `dev-methodology:convencoes-frontend`, e carregue essa skill antes
-     de implementar — componentes do design system do projeto (antd ou
-     tailwind+shadcn, a skill detecta qual) em vez de `<div>`/`<span>`
-     crus, tokens de tema em vez de valores fixos, sem
-     ternário/condicional no `return`, sem estilo inline, teste
-     unitário restrito à camada `core`. Isso não é
-     uma tarefa separada do checklist nem entra na pergunta inline vs.
-     subagent: é uma convenção que acompanha a tarefa.
+   - **Se a tarefa é de frontend e puramente de apresentação**
+     (`components/`, `pages/`, JSX que só renderiza, sem lógica
+     própria), registre no próprio item do plano que ela vai pelo agent
+     `dev-methodology:implementador-frontend` (ou inline com a skill
+     `dev-methodology:convencoes-frontend`) em vez de
+     `parceiro-tdd`/`test-driven-development` — sem teste unitário e
+     sem ciclo RED-GREEN-REFACTOR para essa tarefa, só as convenções de
+     componentes do design system do projeto (antd ou tailwind+shadcn,
+     a skill detecta qual), tokens de tema em vez de valores fixos, sem
+     ternário/condicional no `return`, sem estilo inline. Se a tarefa
+     mistura lógica com UI, quebre-a em duas: uma de lógica (`core`,
+     `parceiro-tdd`, com teste) e uma de apresentação
+     (`implementador-frontend`, sem teste), com a segunda dependendo da
+     primeira.
 3. **Marque quais tarefas podem rodar em paralelo.** Duas tarefas só
    podem ser paralelas se, ao mesmo tempo:
    - Nenhuma depende do resultado da outra (não há import, contrato ou
@@ -89,7 +93,8 @@ por tarefa, ou poucos ciclos).
 
 Com o plano confirmado, cada tarefa pode ser implementada e revisada
 **inline** nesta conversa ou por um subagent isolado (`parceiro-tdd`
-para a implementação, `revisor-arquiteto` para o code review). **É
+para tarefas de lógica, `implementador-frontend` para tarefas de
+tela/apresentação, `revisor-arquiteto` para o code review). **É
 obrigatório perguntar ao Matheus**, mas só **uma vez**, antes de
 começar a primeira tarefa do plano — não decida sozinho e não assuma
 que inline é o padrão. Apresente uma recomendação com o motivo (ex:
