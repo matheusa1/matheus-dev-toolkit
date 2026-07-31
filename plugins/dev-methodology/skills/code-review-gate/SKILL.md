@@ -40,7 +40,13 @@ plano. Detalhes em `dev-methodology:using-dev-methodology`.
      detecta qual) em vez de `<div>`/`<span>` crus, teste unitário
      restrito à camada core, tokens de tema em vez de valores fixos,
      sem ternário/condicional no `return`, componentes simples, sem
-     estilo inline.
+     estilo inline, e acessibilidade mínima aceitável (elemento certo
+     para a função, foco de teclado preservado, `alt`/label presentes,
+     estado não comunicado só por cor). Se o diff reduz acessibilidade
+     sem justificativa registrada na conversa (ex: `outline` removido
+     sem substituto, `<div onClick>` no lugar de botão), trate como
+     achado — pelo menos 🟡 aviso, 🔴 crítico se elimina acesso via
+     teclado ou leitor de tela para um fluxo essencial.
 3. **Classifique cada achado por severidade:**
    - 🔴 **Crítico** — quebra a arquitetura, falta teste para lógica de
      negócio, bug real, segredo exposto. **Bloqueia** a próxima

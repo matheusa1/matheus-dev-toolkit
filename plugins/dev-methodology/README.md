@@ -26,7 +26,9 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
     tailwind+shadcn, detectado por projeto) em vez de `<div>`/`<span>`
     crus, teste unitário restrito à camada core, tokens de tema em vez
     de valores fixos, sem ternário/condicional no `return`,
-    componentes simples, sem estilo inline.
+    componentes simples, sem estilo inline, e acessibilidade mínima
+    obrigatória (questiona antes de implementar algo que prejudique
+    acessibilidade).
   - `commit-conventions` — Conventional Commits + emoji, escopo =
     branch, mensagem em português, sem trailer de co-autoria.
   - `debugging-sistematico` — investiga um bug relatado (reproduzir,
@@ -36,6 +38,10 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.
   - `parceiro-tdd` — implementa uma tarefa em TDD estrito.
+  - `implementador-frontend` — implementa uma tela/componente de
+    apresentação frontend sem teste e sem TDD, seguindo
+    `convencoes-frontend`. Roda no lugar do `parceiro-tdd` para
+    tarefas puramente de UI.
   - `gerador-modulo` — gera o esqueleto de um módulo novo.
   - `revisor-conformidade` — ao fim da implementação, compara o
     resultado com o arquivo de spec salvo em `docs/especificacao/` e
@@ -47,18 +53,18 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
 - **Hook**: lembrete no início da sessão apontando para
   `using-dev-methodology`.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
-  `parceiro-tdd`, `gerador-modulo`, `revisor-conformidade` e
-  `investigador-bugs` não é fixo — varia entre `haiku` (baixa), padrão
-  da conversa (média) e `opus` (alta), conforme a criticidade marcada
-  na tarefa do plano. Ver "Modelo por criticidade" em
-  `using-dev-methodology`.
+  `parceiro-tdd`, `implementador-frontend`, `gerador-modulo`,
+  `revisor-conformidade` e `investigador-bugs` não é fixo — varia entre
+  `haiku` (baixa), padrão da conversa (média) e `opus` (alta), conforme
+  a criticidade marcada na tarefa do plano. Ver "Modelo por
+  criticidade" em `using-dev-methodology`.
 
 ## Fluxo
 
 ```
 brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
   → writing-plans (plano em docs/planos/AAAA-MM-DD-nome-tarefa.md, marca tarefas independentes com [P<n>])
-  → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD → code-review-gate → commit-conventions ]
+  → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD (lógica) ou convencoes-frontend sem teste (tela/UI) → code-review-gate → commit-conventions ]
   → (opcional) clean-architecture-scaffold
   → revisor-conformidade (compara implementação final x spec e x plano)
 ```
@@ -73,8 +79,9 @@ debugging-sistematico (reproduzir → evidência → hipóteses → isolar → c
 
 Tarefas do mesmo grupo `[P<n>]` no plano — ex: domain/application/infra
 de um módulo novo, quando não dependem uma da outra nem tocam nos
-mesmos arquivos — podem ser disparadas ao mesmo tempo, um agente
-`parceiro-tdd` por tarefa. Veja "Execução em paralelo" em
+mesmos arquivos — podem ser disparadas ao mesmo tempo, um agente por
+tarefa (`parceiro-tdd` para lógica, `implementador-frontend` para
+tela/apresentação). Veja "Execução em paralelo" em
 `using-dev-methodology`.
 
 Specs ficam em `docs/especificacao/` e planos em `docs/planos/` no

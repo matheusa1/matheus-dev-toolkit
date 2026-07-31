@@ -63,13 +63,24 @@ não pule etapas mesmo que o pedido pareça simples:
    pequenas, testáveis e ordenadas. Apresente como checklist, salve em
    `docs/planos/AAAA-MM-DD-nome-tarefa.md` (mesmo nome da spec
    correspondente) e confirme antes de executar.
-3. **Para cada tarefa do plano**:
-   a. **TDD** → skill `test-driven-development`, aplicada **inline** ou
-      pelo agent `parceiro-tdd` isolado — pergunte antes (ver "Pergunte
-      antes de decidir inline vs. subagent" abaixo). RED (teste
-      falhando) → GREEN (implementação mínima) → REFACTOR. Nunca
-      escreva código de implementação antes de existir um teste
-      falhando para ele.
+3. **Para cada tarefa do plano**, decida primeiro se ela é de tela/
+   apresentação frontend ou de lógica testável:
+   a. **Tarefa de tela/componente de apresentação frontend**
+      (`components/`, `pages/`, JSX que só renderiza, sem lógica
+      própria) → skill `convencoes-frontend`, aplicada **inline** ou
+      pelo agent `implementador-frontend` isolado — pergunte antes (ver
+      "Pergunte antes de decidir inline vs. subagent" abaixo). Sem
+      ciclo RED-GREEN-REFACTOR e sem teste unitário para essa tarefa.
+      Se a tarefa mistura lógica com UI, extraia a lógica para `core`
+      e trate-a pelo passo 3a' (TDD) antes de implementar a
+      apresentação por cima.
+   a'. **Qualquer outra tarefa** (lógica testável: domain, application,
+      infra, hooks/services/utils de `core`) → skill
+      `test-driven-development`, aplicada **inline** ou pelo agent
+      `parceiro-tdd` isolado — pergunte antes (ver "Pergunte antes de
+      decidir inline vs. subagent" abaixo). RED (teste falhando) →
+      GREEN (implementação mínima) → REFACTOR. Nunca escreva código de
+      implementação antes de existir um teste falhando para ele.
    b. **Code review com gate** → skill `code-review-gate`, aplicada
       **inline** ou pelo agent `revisor-arquiteto` isolado — pergunte
       antes, do mesmo jeito. Ao terminar a tarefa, revise o diff
@@ -82,27 +93,21 @@ não pule etapas mesmo que o pedido pareça simples:
 
    Tarefas marcadas como paralelizáveis no plano (mesmo grupo `[P<n>]`
    — ver `writing-plans`) são a exceção à pergunta: dispare
-   automaticamente, sem perguntar, uma `Agent`
-   `dev-methodology:parceiro-tdd` por tarefa, ao mesmo tempo, em vez
-   de uma de cada vez — a marcação `[P<n>]` no plano já é a decisão
-   tomada antecipadamente. Exemplo típico: implementar um módulo novo
-   com um agente para domain, outro para application e outro para
-   infra, todos simultâneos, porque nenhum depende do resultado do
-   outro dentro do mesmo disparo. Veja a seção "Execução em paralelo"
-   abaixo antes de disparar.
+   automaticamente, sem perguntar, uma `Agent` por tarefa (
+   `dev-methodology:parceiro-tdd` para as de lógica,
+   `dev-methodology:implementador-frontend` para as de
+   tela/apresentação), ao mesmo tempo, em vez de uma de cada vez — a
+   marcação `[P<n>]` no plano já é a decisão tomada antecipadamente.
+   Exemplo típico: implementar um módulo novo com um agente para
+   domain, outro para application e outro para infra, todos
+   simultâneos, porque nenhum depende do resultado do outro dentro do
+   mesmo disparo. Veja a seção "Execução em paralelo" abaixo antes de
+   disparar.
 4. **Módulo novo em projeto TypeScript?** → skill
    `clean-architecture-scaffold`, aplicada **inline** ou pelo agent
    `gerador-modulo` isolado — pergunte antes. Gera o esqueleto
    domain/application/infra de um módulo novo, seguindo as convenções
    de nomenclatura (T/I/E) e o padrão de DI com Inversify.
-   - **Tarefa é de frontend (componente de UI)?** → skill
-     `dev-methodology:convencoes-frontend`, sempre inline, junto com o
-     TDD/code review da tarefa (não é uma etapa separada a perguntar)
-     — componentes do design system do projeto (antd ou
-     tailwind+shadcn, a skill detecta qual) em vez de `<div>`/`<span>`
-     crus, teste unitário restrito à camada core, tokens de tema, sem
-     ternário/condicional no `return`, componentes simples, sem
-     estilo inline.
 5. **Ao terminar todas as tarefas do plano**: pergunte se a
    comparação final entre a implementação e a spec deve rodar
    **inline** ou pelo agent `revisor-conformidade` isolado (a
@@ -149,8 +154,9 @@ prefiro esse — pode ser inline se preferir rapidez").
 
 Depois que o plano estiver confirmado e as tasks registradas, tarefas
 do mesmo grupo `[P<n>]` podem ser implementadas simultaneamente, cada
-uma em um agente `parceiro-tdd` separado (via `Agent`, um por tarefa),
-em vez de uma de cada vez.
+uma em um agente separado (via `Agent`, um por tarefa) — `parceiro-tdd`
+para tarefas de lógica, `implementador-frontend` para tarefas de
+tela/apresentação — em vez de uma de cada vez.
 
 - **Dispare todas as tarefas do grupo no mesmo turno**, uma chamada
   `Agent` por tarefa, para elas rodarem em paralelo de fato — chamadas
@@ -181,8 +187,8 @@ em vez de uma de cada vez.
 ## Modelo por criticidade
 
 `revisor-arquiteto`, `revisor-conformidade`, `parceiro-tdd`,
-`gerador-modulo` e `investigador-bugs` rodam com `model: inherit` por
-padrão, mas o modelo
+`implementador-frontend`, `gerador-modulo` e `investigador-bugs` rodam
+com `model: inherit` por padrão, mas o modelo
 pode e deve variar por tarefa: ao disparar via `Agent`, passe o
 parâmetro `model` explicitamente conforme a criticidade da tarefa
 (avaliada no plano ou no momento do disparo). `redator-commit` é
@@ -209,8 +215,9 @@ disparar o agente.
 ## O que os subagents herdam automaticamente
 
 Sempre que uma etapa rodar por subagent (`parceiro-tdd`,
-`revisor-arquiteto`, `gerador-modulo`, `revisor-conformidade`,
-`investigador-bugs`, `redator-commit`), ele segue as regras do projeto
+`implementador-frontend`, `revisor-arquiteto`, `gerador-modulo`,
+`revisor-conformidade`, `investigador-bugs`, `redator-commit`), ele
+segue as regras do projeto
 — mas não todas pela mesma via:
 
 - **Automático, sem precisar passar nada**: o `CLAUDE.md` do projeto
@@ -265,7 +272,12 @@ sempre em português do Brasil:
 - `revisor-arquiteto` — aplica `code-review-gate` como revisor
   read-only.
 - `parceiro-tdd` — aplica `test-driven-development` para implementar uma
-  tarefa específica do plano.
+  tarefa específica do plano (lógica testável: domain, application,
+  infra, `core` de frontend).
+- `implementador-frontend` — aplica `convencoes-frontend` para
+  implementar uma tela/componente de apresentação frontend, sem teste
+  e sem ciclo de TDD. Use no lugar do `parceiro-tdd` quando a tarefa
+  for puramente de UI (`components/`, `pages/`, JSX que só renderiza).
 - `gerador-modulo` — aplica `clean-architecture-scaffold` para
   gerar um módulo novo.
 - `revisor-conformidade` — compara a implementação final com o
@@ -278,7 +290,7 @@ sempre em português do Brasil:
   em português a partir do diff (usado pela skill `commit-conventions`
   para não gastar o modelo principal com isso).
 
-O modelo dos cinco primeiros não é fixo — veja "Modelo por
+O modelo dos seis primeiros não é fixo — veja "Modelo por
 criticidade" acima para saber quando passar `haiku` ou `opus` em vez
 de herdar o padrão.
 

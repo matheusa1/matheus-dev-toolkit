@@ -1,7 +1,7 @@
 {
   "name": "dev-methodology",
   "description": "Metodologia de desenvolvimento: brainstorm→spec, TDD (RED-GREEN-REFACTOR), code review com gate de severidade, debugging sistemático de bugs relatados, execução paralela de tarefas independentes, commits no padrão Conventional Commits e scaffolding de Clean Architecture/DDD. Agnóstico de projeto.",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "author": {
     "name": "Matheus"
   }

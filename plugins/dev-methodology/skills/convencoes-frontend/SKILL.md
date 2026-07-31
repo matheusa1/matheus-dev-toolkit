@@ -1,5 +1,5 @@
 ---
-description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, e componentização simples. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend.
+description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, componentização simples, e acessibilidade mínima obrigatória. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
 ---
 
 # Convenções de frontend
@@ -38,7 +38,10 @@ customizados com lógica, services, utils, reducers, use cases).
   observável pelo usuário, Cypress/Playwright), não teste unitário do
   componente isolado.
 - Isso não dispensa TDD (`test-driven-development`) para a lógica que
-  vive em `core` — o ciclo RED-GREEN-REFACTOR continua valendo ali.
+  vive em `core` — o ciclo RED-GREEN-REFACTOR continua valendo ali,
+  aplicado pelo agent `parceiro-tdd`. A implementação da camada de
+  apresentação em si (o que esta skill cobre) é feita pelo agent
+  `implementador-frontend`, sem teste e sem ciclo TDD.
 
 ## 2. Tokens do tema, nunca valores fixos
 
@@ -160,3 +163,45 @@ detecção da regra 0 para saber qual tabela aplicar.
   equivalente disponível e não usado (Card, Button, Badge, Dialog,
   Separator, etc.) — `<div>` com classes utilitárias de layout é
   normal.
+
+## 7. Acessibilidade aceitável é obrigatória
+
+Todo componente de apresentação implementado ou revisado sob esta
+skill precisa manter um nível mínimo aceitável de acessibilidade — não
+é opcional nem "para depois". Isso, na prática, quer dizer:
+
+- **Elemento certo para a função**: `<button>`/componente de botão do
+  design system para ações, não `<div onClick>`; `<a>`/link do design
+  system para navegação; inputs sempre com `<label>` associado (ou
+  `aria-label`/`aria-labelledby` quando não houver label visível).
+  Seguir a tabela da regra 6 (componentes do design system em vez de
+  HTML cru) já resolve boa parte disso, porque os componentes do
+  antd/shadcn trazem semântica e ARIA corretos de fábrica.
+- **Navegação por teclado**: qualquer elemento interativo precisa ser
+  alcançável e operável via teclado (`Tab`, `Enter`/`Espaço`), sem
+  remover o `outline`/foco visível do navegador ou do design system
+  sem substituí-lo por um indicador de foco equivalente.
+- **Texto alternativo**: `<img>`/`<Image>`/`<Avatar>` com conteúdo
+  informativo sempre com `alt` descritivo; imagem puramente decorativa
+  usa `alt=""` (não omite o atributo).
+- **Não depender só de cor**: estado/erro/sucesso não pode ser
+  comunicado só por cor — combine com ícone, texto ou padrão (ex: badge
+  colorido acompanhado do texto do status, não só a cor de fundo).
+- **Contraste**: use os tokens de tema do design system (regra 2), que
+  já são calibrados para contraste adequado; se precisar de uma cor
+  fora dos tokens, isso é ainda mais motivo para questionar antes de
+  aplicar (ver abaixo).
+
+### Se uma decisão da tarefa prejudicar a acessibilidade, questione antes de implementar
+
+Se, ao implementar a tarefa como descrita, você perceber que o
+resultado vai prejudicar a acessibilidade (ex: pedido explícito para
+remover o foco visível, usar `<div>` clicável em vez de botão, omitir
+`alt`/label, usar só cor para indicar estado, ou aplicar uma cor fora
+dos tokens que reduz o contraste), **não implemente isso em silêncio
+nem "corrija" por conta própria** — pare e pergunte se o objetivo é
+mesmo abrir mão da acessibilidade ali (ex: "isso remove o indicador de
+foco do teclado para todos os usuários desse componente — é essa a
+intenção, ou posso manter/adaptar o foco visível?"). Só prossiga do
+jeito que reduz acessibilidade se a resposta confirmar que é
+intencional; caso contrário, implemente a alternativa acessível.
