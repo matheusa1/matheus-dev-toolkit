@@ -1,5 +1,5 @@
 ---
-description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, componentização simples, e acessibilidade mínima obrigatória. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
+description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, componentização simples, acessibilidade mínima obrigatória, proibição de lógica de negócio em .tsx/useEffect, e restrição de import de use case só em *.registry.ts da infra. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
 ---
 
 # Convenções de frontend
@@ -205,3 +205,52 @@ foco do teclado para todos os usuários desse componente — é essa a
 intenção, ou posso manter/adaptar o foco visível?"). Só prossiga do
 jeito que reduz acessibilidade se a resposta confirmar que é
 intencional; caso contrário, implemente a alternativa acessível.
+
+## 8. Sem lógica de negócio em `.tsx`, nem dentro de `useEffect`
+
+Arquivo `.tsx` (componente de apresentação) não contém lógica de
+negócio — cálculo, transformação de dado, regra de decisão — nem
+lógica dentro de `useEffect`. Isso é verificado automaticamente pelo
+`danger:check` do projeto.
+
+- **Cálculo/transformação**: se o componente precisa de um valor
+  derivado (ex: `const remaining = container.scrollHeight -
+  container.scrollTop - container.clientHeight`), essa conta não vive
+  solta no `.tsx` — extraia para uma função em `@core` (ou, no mínimo,
+  um hook dedicado que a encapsula) e o componente só consome o
+  resultado.
+- **`useEffect` sem lógica dentro**: o corpo do `useEffect` não decide,
+  calcula nem orquestra nada por conta própria. Extraia o
+  comportamento para um `useCallback` (ou função de `@core`) e o
+  `useEffect` só chama essa função — ele deve ser praticamente uma
+  linha de disparo, não o lugar onde a lógica acontece.
+- Isso é uma extensão da regra 1 (teste unitário só na camada core):
+  se há lógica o bastante para justificar mover para `@core`, ela
+  também passa a ser testável/testada lá, seguindo TDD via
+  `parceiro-tdd`.
+- Ao encontrar isso durante implementação (agent
+  `implementador-frontend`) ou revisão, não “resolva” escondendo a
+  lógica em outro lugar do mesmo `.tsx` — mova de fato para `@core` e
+  deixe explícito no resumo o que foi extraído.
+
+## 9. Use case só é importado em `*.registry.ts` da camada infra
+
+Componentes, hooks e helpers de `@presentation` não importam use case
+diretamente. Import de use case só é permitido em arquivos
+`*.registry.ts` da camada infra — é lá que o use case é resolvido e
+exposto (ex: via injeção/factory) para o resto do app consumir.
+
+- Se um componente, hook (`useX.hooks.ts`) ou helper precisa do
+  comportamento de um use case, ele deve obtê-lo através do que o
+  `*.registry.ts` expõe (ex: uma factory/hook de infra já registrado),
+  nunca com `import { AlgumUseCase } from '.../application/...'` direto
+  no arquivo de apresentação.
+- Isso vale mesmo quando o use case está sendo usado só para um
+  cálculo simples dentro de um helper (`helper.ts`) — o import
+  continua proibido fora de `*.registry.ts`, independente de quão
+  pequeno for o uso.
+- Ao implementar ou revisar, se a tarefa parecer exigir importar um
+  use case direto em `@presentation`, isso é sinal de que falta um
+  registro em `*.registry.ts` (infra) para expor esse caso de uso — a
+  correção é criar/usar esse registro, não contornar a regra com
+  import direto.

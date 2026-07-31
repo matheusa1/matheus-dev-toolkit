@@ -39,7 +39,13 @@ Ao receber uma tarefa:
    - acessibilidade mínima aceitável (elemento certo para a função,
      navegável por teclado, foco visível, `alt`/label em imagens e
      inputs, estado nunca comunicado só por cor, contraste dos tokens
-     de tema).
+     de tema);
+   - sem lógica de negócio no `.tsx` nem dentro de `useEffect` (cálculo
+     vai para `@core`, comportamento do `useEffect` vira
+     `useCallback`/função extraída);
+   - sem import de use case fora de `*.registry.ts` da infra (consome
+     o que o registro expõe, nunca `application/...` direto em
+     `@presentation`).
 4. **Se algo na tarefa, como descrita, for prejudicar a
    acessibilidade** (ex: pedido para remover o indicador de foco, usar
    `<div>` clicável em vez de botão, omitir `alt`/label, ou usar cor
