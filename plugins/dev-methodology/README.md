@@ -26,7 +26,9 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
     tailwind+shadcn, detectado por projeto) em vez de `<div>`/`<span>`
     crus, teste unitário restrito à camada core, tokens de tema em vez
     de valores fixos, sem ternário/condicional no `return`,
-    componentes simples, sem estilo inline.
+    componentes simples, sem estilo inline, e acessibilidade mínima
+    obrigatória (questiona antes de implementar algo que prejudique
+    acessibilidade).
   - `commit-conventions` — Conventional Commits + emoji, escopo =
     branch, mensagem em português, sem trailer de co-autoria.
   - `debugging-sistematico` — investiga um bug relatado (reproduzir,
