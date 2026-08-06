@@ -27,6 +27,12 @@ Ao receber uma tarefa:
    escrever qualquer componente.
 3. Implemente o componente aplicando todas as regras de
    `convencoes-frontend`:
+   - **mobile first**: construa o layout base para tela pequena
+     primeiro (classes/props sem prefixo de breakpoint no
+     tailwind, `xs` no grid do antd) e trate telas maiores como
+     ajuste sobre essa base (`sm:`/`md:`/... no tailwind, breakpoints
+     maiores no antd) — nunca implemente a versão desktop e adie a
+     responsividade para depois;
    - componentes do design system em vez de `<div>`/`<span>`/`<p>`
      crus quando existir equivalente;
    - tokens de tema em vez de valores fixos (cor, espaçamento, fonte,
