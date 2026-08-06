@@ -1,5 +1,5 @@
 ---
-description: Convenções de código para frontend (React) — escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, componentização simples, acessibilidade mínima obrigatória, proibição de lógica de negócio em .tsx/useEffect, e restrição de import de use case só em *.registry.ts da infra. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
+description: Convenções de código para frontend (React) — implementação mobile first obrigatória (layout base para telas pequenas, breakpoints maiores só como exceção via min-width), escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, componentização simples, acessibilidade mínima obrigatória, proibição de lógica de negócio em .tsx/useEffect, e restrição de import de use case só em *.registry.ts da infra. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
 ---
 
 # Convenções de frontend
@@ -254,3 +254,53 @@ exposto (ex: via injeção/factory) para o resto do app consumir.
   registro em `*.registry.ts` (infra) para expor esse caso de uso — a
   correção é criar/usar esse registro, não contornar a regra com
   import direto.
+
+## 10. Implementação é sempre mobile first
+
+Todo componente/tela é construído partindo do layout de tela pequena
+como padrão, e telas maiores são tratadas como exceção/ajuste sobre
+essa base — nunca o contrário. Isso evita retrabalho de
+responsividade depois: a responsividade é parte da implementação
+inicial, não um passo posterior.
+
+- **Estilo base = mobile.** As classes/propriedades sem prefixo de
+  breakpoint (tailwind) ou os valores padrão de um token/prop
+  responsivo (antd) descrevem o layout de tela pequena. Ajustes para
+  telas maiores entram como incremento sobre essa base, nunca como
+  reset de um layout desktop pensado primeiro.
+- **tailwind + shadcn**: use os prefixos de breakpoint (`sm:`, `md:`,
+  `lg:`, `xl:`) sempre para adicionar/alterar comportamento em telas
+  *maiores* que a base (`min-width`, que é o comportamento nativo do
+  tailwind). Não use `max-w-*`/media query desktop-first como
+  substituto disso — ex: escreva `className="flex flex-col md:flex-row
+  gap-2 md:gap-4"` (coluna no mobile, linha a partir de `md`), não o
+  inverso com override para baixo.
+- **antd**: use os breakpoints do grid (`<Row>`/`<Col>` com props
+  `xs`/`sm`/`md`/`lg`/`xl`/`xxl`, ou `Grid.useBreakpoint()`) definindo
+  primeiro o valor de `xs` (mobile) e adicionando os breakpoints
+  maiores só onde o layout realmente precisa mudar. Componentes como
+  `<Flex>` que mudam de direção (`vertical` no mobile, horizontal no
+  desktop) seguem a mesma lógica: vertical é o padrão, horizontal é o
+  ajuste condicionado a breakpoint maior.
+- **Toque antes de mouse**: áreas clicáveis/tocáveis (botões, itens de
+  lista, controles) devem ter tamanho e espaçamento adequados a toque
+  (dedo, não cursor preciso) por padrão; estados como `:hover` são
+  complementares, nunca a única forma de revelar uma ação essencial,
+  já que não existem em touch.
+- **Sem overflow horizontal no mobile**: tabelas, grids de cartões,
+  linhas com muitos itens lado a lado etc. precisam de uma solução
+  pensada para telas estreitas desde o início (empilhar, virar lista,
+  scroll horizontal controlado com indicação visual, componente
+  responsivo do design system), não "funciona no desktop e depois se
+  vê" — não implemente a versão desktop e adie a versão mobile para
+  depois.
+- Isso não substitui as regras 2 e 6 (tokens e componentes do design
+  system) — os breakpoints e ajustes responsivos também usam os
+  tokens/props do design system (regra 0 detecta qual), nunca valores
+  fixos de media query hardcoded fora da escala do projeto.
+- Ao implementar (agent `implementador-frontend`) ou revisar, se a
+  tarefa/design de referência só descrever o layout desktop, não
+  implemente só essa versão e "lembre depois" do mobile — construa a
+  base mobile primeiro e trate o desktop como o ajuste sobre ela; se
+  faltar informação sobre o comportamento em tela pequena, pergunte
+  antes de assumir.
