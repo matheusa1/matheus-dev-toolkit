@@ -69,15 +69,17 @@ diagnóstico do erro.
    commits distintos com `git add` seletivo — não junte tudo num commit
    só só porque é mais rápido.
 2. **Descubra o escopo**: `git branch --show-current`.
-3. **Gere a mensagem com o modelo mais econômico disponível.** Não use
-   o modelo principal da conversa para redigir a mensagem — dispare o
-   agente `redator-commit` deste plugin (que já roda em Haiku) passando
-   o `git diff --staged` (ou um resumo, se o diff for muito grande) e o
-   escopo. Ele devolve `title` + `description` prontos no formato
-   acima.
-4. **Monte o commit final** com o `type`/emoji certos (você escolhe o
-   `type`, o agente só escreve texto) e crie o commit via heredoc, como
-   de costume:
+3. **Escreva a mensagem você mesmo, sem disparar subagent.** Você (o
+   orquestrador desta conversa) já acompanhou a tarefa do início ao fim
+   — sabe o "porquê" da mudança sem precisar reconstruir contexto a
+   partir só do diff. Delegar a redação para um subagent custaria mais
+   (novo turno, novo contexto) do que só escrever a mensagem
+   diretamente com o que você já sabe. Use o `git diff --staged` para
+   confirmar os detalhes finos do "o quê", mas o "porquê" vem do que
+   você já viveu na tarefa, não do diff isolado.
+4. **Monte o commit final** com o `type`/emoji certos, escolhidos por
+   você conforme a tabela acima, e crie o commit via heredoc, como de
+   costume:
 
    ```bash
    git commit -m "$(cat <<'EOF'

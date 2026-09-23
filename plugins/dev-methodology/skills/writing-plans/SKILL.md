@@ -45,6 +45,14 @@ por tarefa, ou poucos ciclos).
    ser paralelizáveis entre si (cada camada em seu próprio arquivo),
    mas o endpoint/controller normalmente depende do caso de uso e
    segue depois, sequencial.
+
+   **Máximo de 4 tarefas por disparo simultâneo.** Um grupo `[P<n>]`
+   pode ter quantas tarefas fizerem sentido logicamente, mas na hora de
+   executar (`using-dev-methodology` → "Execução em paralelo") nunca
+   mais de 4 rodam ao mesmo tempo — grupos maiores são disparados em
+   lotes de até 4. Não é preciso quebrar o grupo em `[P<n>]` diferentes
+   só por causa desse limite; é o orquestrador que fatia o disparo na
+   hora de executar.
 4. **Marque a criticidade de cada tarefa**: `[baixa]`, `[média]`
    (padrão, pode omitir a tag) ou `[alta]`. Alta é para autenticação,
    autorização, pagamentos, migração/exclusão de dados ou lógica de

@@ -161,6 +161,14 @@ tela/apresentação — em vez de uma de cada vez.
 - **Dispare todas as tarefas do grupo no mesmo turno**, uma chamada
   `Agent` por tarefa, para elas rodarem em paralelo de fato — chamadas
   sequenciais em turnos separados não paralelizam.
+- **Máximo de 4 tarefas simultâneas.** Nunca dispare mais de 4 chamadas
+  `Agent` no mesmo turno, mesmo que o grupo `[P<n>]` do plano tenha mais
+  itens. Se o grupo tiver 5 ou mais tarefas, divida em lotes de até 4:
+  dispare o primeiro lote, espere todas as tarefas do lote terminarem
+  (implementação + `code-review-gate` de cada uma), e só então dispare
+  o próximo lote. Isso vale mesmo que todas as tarefas do grupo sejam,
+  em tese, independentes entre si — o limite é sobre custo/atenção de
+  revisão simultânea, não sobre dependência.
 - Cada agente recebe só a sua tarefa (descrição, critérios de aceite,
   arquivos que deve tocar) — não o plano inteiro. Ele não tem contexto
   desta conversa (ver "O que os subagents herdam automaticamente"
@@ -191,9 +199,7 @@ tela/apresentação — em vez de uma de cada vez.
 com `model: inherit` por padrão, mas o modelo
 pode e deve variar por tarefa: ao disparar via `Agent`, passe o
 parâmetro `model` explicitamente conforme a criticidade da tarefa
-(avaliada no plano ou no momento do disparo). `redator-commit` é
-exceção — sempre roda em `haiku`, independente da criticidade, porque
-só redige texto.
+(avaliada no plano ou no momento do disparo).
 
 - **Baixa** (typo, ajuste de string, mudança cosmética, tarefa
   mecânica sem lógica de negócio) → `haiku`. Mais rápido e barato,
@@ -216,7 +222,7 @@ disparar o agente.
 
 Sempre que uma etapa rodar por subagent (`parceiro-tdd`,
 `implementador-frontend`, `revisor-arquiteto`, `gerador-modulo`,
-`revisor-conformidade`, `investigador-bugs`, `redator-commit`), ele
+`revisor-conformidade`, `investigador-bugs`), ele
 segue as regras do projeto
 — mas não todas pela mesma via:
 
@@ -286,13 +292,12 @@ sempre em português do Brasil:
 - `investigador-bugs` — aplica `debugging-sistematico` para investigar
   um bug relatado até a causa raiz confirmada, antes de qualquer
   correção.
-- `redator-commit` — roda em Haiku, redige título/descrição de commit
-  em português a partir do diff (usado pela skill `commit-conventions`
-  para não gastar o modelo principal com isso).
 
-O modelo dos seis primeiros não é fixo — veja "Modelo por
+O modelo desses subagents não é fixo — veja "Modelo por
 criticidade" acima para saber quando passar `haiku` ou `opus` em vez
-de herdar o padrão.
+de herdar o padrão. A mensagem de commit (`commit-conventions`) não
+usa subagent — é escrita pelo orquestrador da conversa, que já tem o
+contexto da tarefa.
 
 Use os subagents quando quiser manter o contexto da tarefa isolado da
 conversa principal (por exemplo, revisar um diff grande sem poluir o

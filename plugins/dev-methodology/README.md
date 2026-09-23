@@ -48,8 +48,6 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
     o plano salvo em `docs/planos/`.
   - `investigador-bugs` — investiga um bug relatado até a causa raiz
     confirmada, sem sair corrigindo por tentativa e erro.
-  - `redator-commit` — roda em Haiku, redige o texto do commit
-    (título/descrição) sem gastar o modelo principal.
 - **Hook**: lembrete no início da sessão apontando para
   `using-dev-methodology`.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
