@@ -30,10 +30,13 @@ a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
     obrigatória (questiona antes de implementar algo que prejudique
     acessibilidade).
   - `commit-conventions` — Conventional Commits + emoji, escopo =
-    branch, mensagem em português, sem trailer de co-autoria.
+    tarefa da branch (sem prefixo `fix/`, `refact/`...), mensagem em português, sem trailer de co-autoria.
   - `debugging-sistematico` — investiga um bug relatado (reproduzir,
     coletar evidência, testar hipóteses, isolar causa raiz) antes de
     qualquer correção.
+- **Regras de código** (em `using-dev-methodology`, valem para todo
+  desenvolvimento): código majoritariamente em inglês (specs, planos e
+  commits seguem em português) e sempre respeitando SOLID.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.

@@ -35,6 +35,28 @@ ele está instalado — não uma opção entre outras. Isso significa:
   descobrir depois que faltou spec, teste ou review numa mudança que
   não era tão trivial assim.
 
+## Regras de código (valem para todo desenvolvimento)
+
+Estas duas regras se aplicam a qualquer código escrito ou revisado
+com este plugin, inline ou por subagent:
+
+- **Código majoritariamente em inglês.** Identificadores (variáveis,
+  funções, classes, tipos, arquivos, pastas), comentários, mensagens
+  de erro e nomes de teste ficam em inglês. Specs, planos, conversa e
+  mensagens de commit continuam em português (ver `commit-conventions`).
+  Exceção: termos de domínio sem tradução natural podem ficar no
+  idioma original — mantenha-os consistentes e evite misturar
+  idiomas dentro do mesmo nome. Em código existente com nomes em
+  português, não renomeie por conta própria fora do escopo da
+  tarefa; siga a convenção local e sinalize.
+- **Sempre respeitar SOLID.** Uma responsabilidade por classe/módulo
+  (S); estender por abstração em vez de editar código existente (O);
+  implementações substituíveis pelo contrato que declaram (L);
+  interfaces pequenas e focadas, sem forçar dependência de métodos
+  não usados (I); depender de abstrações (`I*`/ports), nunca de
+  implementações concretas (D). Se uma tarefa parece exigir violar
+  algum princípio, pare e pergunte ao Matheus antes de seguir.
+
 ## Bug relatado? Investigue antes de corrigir
 
 Se o pedido é um bug, erro ou comportamento inesperado relatado pelo
@@ -89,7 +111,7 @@ não pule etapas mesmo que o pedido pareça simples:
       próxima tarefa até serem corrigidos.
    c. **Commit** → skill `commit-conventions`, se o Matheus pedir para
       commitar. Um commit atômico por tarefa, Conventional Commits com
-      emoji, escopo = branch atual, mensagem em português.
+      emoji, escopo = tarefa da branch sem prefixo de tipo, mensagem em português.
 
    Tarefas marcadas como paralelizáveis no plano (mesmo grupo `[P<n>]`
    — ver `writing-plans`) são a exceção à pergunta: dispare

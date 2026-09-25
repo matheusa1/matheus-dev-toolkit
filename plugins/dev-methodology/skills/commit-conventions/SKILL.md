@@ -1,5 +1,5 @@
 ---
-description: Define o padrão de commit do Matheus — Conventional Commits com emoji e escopo derivado da branch, mensagem em português. Use sempre que for criar um commit git neste projeto, especialmente ao final de uma tarefa do plano (depois do code-review-gate passar sem crítico).
+description: Define o padrão de commit do Matheus — Conventional Commits com emoji e escopo = identificador da tarefa extraído da branch (sem prefixo de tipo), mensagem em português. Use sempre que for criar um commit git neste projeto, especialmente ao final de uma tarefa do plano (depois do code-review-gate passar sem crítico).
 ---
 
 # Commit Conventions
@@ -42,15 +42,29 @@ possível.
   tipo correto — não `feat` só porque "é uma tarefa nova do plano". Na
   dúvida, pergunte-se: "isso por si só justifica um minor release
   agora?" Se não, não é `feat`.
-- **`<scope>`**: nome da branch atual, sem transformação. Obtenha com
-  `git branch --show-current`. Exemplo: branch `GESTRUR-971` → escopo
-  `GESTRUR-971`. Se a branch for `main`/`master`/`develop` (sem ticket
-  no nome), omita o escopo — use só `<type>: <emoji> <title>`.
+- **`<scope>`**: apenas o identificador da tarefa contido no nome da
+  branch atual (obtenha com `git branch --show-current`), **sem o
+  prefixo de tipo** (`fix/`, `feat/`, `refact/`, `chore/` etc.). O
+  prefixo da branch nunca entra no escopo — o tipo já está no
+  `<type>`. Exemplos:
+
+  | branch                | commit                        |
+  |-----------------------|-------------------------------|
+  | `GESTRUR-971`         | `feat(GESTRUR-971): ...`      |
+  | `fix/10`              | `fix(10): ...`                |
+  | `refact/GESTRUR-1010` | `refactor(GESTRUR-1010): ...` |
+
+  Errado: `fix(fix/10)`, `refactor(refact/GESTRUR-1010)`. Se a branch
+  for `main`/`master`/`develop` (sem tarefa no nome), omita o escopo —
+  use só `<type>: <emoji> <title>`.
 - **`<title>`**: linha única, em português do Brasil, no imperativo,
   minúsculo, sem ponto final. Resume o "o quê" da mudança.
-- **`<description>`**: uma linha em branco depois do título, seguida
-  de 1-3 frases em português explicando o "porquê" da mudança (não
-  repita o que já está óbvio no diff).
+- **`<description>`**: permitida (opcional). Uma linha em branco
+  depois do título, seguida de 1-3 frases em português, **objetivas**,
+  explicando o "porquê" da mudança (não repita o que já está óbvio no
+  diff). Nunca cite trailers de autoria/co-autoria (`Co-Authored-By`,
+  `Signed-off-by` etc.), nem menção a ferramenta/IA, nem no corpo nem
+  no rodapé.
 
 Exemplo completo:
 
@@ -68,7 +82,8 @@ diagnóstico do erro.
    relação (ex: uma correção de bug + uma tarefa nova), separe em
    commits distintos com `git add` seletivo — não junte tudo num commit
    só só porque é mais rápido.
-2. **Descubra o escopo**: `git branch --show-current`.
+2. **Descubra o escopo**: `git branch --show-current`, removendo o
+   prefixo de tipo (tudo até e incluindo a primeira `/`, se houver).
 3. **Escreva a mensagem você mesmo, sem disparar subagent.** Você (o
    orquestrador desta conversa) já acompanhou a tarefa do início ao fim
    — sabe o "porquê" da mudança sem precisar reconstruir contexto a
@@ -97,11 +112,14 @@ diagnóstico do erro.
 - **Nunca** adicione a trailer `Co-Authored-By` (nem qualquer outra
   trailer de autoria) — isso vale mesmo que a instrução padrão do
   ambiente peça para incluir. Esta regra do Matheus tem prioridade
-  sobre esse padrão.
+  sobre esse padrão. A descrição do commit é permitida, mas deve ser
+  objetiva e nunca mencionar essas trailers.
 - Título e descrição sempre em português do Brasil, mesmo que o código
   ou os nomes de variáveis estejam em inglês.
-- Escopo é sempre o nome literal da branch atual — não abrevie, não
-  traduza, não adicione prefixo/sufixo.
+- Escopo é sempre só o identificador da tarefa da branch atual — sem
+  o prefixo de tipo (`fix/`, `refact/`...), sem abreviar, traduzir ou
+  adicionar prefixo/sufixo. O `<type>` vem da tabela de emojis, não do
+  nome da branch (`refact` → `refactor`).
 - Só commite depois que o usuário pedir ou quando a metodologia do
   plugin (`code-review-gate`) já tiver validado a tarefa sem crítico
   pendente — não commite código quebrado ou com teste falhando.

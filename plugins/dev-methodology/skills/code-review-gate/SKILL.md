@@ -34,6 +34,14 @@ plano. Detalhes em `dev-methodology:using-dev-methodology`.
    - **Segurança básica**: segredos expostos, entrada não validada,
      SQL/queries não parametrizadas.
    - **Legibilidade**: nomes claros, sem duplicação óbvia.
+   - **Idioma**: identificadores, comentários e nomes de teste em
+     inglês (specs, planos e commits seguem em português). Nome em
+     português fora do padrão local é 🟡 aviso.
+   - **SOLID**: classe/módulo com mais de uma responsabilidade,
+     dependência de implementação concreta em vez de `I*`, interface
+     inchada, subtipo que quebra o contrato do pai, ou alteração de
+     código existente onde bastava estender. Violação clara é 🔴
+     crítico quando compromete a arquitetura; caso contrário 🟡.
    - **Se o diff é de frontend** (componentes de UI): aplique também a
      skill `dev-methodology:convencoes-frontend` — componentes do
      design system do projeto (antd ou tailwind+shadcn, a skill

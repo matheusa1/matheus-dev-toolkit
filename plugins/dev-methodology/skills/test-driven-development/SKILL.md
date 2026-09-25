@@ -41,7 +41,9 @@ burocracia — é a garantia de que o teste realmente testa algo.
 - Um teste por comportamento/caso de borda, não um teste gigante
   cobrindo tudo.
 - Nomeie o teste pelo comportamento esperado, não pelo nome do método
-  (`deve rejeitar pedido sem itens`, não `testCriarPedido2`).
+  (`should reject an order without items`, não `testCreateOrder2`).
+  Código e nomes de teste em inglês, e a implementação deve respeitar
+  SOLID (ver `using-dev-methodology`, "Regras de código").
 - Em projetos TypeScript/NestJS: teste unitário para domain/application
   (mocks para os ports/interfaces `I*`), teste de integração para
   infra (banco real ou testcontainer), teste e2e para os endpoints.
