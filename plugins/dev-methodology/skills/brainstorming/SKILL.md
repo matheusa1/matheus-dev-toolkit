@@ -54,6 +54,19 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
 5. **Pare e peça confirmação** antes de seguir para o plano
    (`writing-plans`). Não implemente nada nesta etapa.
 
+## Tarefa pequena: spec dentro do plano
+
+Se a tarefa foi classificada como **pequena** (ver "Tamanho da
+tarefa" em `using-dev-methodology`), não crie arquivo em
+`docs/especificacao/` nem peça confirmação separada:
+
+- Faça só as perguntas indispensáveis (muitas vezes nenhuma).
+- Escreva a spec como seção `## Spec` (com os mesmos cinco blocos,
+  cada um em 1-3 linhas) no topo do arquivo de plano em
+  `docs/planos/AAAA-MM-DD-nome-tarefa.md`.
+- Siga direto para `writing-plans`, que acrescenta o checklist no mesmo
+  arquivo e faz **uma** confirmação para spec + plano.
+
 ## Regras
 
 - Não infira requisitos não-ditos e apresente como se fossem certos —

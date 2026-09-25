@@ -9,26 +9,28 @@ um teste que falhe por causa da ausência desse código.**
 
 ## Antes de começar: inline ou subagent?
 
-Esta skill pode ser aplicada inline nesta conversa ou pelo agent
-`dev-methodology:parceiro-tdd` isolado. Se essa decisão ainda não foi
-tomada nesta conversa, **é obrigatório perguntar ao Matheus** — não
-assuma inline. Se já foi perguntado e respondido antes (mesmo para
-outra tarefa), reaproveite essa resposta sem perguntar de novo.
-Exceções: tarefas do mesmo grupo `[P<n>]` do plano (já implicam agents
-em paralelo, dispare direto). Detalhes em
+Inline ou agent `dev-methodology:parceiro-tdd`. Decidido na rodada única de
+perguntas junto com o plano; grupos `[P<n>]` vão direto para agents — regras em
 `dev-methodology:using-dev-methodology`.
 
 ## Ciclo
 
 1. **RED** — Escreva o teste que descreve o comportamento esperado.
-   Rode a suíte e confirme que ele falha, e que falha pelo motivo
-   certo (não por erro de sintaxe ou import quebrado).
+   Rode **só o arquivo de teste da tarefa** e confirme que falha pelo
+   motivo certo (não por erro de sintaxe ou import quebrado).
 2. **GREEN** — Escreva a implementação mínima necessária para o teste
-   passar. Nada de generalizar além do que o teste pede.
+   passar. Nada de generalizar além do que o teste pede. Rode de novo
+   só esse arquivo.
 3. **REFACTOR** — Com os testes verdes, limpe o código (nomes,
-   duplicação, estrutura) sem mudar comportamento. Rode os testes de
-   novo depois de refatorar.
+   duplicação, estrutura) sem mudar comportamento e rode o arquivo de
+   novo.
 4. Repita para o próximo pedaço de comportamento.
+5. Ao fechar a tarefa, rode uma vez a suíte relacionada (o módulo/pasta
+   afetado) para pegar regressão.
+
+Rode os testes no modo silencioso do runner (ex: `--silent`,
+reporter `dot`) e, quando a saída for longa, filtre só as falhas —
+saída inteira de teste gasta contexto sem ajudar.
 
 ## Se você perceber que escreveu implementação antes do teste
 
@@ -41,7 +43,9 @@ burocracia — é a garantia de que o teste realmente testa algo.
 - Um teste por comportamento/caso de borda, não um teste gigante
   cobrindo tudo.
 - Nomeie o teste pelo comportamento esperado, não pelo nome do método
-  (`deve rejeitar pedido sem itens`, não `testCriarPedido2`).
+  (`should reject an order without items`, não `testCreateOrder2`).
+  Código e nomes de teste em inglês, e a implementação deve respeitar
+  SOLID (ver `using-dev-methodology`, "Regras de código").
 - Em projetos TypeScript/NestJS: teste unitário para domain/application
   (mocks para os ports/interfaces `I*`), teste de integração para
   infra (banco real ou testcontainer), teste e2e para os endpoints.

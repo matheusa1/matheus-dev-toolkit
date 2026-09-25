@@ -22,16 +22,10 @@ essa skill existe para evitar isso.
 
 ## Antes de começar: inline ou subagent?
 
-A investigação pode rodar inline nesta conversa ou pelo agent
-`dev-methodology:investigador-bugs` isolado. Se essa decisão ainda não
-foi tomada nesta conversa, **é obrigatório perguntar ao Matheus** —
-não assuma inline. A recomendação padrão é o agent isolado quando a
-investigação exigir rodar muitos comandos, logs extensos ou explorar
-várias hipóteses — isso evita poluir o contexto principal. Para um bug
-simples e localizado, inline é mais rápido. Se já foi perguntado e
-respondido antes (mesmo para outra tarefa), reaproveite essa resposta
-sem perguntar de novo. Detalhes gerais sobre essa escolha em
-`dev-methodology:using-dev-methodology`.
+Inline ou agent `dev-methodology:investigador-bugs`. Recomende o agent
+quando a investigação exigir muitos comandos, logs extensos ou várias
+hipóteses; inline para bug simples e localizado. Pergunte na primeira vez e
+reaproveite a resposta na conversa — regras em `dev-methodology:using-dev-methodology`.
 
 ## Processo
 

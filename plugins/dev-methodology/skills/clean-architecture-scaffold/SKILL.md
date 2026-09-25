@@ -41,6 +41,14 @@ core/modules/<módulo>/
 - `I` prefixa interfaces/ports (`IUserRepository`).
 - `E` prefixa enums (`EPedidoStatus`).
 
+## Idioma e SOLID
+
+- Todo o código gerado (nomes de arquivos, classes, métodos, tipos,
+  comentários) em inglês.
+- Respeite SOLID: uma responsabilidade por classe (um use case por
+  arquivo), dependências sempre via interfaces `I*`, interfaces
+  pequenas e focadas por port. Ver `using-dev-methodology`.
+
 ## Injeção de dependência (Inversify)
 
 - Cada módulo tem seu próprio `ContainerModule` em
