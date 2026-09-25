@@ -15,29 +15,29 @@ por tarefa, ou poucos ciclos).
      responde, um componente que renderiza).
    - Ser pequena o suficiente para revisar em poucos minutos.
    - Declarar suas dependências (quais tarefas anteriores ela precisa).
+   - Listar os arquivos que cria ou altera (caminhos ou pastas). Essa
+     lista é o que limita o diff do code review à tarefa e o que o
+     agent paralelo pode tocar.
 2. **Aponte decisões arquiteturais que a tarefa afeta** (nova camada,
    novo módulo, mudança de contrato) para que o code review saiba o
    que checar depois.
    - **Se a tarefa é de frontend e puramente de apresentação**
      (`components/`, `pages/`, JSX que só renderiza, sem lógica
-     própria), registre no próprio item do plano que ela vai pelo agent
-     `dev-methodology:implementador-frontend` (ou inline com a skill
-     `dev-methodology:convencoes-frontend`) em vez de
-     `parceiro-tdd`/`test-driven-development` — sem teste unitário e
-     sem ciclo RED-GREEN-REFACTOR para essa tarefa, só as convenções de
-     componentes do design system do projeto (antd ou tailwind+shadcn,
-     a skill detecta qual), tokens de tema em vez de valores fixos, sem
-     ternário/condicional no `return`, sem estilo inline. Se a tarefa
-     mistura lógica com UI, quebre-a em duas: uma de lógica (`core`,
-     `parceiro-tdd`, com teste) e uma de apresentação
-     (`implementador-frontend`, sem teste), com a segunda dependendo da
-     primeira.
+     própria), registre no item que ela vai por `implementador-frontend`
+     (ou inline com `convencoes-frontend`), sem teste unitário nem TDD.
+     Se mistura lógica com UI, quebre em duas: lógica (`core`,
+     `parceiro-tdd`, com teste) e apresentação (`implementador-frontend`),
+     a segunda dependendo da primeira.
 3. **Marque quais tarefas podem rodar em paralelo.** Duas tarefas só
    podem ser paralelas se, ao mesmo tempo:
    - Nenhuma depende do resultado da outra (não há import, contrato ou
      tipo que uma precise que a outra já tenha criado).
    - Não tocam nos mesmos arquivos nem em arquivos fortemente
      acoplados (ex: o mesmo `module.ts` de DI).
+   - Nenhuma altera `package.json` ou lockfile — tarefa que adiciona,
+     remove ou atualiza dependência é sempre sequencial (as worktrees
+     paralelas compartilham as dependências do diretório principal, e
+     dois lockfiles alterados em paralelo conflitam no merge).
    Agrupe essas tarefas com uma tag `[P<n>]` no checklist — tarefas com
    o mesmo `n` podem ser disparadas ao mesmo tempo; tarefas sem tag ou
    com `n` diferente seguem sequenciais. O caso mais comum é um módulo
@@ -46,13 +46,9 @@ por tarefa, ou poucos ciclos).
    mas o endpoint/controller normalmente depende do caso de uso e
    segue depois, sequencial.
 
-   **Máximo de 4 tarefas por disparo simultâneo.** Um grupo `[P<n>]`
-   pode ter quantas tarefas fizerem sentido logicamente, mas na hora de
-   executar (`using-dev-methodology` → "Execução em paralelo") nunca
-   mais de 4 rodam ao mesmo tempo — grupos maiores são disparados em
-   lotes de até 4. Não é preciso quebrar o grupo em `[P<n>]` diferentes
-   só por causa desse limite; é o orquestrador que fatia o disparo na
-   hora de executar.
+   Um grupo pode ter mais de 4 tarefas: o orquestrador fatia o disparo
+   em lotes de até 4 (`using-dev-methodology`), não é preciso quebrar o
+   grupo por causa disso.
 4. **Marque a criticidade de cada tarefa**: `[baixa]`, `[média]`
    (padrão, pode omitir a tag) ou `[alta]`. Alta é para autenticação,
    autorização, pagamentos, migração/exclusão de dados ou lógica de
@@ -64,10 +60,10 @@ por tarefa, ou poucos ciclos).
 5. **Apresente como checklist markdown**, por exemplo:
 
    ```markdown
-   - [ ] 1. Criar entidade de domínio `TPedido` + testes unitários
-   - [ ] 2. [P1] Implementar caso de uso `CriarPedido` (application) + testes
-   - [ ] 3. [P1] Implementar repositório TypeORM (infra) + testes de integração
-   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento)
+   - [ ] 1. Criar entidade de domínio `TOrder` + testes unitários — `domain/entities/`
+   - [ ] 2. [P1] Implementar caso de uso `CreateOrder` (application) + testes — `application/use-cases/create-order*`
+   - [ ] 3. [P1] Implementar repositório TypeORM (infra) + testes de integração — `infra/repositories/`
+   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento) — `infra/http/`
    ```
 
    Aqui as tarefas 2 e 3 dependem só da 1 (entidade já existe) e não
@@ -95,35 +91,18 @@ por tarefa, ou poucos ciclos).
      esse checklist, mas o arquivo é o que sobrevive a uma
      compactação de contexto ou a uma nova sessão.
 
-7. **Pare e peça confirmação** do plano antes de começar a implementar.
+   - **Tarefa pequena**: o mesmo arquivo já começa com a seção
+     `## Spec` escrita pelo `brainstorming`; acrescente o checklist
+     abaixo dela em `## Plano`. Não existe arquivo em
+     `docs/especificacao/` nesse caso.
 
-## Antes de executar o plano: pergunte inline vs. subagent, uma vez
-
-Com o plano confirmado, cada tarefa pode ser implementada e revisada
-**inline** nesta conversa ou por um subagent isolado (`parceiro-tdd`
-para tarefas de lógica, `implementador-frontend` para tarefas de
-tela/apresentação, `revisor-arquiteto` para o code review). **É
-obrigatório perguntar ao Matheus**, mas só **uma vez**, antes de
-começar a primeira tarefa do plano — não decida sozinho e não assuma
-que inline é o padrão. Apresente uma recomendação com o motivo (ex:
-"revisor-arquiteto isolado evita poluir o contexto com o diff
-inteiro").
-
-- Reaproveite a resposta para todas as tarefas seguintes do plano
-  (TDD e code review) sem perguntar de novo tarefa a tarefa.
-- Exceção: tarefas do mesmo grupo `[P<n>]` já implicam agents em
-  paralelo — dispare direto, sem perguntar.
-- Se o Matheus já disse nesta conversa como prefere, respeite e não
-  repita a pergunta.
-- Ao terminar **todas** as tarefas, pergunte também se a comparação
-  final com a spec roda inline ou pelo agent
-  `dev-methodology:revisor-conformidade`
-  (recomendação padrão: o agent) — essa é uma pergunta separada, feita
-  uma única vez ao final.
-
-O detalhamento completo está em `dev-methodology:using-dev-methodology`
-— se essa skill ainda não foi carregada nesta sessão, carregue-a antes
-de começar a implementar.
+7. **Peça confirmação numa rodada única** (`AskUserQuestion`): aprovar
+   o plano (e a spec, na tarefa pequena) junto com as decisões de
+   execução — subagents ou inline, commit por tarefa, e conformidade
+   final (só tarefa grande). Perguntas, opções e regras em
+   `dev-methodology:using-dev-methodology` → "Perguntas: uma rodada
+   só" (carregue-a se ainda não estiver nesta sessão). Depois dessa
+   rodada, execute o plano sem novas perguntas de processo.
 
 ## Regras
 

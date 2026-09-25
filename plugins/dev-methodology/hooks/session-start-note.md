@@ -5,16 +5,16 @@ pedido explicitamente para não usar.
 PRIMEIRO PASSO OBRIGATÓRIO de qualquer tarefa de desenvolvimento:
 carregue a skill `dev-methodology:using-dev-methodology` antes de
 qualquer outra coisa. Ela contém o fluxo completo e as regras de
-orquestração (perguntar inline vs. subagent, modelo por criticidade,
-rastreio de progresso, revisão final de conformidade) que não existem
-em nenhuma outra skill. Sem ela carregada, o fluxo roda pela metade.
+orquestração (tamanho da tarefa, rodada única de perguntas, modelo por
+criticidade, execução paralela com worktree, rastreio de progresso)
+que não existem em nenhuma outra skill.
 
-Ordem do fluxo: `dev-methodology:brainstorming` →
-`dev-methodology:writing-plans` → (`dev-methodology:test-driven-development`
-+ `dev-methodology:code-review-gate` + `dev-methodology:commit-conventions`
-por tarefa, tarefas independentes podem rodar em paralelo) →
-opcionalmente `dev-methodology:clean-architecture-scaffold` para
-módulos novos em TypeScript.
+O tamanho da tarefa define o fluxo: trivial vai direto ao código;
+pequena junta spec e plano num arquivo com uma confirmação; grande
+segue `dev-methodology:brainstorming` → `dev-methodology:writing-plans`
+→ (`dev-methodology:test-driven-development` +
+`dev-methodology:code-review-gate` + `dev-methodology:commit-conventions`
+por tarefa, tarefas `[P<n>]` em paralelo) → revisão de conformidade.
 
 Todas as skills deste plugin são invocadas com o prefixo
 `dev-methodology:`. Se uma chamada `Skill` falhar com "Unknown skill",

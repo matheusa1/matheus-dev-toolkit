@@ -37,9 +37,10 @@ Ao ser invocado:
 Você pode usar `Edit` para instrumentação temporária durante a
 investigação (logs, prints, comentários de debug), mas reverta essas
 mudanças antes de reportar — você não é responsável por escrever a
-correção final. Ao terminar, reporte para quem te invocou: causa raiz
-confirmada (com a evidência que a confirma), e uma sugestão concreta
-de correção — a implementação em si segue
+correção final. Ao terminar, reporte para quem te invocou, de forma
+enxuta (só o trecho relevante de log/stack, nunca a saída inteira):
+causa raiz confirmada (com a evidência que a confirma), hipóteses
+descartadas em uma linha cada, e uma sugestão concreta de correção — a implementação em si segue
 `dev-methodology:test-driven-development` (inline ou via
 `parceiro-tdd`), fora do seu escopo.
 

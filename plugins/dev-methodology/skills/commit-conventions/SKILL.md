@@ -84,6 +84,9 @@ diagnóstico do erro.
    só só porque é mais rápido.
 2. **Descubra o escopo**: `git branch --show-current`, removendo o
    prefixo de tipo (tudo até e incluindo a primeira `/`, se houver).
+   Ao commitar dentro de uma worktree de tarefa paralela, o escopo vem
+   da branch do **diretório principal**, nunca da branch temporária da
+   worktree.
 3. **Escreva a mensagem você mesmo, sem disparar subagent.** Você (o
    orquestrador desta conversa) já acompanhou a tarefa do início ao fim
    — sabe o "porquê" da mudança sem precisar reconstruir contexto a

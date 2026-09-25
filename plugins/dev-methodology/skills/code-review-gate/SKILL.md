@@ -9,19 +9,20 @@ seguro seguir em frente.
 
 ## Antes de começar: inline ou subagent?
 
-Esta revisão pode rodar inline nesta conversa ou pelo agent
-`dev-methodology:revisor-arquiteto` isolado. Se essa decisão ainda não
-foi tomada nesta conversa, **é obrigatório perguntar ao Matheus** —
-não assuma inline. A recomendação padrão é o agent isolado, que evita
-poluir o contexto principal com o diff inteiro. Se já foi perguntado e
-respondido antes (mesmo para outra tarefa), reaproveite essa resposta
-sem perguntar de novo. Exceção: tarefas do mesmo grupo `[P<n>]` do
-plano. Detalhes em `dev-methodology:using-dev-methodology`.
+Inline ou agent `dev-methodology:revisor-arquiteto` (recomendado: evita
+trazer o diff para o contexto principal). Decidido na rodada única de perguntas junto com o plano —
+regras em `dev-methodology:using-dev-methodology`.
 
 ## Processo
 
-1. Rode `git diff` (ou `git diff --staged`) para ver exatamente o que
-   mudou nesta tarefa. Foque só nos arquivos modificados.
+1. Veja **só o diff desta tarefa** — nunca `git diff` puro, que inclui
+   mudanças de outras tarefas não commitadas (ex: agents paralelos):
+   - Em worktree: `git -C <worktree> add -A ':(exclude,glob)**/node_modules'`
+     e `git -C <worktree> diff --staged`.
+   - No diretório principal: `git diff HEAD -- <arquivos da tarefa>` e
+     `git status --short -- <arquivos>` para arquivos novos.
+   Se não souber quais arquivos são da tarefa, pergunte a quem pediu a
+   revisão em vez de revisar o diff inteiro.
 2. Revise contra:
    - **O plano**: a tarefa entrega o que foi prometido, nem mais nem
      menos?
@@ -42,19 +43,12 @@ plano. Detalhes em `dev-methodology:using-dev-methodology`.
      inchada, subtipo que quebra o contrato do pai, ou alteração de
      código existente onde bastava estender. Violação clara é 🔴
      crítico quando compromete a arquitetura; caso contrário 🟡.
-   - **Se o diff é de frontend** (componentes de UI): aplique também a
-     skill `dev-methodology:convencoes-frontend` — componentes do
-     design system do projeto (antd ou tailwind+shadcn, a skill
-     detecta qual) em vez de `<div>`/`<span>` crus, teste unitário
-     restrito à camada core, tokens de tema em vez de valores fixos,
-     sem ternário/condicional no `return`, componentes simples, sem
-     estilo inline, e acessibilidade mínima aceitável (elemento certo
-     para a função, foco de teclado preservado, `alt`/label presentes,
-     estado não comunicado só por cor). Se o diff reduz acessibilidade
-     sem justificativa registrada na conversa (ex: `outline` removido
-     sem substituto, `<div onClick>` no lugar de botão), trate como
-     achado — pelo menos 🟡 aviso, 🔴 crítico se elimina acesso via
-     teclado ou leitor de tela para um fluxo essencial.
+   - **Só se o diff tiver `.tsx`/`.jsx`** (UI): carregue a skill
+     `dev-methodology:convencoes-frontend` e revise contra ela. Diff
+     sem arquivo de UI não carrega essa skill. Redução de
+     acessibilidade sem justificativa registrada é pelo menos 🟡, e 🔴
+     se elimina acesso por teclado ou leitor de tela num fluxo
+     essencial.
 3. **Classifique cada achado por severidade:**
    - 🔴 **Crítico** — quebra a arquitetura, falta teste para lógica de
      negócio, bug real, segredo exposto. **Bloqueia** a próxima
@@ -62,8 +56,10 @@ plano. Detalhes em `dev-methodology:using-dev-methodology`.
    - 🟡 **Aviso** — deveria ser corrigido, mas não bloqueia (ex:
      nomenclatura inconsistente, duplicação pequena).
    - 🟢 **Sugestão** — melhoria opcional.
-4. Apresente os achados agrupados por severidade, com o arquivo/linha e
-   uma sugestão concreta de correção para cada um.
+4. Apresente só os achados, agrupados por severidade, cada um com
+   `arquivo:linha` e a correção sugerida em uma ou duas linhas — sem
+   repetir o diff nem descrever o que está correto. Diff limpo:
+   responda apenas `✅ Sem achados.`
 5. Se houver crítico: pare, corrija (voltando ao TDD se for lógica
    faltando), revise de novo. Só considere a tarefa concluída sem
    crítico pendente.

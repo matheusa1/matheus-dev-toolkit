@@ -19,8 +19,9 @@ Ao ser invocado:
    exemplo — a implementação real vem depois via TDD.
 4. Registre o `ContainerModule` do módulo e explique onde ele precisa
    ser plugado no container global da aplicação.
-5. Ao final, liste os arquivos criados e o que falta implementar
-   (apontando para a próxima etapa: `test-driven-development`).
+5. Ao final, liste os arquivos criados (só caminhos, sem colar
+   conteúdo) e o que falta implementar (apontando para a próxima
+   etapa: `test-driven-development`).
 
 Se o projeto não for TypeScript, adapte os mesmos princípios de
 camadas ao idioma/framework do projeto e diga isso explicitamente.

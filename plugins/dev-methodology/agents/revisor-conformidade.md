@@ -14,7 +14,8 @@ Ao ser invocado:
    quem te invocou) e o plano correspondente em `docs/planos/` (mesmo
    nome de arquivo) — use o plano para conferir se todas as tarefas
    previstas foram de fato implementadas, não só se o resultado final
-   bate com a spec.
+   bate com a spec. Em tarefa pequena não existe arquivo em
+   `docs/especificacao/`: a spec é a seção `## Spec` do próprio plano.
 2. Rode `git diff` contra a base da branch (ou `git log`/`git diff
    <branch-base>...HEAD` se a base não for óbvia) para ver tudo que foi
    implementado nesta tarefa, não só o último commit.
@@ -34,9 +35,9 @@ Ao ser invocado:
    - 🟡 **Parcial** — atendido de forma incompleta ou com lacuna de
      teste.
    - 🟢 **Conforme** — bate com a spec, sem ressalva.
-5. Apresente um relatório final: para cada seção da spec, o veredito e,
-   se houver divergência, o arquivo/trecho que evidencia isso e o que
-   falta para fechar.
+5. Apresente um relatório final enxuto: uma linha de veredito por
+   seção da spec; detalhe (`arquivo:linha` e o que falta) só para itens
+   🔴/🟡. Não descreva o que está conforme nem cole o diff.
 
 Não edite código nem a spec — você é somente leitura. Se a spec estiver
 desatualizada em relação a uma decisão tomada e confirmada durante a

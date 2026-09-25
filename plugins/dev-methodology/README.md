@@ -12,6 +12,12 @@ refatorar, revisar, commitar), mesmo que o pedido não mencione spec,
 plano ou TDD. Só não use se o Matheus pedir explicitamente para pular
 a metodologia naquela tarefa específica. Ver `using-dev-methodology`.
 
+O tamanho da tarefa define o fluxo: **trivial** vai direto ao código;
+**pequena** junta spec e plano num único arquivo com uma confirmação;
+**grande** segue o fluxo completo. Aprovação do plano, inline vs.
+subagent, commit por tarefa e revisão de conformidade são perguntados
+juntos, numa rodada única, e não se repetem durante a execução.
+
 ## O que tem aqui
 
 - **Skills** (auto-ativadas por descrição):
@@ -82,8 +88,11 @@ Tarefas do mesmo grupo `[P<n>]` no plano — ex: domain/application/infra
 de um módulo novo, quando não dependem uma da outra nem tocam nos
 mesmos arquivos — podem ser disparadas ao mesmo tempo, um agente por
 tarefa (`parceiro-tdd` para lógica, `implementador-frontend` para
-tela/apresentação). Veja "Execução em paralelo" em
-`using-dev-methodology`.
+tela/apresentação), cada um na própria git worktree para testes, build
+e diff não interferirem entre si. O preparo de dependências da
+worktree é detectado pelo lockfile (Bun, Yarn Berry/PnP, Yarn Classic
+com symlink de `node_modules`), e o code review de cada tarefa olha só
+o diff dela. Veja "Execução em paralelo" em `using-dev-methodology`.
 
 Specs ficam em `docs/especificacao/` e planos em `docs/planos/` no
 projeto onde a metodologia é usada, cada um com seu próprio

@@ -4,323 +4,245 @@ description: Explica a metodologia de desenvolvimento pessoal do Matheus e a ord
 
 # Metodologia de desenvolvimento (dev-methodology)
 
-Este plugin é uma metodologia pessoal, inspirada no framework Superpowers
-(obra/superpowers), mas ajustada ao jeito de trabalhar do Matheus:
-full-stack TypeScript (NestJS, React, React Native), Clean Architecture +
-DDD, TDD, e disciplina de processo antes de "sair codando".
+Metodologia pessoal inspirada no Superpowers (obra/superpowers),
+ajustada ao Matheus: full-stack TypeScript (NestJS, React, React
+Native), Clean Architecture + DDD, TDD e processo antes de codar. Esta
+skill é a **fonte única** das regras de orquestração — as outras skills
+e agents apontam para cá em vez de repeti-las.
 
 ## Regra padrão: use sempre
 
-Este plugin é o modo **padrão** de trabalhar em qualquer projeto onde
-ele está instalado — não uma opção entre outras. Isso significa:
+- Use em toda tarefa de desenvolvimento, mesmo que o pedido não cite
+  spec, plano ou TDD. "Implementa X"/"corrige Y" já é gatilho.
+- Única exceção: pedido explícito na conversa ("sem a metodologia
+  dessa vez", "vai direto ao código"). Vale só para aquela tarefa.
+- "Usar a metodologia" não significa sempre o fluxo completo: o
+  tamanho da tarefa define quais etapas rodam (ver abaixo).
 
-- **Use por padrão em toda tarefa de desenvolvimento**, mesmo que o
-  pedido do Matheus não mencione spec, plano, TDD ou qualquer termo da
-  metodologia. Um pedido simples como "implementa X" ou "corrige Y" já
-  é gatilho suficiente — não espere ele pedir o processo explicitamente.
-- **A única exceção é pedido explícito de não usar**, dito na mesma
-  conversa, algo como "sem a metodologia dessa vez", "pode ir direto
-  ao código", "não usa o plugin agora", "sem processo, só resolve
-  rápido". Nesse caso, siga o pedido para aquela tarefa específica —
-  isso não desativa o plugin para o resto da sessão nem para tarefas
-  futuras, só para a que foi pedida.
-- Não confunda isto com a seção "Quando pular etapas" abaixo: aquilo é
-  sobre pular uma etapa específica dentro do fluxo (ex: sem TDD desta
-  vez, mas ainda com spec e plano). Este bloco aqui é sobre usar o
-  fluxo como um todo por padrão, a menos que o Matheus opte por sair
-  dele.
-- Na dúvida se o pedido é trivial o suficiente para pular o fluxo
-  inteiro, não assuma que sim — trate como tarefa normal e siga a
-  metodologia. É mais barato perguntar ou seguir o processo do que
-  descobrir depois que faltou spec, teste ou review numa mudança que
-  não era tão trivial assim.
+## Regras de código (todo desenvolvimento, inline ou subagent)
 
-## Regras de código (valem para todo desenvolvimento)
-
-Estas duas regras se aplicam a qualquer código escrito ou revisado
-com este plugin, inline ou por subagent:
-
-- **Código majoritariamente em inglês.** Identificadores (variáveis,
-  funções, classes, tipos, arquivos, pastas), comentários, mensagens
-  de erro e nomes de teste ficam em inglês. Specs, planos, conversa e
-  mensagens de commit continuam em português (ver `commit-conventions`).
-  Exceção: termos de domínio sem tradução natural podem ficar no
-  idioma original — mantenha-os consistentes e evite misturar
-  idiomas dentro do mesmo nome. Em código existente com nomes em
-  português, não renomeie por conta própria fora do escopo da
-  tarefa; siga a convenção local e sinalize.
-- **Sempre respeitar SOLID.** Uma responsabilidade por classe/módulo
-  (S); estender por abstração em vez de editar código existente (O);
-  implementações substituíveis pelo contrato que declaram (L);
-  interfaces pequenas e focadas, sem forçar dependência de métodos
-  não usados (I); depender de abstrações (`I*`/ports), nunca de
-  implementações concretas (D). Se uma tarefa parece exigir violar
-  algum princípio, pare e pergunte ao Matheus antes de seguir.
+- **Código em inglês**: identificadores, arquivos, comentários,
+  mensagens de erro e nomes de teste. Specs, planos, conversa e
+  commits em português. Termos de domínio sem tradução natural podem
+  ficar no original, sem misturar idiomas no mesmo nome. Em código
+  existente em português, siga a convenção local e sinalize — não
+  renomeie fora do escopo.
+- **SOLID sempre**: uma responsabilidade por classe/módulo (S);
+  estender por abstração em vez de editar (O); implementações
+  substituíveis pelo contrato (L); interfaces pequenas (I); depender de
+  abstrações `I*`/ports, nunca de concretas (D). Se a tarefa parecer
+  exigir violar algum, pare e pergunte.
 
 ## Bug relatado? Investigue antes de corrigir
 
-Se o pedido é um bug, erro ou comportamento inesperado relatado pelo
-Matheus (não uma feature nova), o fluxo abaixo não se aplica direto —
-use primeiro a skill `debugging-sistematico`, aplicada **inline** ou
-pelo agent `investigador-bugs` isolado (pergunte antes, mesma lógica
-de "Pergunte antes de decidir inline vs. subagent"). Reproduza, colete
-evidência, teste hipóteses e confirme a causa raiz antes de escrever
-qualquer correção. Só depois da causa raiz confirmada entre no fluxo
-normal a partir do passo 3a (TDD) para a correção em si — não é
-preciso brainstorming/plano para um bug pontual, a menos que a
-investigação revele que o problema é maior do que um bug isolado.
+Bug, erro ou comportamento inesperado → skill `debugging-sistematico`
+(inline ou agent `investigador-bugs`). Confirme a causa raiz com
+evidência; só então corrija entrando no passo 3 (TDD). Sem
+brainstorming/plano para bug pontual, a menos que a investigação
+revele algo maior.
 
-## Ordem do fluxo
+## Tamanho da tarefa define o fluxo
 
-Para qualquer tarefa de desenvolvimento não-trivial, siga esta ordem —
-não pule etapas mesmo que o pedido pareça simples:
+Antes de qualquer etapa, classifique o pedido e diga em uma linha qual
+tamanho escolheu e por quê (ex: "Tratei como **pequena**: 2 tarefas no
+mesmo módulo, sem mudança de contrato — se quiser o fluxo completo, me
+diga"). O Matheus pode reclassificar a qualquer momento.
 
-1. **Spec primeiro** → skill `brainstorming`. Nunca comece a escrever
-   código a partir de um pedido vago. Refine o pedido em uma
-   especificação curta (objetivo, não-objetivos, restrições, critérios
-   de aceite), salve em
-   `docs/especificacao/AAAA-MM-DD-nome-tarefa.md` e peça confirmação
-   antes de seguir.
-2. **Plano** → skill `writing-plans`. Quebre a spec aprovada em tarefas
-   pequenas, testáveis e ordenadas. Apresente como checklist, salve em
-   `docs/planos/AAAA-MM-DD-nome-tarefa.md` (mesmo nome da spec
-   correspondente) e confirme antes de executar.
-3. **Para cada tarefa do plano**, decida primeiro se ela é de tela/
-   apresentação frontend ou de lógica testável:
-   a. **Tarefa de tela/componente de apresentação frontend**
-      (`components/`, `pages/`, JSX que só renderiza, sem lógica
-      própria) → skill `convencoes-frontend`, aplicada **inline** ou
-      pelo agent `implementador-frontend` isolado — pergunte antes (ver
-      "Pergunte antes de decidir inline vs. subagent" abaixo). Sem
-      ciclo RED-GREEN-REFACTOR e sem teste unitário para essa tarefa.
-      Se a tarefa mistura lógica com UI, extraia a lógica para `core`
-      e trate-a pelo passo 3a' (TDD) antes de implementar a
-      apresentação por cima.
-   a'. **Qualquer outra tarefa** (lógica testável: domain, application,
-      infra, hooks/services/utils de `core`) → skill
-      `test-driven-development`, aplicada **inline** ou pelo agent
-      `parceiro-tdd` isolado — pergunte antes (ver "Pergunte antes de
-      decidir inline vs. subagent" abaixo). RED (teste falhando) →
-      GREEN (implementação mínima) → REFACTOR. Nunca escreva código de
-      implementação antes de existir um teste falhando para ele.
-   b. **Code review com gate** → skill `code-review-gate`, aplicada
-      **inline** ou pelo agent `revisor-arquiteto` isolado — pergunte
-      antes, do mesmo jeito. Ao terminar a tarefa, revise o diff
-      contra o plano e as convenções do projeto, classificando
-      problemas por severidade. Problemas críticos bloqueiam a
-      próxima tarefa até serem corrigidos.
-   c. **Commit** → skill `commit-conventions`, se o Matheus pedir para
-      commitar. Um commit atômico por tarefa, Conventional Commits com
-      emoji, escopo = tarefa da branch sem prefixo de tipo, mensagem em português.
+| Tamanho | Quando | Fluxo |
+|---|---|---|
+| **Trivial** | typo, ajuste de string/config, mudança de 1 a poucas linhas óbvias, sem lógica nova | Direto ao código. Sem spec, plano ou pergunta. Rode o teste/lint relacionado e revise você mesmo o diff antes de reportar. |
+| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando os critérios de aceite do arquivo. |
+| **Grande** | mais de ~3 tarefas, vários módulos, decisão arquitetural, contrato público novo/alterado, ou qualquer tarefa `[alta]` (auth, pagamentos, migração/exclusão de dados, domínio central) | Fluxo completo abaixo: spec e plano em arquivos separados, duas confirmações. |
 
-   Tarefas marcadas como paralelizáveis no plano (mesmo grupo `[P<n>]`
-   — ver `writing-plans`) são a exceção à pergunta: dispare
-   automaticamente, sem perguntar, uma `Agent` por tarefa (
-   `dev-methodology:parceiro-tdd` para as de lógica,
-   `dev-methodology:implementador-frontend` para as de
-   tela/apresentação), ao mesmo tempo, em vez de uma de cada vez — a
-   marcação `[P<n>]` no plano já é a decisão tomada antecipadamente.
-   Exemplo típico: implementar um módulo novo com um agente para
-   domain, outro para application e outro para infra, todos
-   simultâneos, porque nenhum depende do resultado do outro dentro do
-   mesmo disparo. Veja a seção "Execução em paralelo" abaixo antes de
-   disparar.
-4. **Módulo novo em projeto TypeScript?** → skill
-   `clean-architecture-scaffold`, aplicada **inline** ou pelo agent
-   `gerador-modulo` isolado — pergunte antes. Gera o esqueleto
-   domain/application/infra de um módulo novo, seguindo as convenções
-   de nomenclatura (T/I/E) e o padrão de DI com Inversify.
-5. **Ao terminar todas as tarefas do plano**: pergunte se a
-   comparação final entre a implementação e a spec deve rodar
-   **inline** ou pelo agent `revisor-conformidade` isolado (a
-   recomendação padrão é o agent, para não poluir o contexto principal
-   com o diff inteiro do plano). Compare item a item contra o arquivo
-   de spec salvo em `docs/especificacao/` (objetivo, não-objetivos,
-   restrições, casos de borda, critérios de aceite) e confira contra o
-   arquivo de plano em `docs/planos/` que todas as tarefas previstas
-   foram implementadas. Só considere a feature pronta sem achados
-   críticos pendentes.
+Na dúvida entre dois tamanhos, escolha o maior. Bug com causa raiz
+confirmada normalmente é trivial ou pequeno.
 
-## Pergunte uma vez: inline vs. subagent
+## Ordem do fluxo (tarefa grande)
 
-Sempre que uma etapa do fluxo (TDD, code review, scaffold, revisão de
-conformidade) puder rodar tanto inline nesta conversa quanto por um
-subagent isolado, **é obrigatório perguntar ao Matheus** — não decida
-sozinho e não assuma que inline é o padrão. Use `AskUserQuestion` (ou
-pergunta direta em texto) com uma recomendação clara e o motivo (ex:
-"revisor-arquiteto isolado evita poluir o contexto com o diff inteiro;
-prefiro esse — pode ser inline se preferir rapidez").
+1. **Spec** → `brainstorming`. Salva em
+   `docs/especificacao/AAAA-MM-DD-nome-tarefa.md`, pede confirmação.
+2. **Plano** → `writing-plans`. Checklist com tags `[P<n>]`,
+   criticidade e arquivos de cada tarefa, salvo em
+   `docs/planos/AAAA-MM-DD-nome-tarefa.md`, pede confirmação com a
+   rodada única de perguntas (ver "Perguntas: uma rodada só").
+3. **Para cada tarefa do plano**:
+   a. **Tela/componente de apresentação** (`components/`, `pages/`,
+      JSX que só renderiza) → `convencoes-frontend` (inline ou agent
+      `implementador-frontend`). Sem TDD nem teste unitário. Se mistura
+      lógica com UI, a lógica vai antes para `core` via 3a'.
+   a'. **Lógica testável** (domain, application, infra, `core` de
+      frontend) → `test-driven-development` (inline ou agent
+      `parceiro-tdd`). Nunca implementação antes de teste falhando.
+   b. **Code review** → `code-review-gate` (inline ou agent
+      `revisor-arquiteto`), sempre com o diff **restrito à tarefa**
+      (ver "Diff da tarefa"). Crítico bloqueia a próxima tarefa.
+   c. **Commit** → `commit-conventions`, se a resposta da rodada de
+      perguntas foi "um commit por tarefa" (ou se o Matheus pedir). Um
+      commit atômico por tarefa, escrito pelo orquestrador.
+4. **Módulo novo em TypeScript** → `clean-architecture-scaffold`
+   (inline ou agent `gerador-modulo`).
+5. **Fim do plano** → comparação com a spec (inline ou agent
+   `revisor-conformidade`, recomendado). Feature pronta só sem crítico.
 
-- Pergunte **uma única vez por conversa**, na primeira oportunidade em
-  que a decisão for necessária (ex: antes da primeira tarefa do plano,
-  ou antes da primeira etapa aplicável se não houver plano formal) —
-  não é preciso perguntar de novo a cada tarefa/etapa seguinte.
-- Depois de obter a resposta, aplique essa preferência a todas as
-  etapas seguintes da mesma conversa (TDD, code review, scaffold,
-  investigação de bug, revisão de conformidade) sem repetir a
-  pergunta.
-- **Exceção**: tarefas do mesmo grupo `[P<n>]` (paralelas) não entram
-  nessa pergunta — a paralelização já implica agents, dispare direto.
-- Brainstorming (`brainstorming`) fica sempre inline — é conversa e
-  decisão de design com o Matheus, não há agent equivalente e não faz
-  sentido isolar essa etapa.
-- Se o Matheus já disse nesta conversa como prefere (ex: "sempre usa
-  subagent pra review", "pode ir tudo inline dessa vez"), respeite a
-  preferência dada e não repita a pergunta.
-- Se o Matheus pedir explicitamente para variar por tarefa (ex:
-  "prefiro decidir tarefa a tarefa"), siga esse pedido e volte a
-  perguntar a cada etapa — a regra de "uma vez só" é o padrão, não uma
-  proibição.
+## Perguntas: uma rodada só
+
+Todas as decisões de execução vão **junto com a confirmação do plano**,
+numa única `AskUserQuestion` (até 4 perguntas), em vez de pausas
+espalhadas pelo fluxo:
+
+1. **Plano** — Aprovar / Ajustar (na tarefa pequena, isso aprova spec
+   e plano juntos).
+2. **Execução** — Subagents (recomendado quando há 2+ tarefas ou diff
+   grande: o contexto principal fica limpo) / Inline (mais rápido para
+   1-2 tarefas curtas). Vale para TDD, frontend, review e scaffold.
+3. **Commit** — Um commit por tarefa / Sem commit (eu commito depois).
+   Define também como as worktrees paralelas são integradas.
+4. **Conformidade final** (só tarefa grande) — Agent
+   `revisor-conformidade` (recomendado) / Inline.
+
+Regras:
+- Sempre com a opção recomendada primeiro e o motivo na descrição.
+- Pule a pergunta cuja resposta o Matheus já deu nesta conversa
+  (ex: "usa subagent pra tudo", "commita cada tarefa").
+- Depois dessa rodada, **não pergunte de novo** sobre execução, commit
+  ou conformidade — aplique as respostas até o fim do plano. Só volte
+  a perguntar se ele pedir para decidir tarefa a tarefa.
+- Grupos `[P<n>]` sempre usam agents, qualquer que seja a resposta 2.
+- Etapas fora de plano (ex: investigar bug) perguntam inline vs.
+  agent na primeira vez que forem necessárias, e a resposta vale para
+  o resto da conversa.
+- `brainstorming` é sempre inline.
+
+## Diff da tarefa
+
+O review de uma tarefa olha **só** o que ela mudou — nunca `git diff`
+puro, que mistura mudanças de outras tarefas ainda não commitadas:
+
+- **Tarefa em worktree** (grupo paralelo): tudo na worktree é da
+  tarefa — `git -C <worktree> add -A ':(exclude,glob)**/node_modules'`
+  e depois `git -C <worktree> diff --staged`.
+- **Tarefa no diretório principal**: `git diff HEAD -- <arquivos da
+  tarefa>` (lista vinda do plano/resumo do agent), mais
+  `git status --short -- <arquivos>` para ver arquivos novos.
+
+Ao disparar o `revisor-arquiteto`, passe no prompt o comando exato de
+diff (ou a worktree + lista de arquivos) — ele não adivinha o escopo.
 
 ## Execução em paralelo
 
-Depois que o plano estiver confirmado e as tasks registradas, tarefas
-do mesmo grupo `[P<n>]` podem ser implementadas simultaneamente, cada
-uma em um agente separado (via `Agent`, um por tarefa) — `parceiro-tdd`
-para tarefas de lógica, `implementador-frontend` para tarefas de
-tela/apresentação — em vez de uma de cada vez.
+Tarefas do mesmo grupo `[P<n>]` rodam ao mesmo tempo, uma `Agent` por
+tarefa (`parceiro-tdd` para lógica, `implementador-frontend` para
+tela), **todas disparadas no mesmo turno**.
 
-- **Dispare todas as tarefas do grupo no mesmo turno**, uma chamada
-  `Agent` por tarefa, para elas rodarem em paralelo de fato — chamadas
-  sequenciais em turnos separados não paralelizam.
-- **Máximo de 4 tarefas simultâneas.** Nunca dispare mais de 4 chamadas
-  `Agent` no mesmo turno, mesmo que o grupo `[P<n>]` do plano tenha mais
-  itens. Se o grupo tiver 5 ou mais tarefas, divida em lotes de até 4:
-  dispare o primeiro lote, espere todas as tarefas do lote terminarem
-  (implementação + `code-review-gate` de cada uma), e só então dispare
-  o próximo lote. Isso vale mesmo que todas as tarefas do grupo sejam,
-  em tese, independentes entre si — o limite é sobre custo/atenção de
-  revisão simultânea, não sobre dependência.
-- Cada agente recebe só a sua tarefa (descrição, critérios de aceite,
-  arquivos que deve tocar) — não o plano inteiro. Ele não tem contexto
-  desta conversa (ver "O que os subagents herdam automaticamente"
-  abaixo) — qualquer decisão combinada só verbalmente precisa ir no
-  prompt de disparo.
-- Marque cada task como em andamento (`TaskUpdate`) no momento em que
-  o agente correspondente é disparado, não todas de uma vez no início.
-- **Rode o `code-review-gate` de cada tarefa separadamente**, assim
-  que o respectivo agente termina — não espere o grupo inteiro para
-  revisar tudo junto.
-- Só avance para as tarefas que dependem do grupo (ex: o endpoint que
-  depende de application + infra) depois que **todas** as tarefas do
-  grupo passaram no code review sem crítico pendente.
-- Se, ao ver os diffs, dois agentes do mesmo grupo tocaram no mesmo
-  arquivo apesar do plano dizer que não deveriam (import cruzado,
-  mesmo arquivo de DI, etc.), trate como achado crítico do code
-  review: resolva o conflito manualmente antes de seguir, e ajuste o
-  plano/checklist para não repetir o agrupamento errado nas próximas
-  tarefas.
-- Na dúvida se algo pode rodar em paralelo, não force — dispare
-  sequencial. Isso deveria já estar decidido no plano (`writing-plans`),
-  não improvisado na hora de disparar os agentes.
+- **Máximo de 4 simultâneas.** Grupo maior → lotes de até 4; o próximo
+  lote só sai depois que o anterior foi revisado e integrado.
+- Cada agent recebe só a sua tarefa: descrição, critérios de aceite,
+  arquivos que pode tocar e qualquer decisão combinada só na conversa
+  (ele não vê esta conversa nem os arquivos gitignored de spec/plano).
+- Marque cada task em andamento (`TaskUpdate`) ao disparar o agent.
+- Revise cada tarefa assim que o agent dela termina, sem esperar o
+  grupo. Tarefas dependentes do grupo só começam com **todas** as do
+  grupo revisadas sem crítico e integradas.
+- Dois agents tocando o mesmo arquivo apesar do plano = achado crítico:
+  resolva manualmente e corrija o agrupamento no plano.
+
+### Worktree por tarefa paralela
+
+Grupos com 2+ tarefas rodam cada agent em worktree própria
+(`isolation: "worktree"` na chamada `Agent`), para testes, build e diff
+não interferirem entre si.
+
+**Pré-condição**: a worktree nasce do `HEAD`, então o que o grupo usa
+(tarefas anteriores) precisa estar commitado. Se não estiver — porque o
+Matheus não está commitando por tarefa — rode o grupo no diretório
+principal, sem worktree, com o diff restrito por arquivos (ver "Diff da
+tarefa"). Não crie commit temporário por conta própria.
+
+**Antes de disparar**, detecte uma vez o gerenciador de pacotes e
+monte o bloco de preparo que vai no prompt de cada agent:
+
+| Detecção | Preparo na worktree |
+|---|---|
+| `bun.lock` / `bun.lockb` | `bun install --frozen-lockfile` |
+| `yarn.lock` + `.yarnrc.yml` sem `nodeLinker: node-modules` (PnP) | `yarn install --immutable` |
+| `yarn.lock` + `.yarnrc.yml` com `nodeLinker: node-modules` | `ln -s <raiz-principal>/node_modules node_modules` |
+| `yarn.lock` sem `.yarnrc.yml` (Classic) | `ln -s <raiz-principal>/node_modules node_modules` |
+| outro (`package-lock.json`, `pnpm-lock.yaml`) | `npm ci` / `pnpm install --frozen-lockfile` |
+
+Em monorepo com `node_modules` aninhados, prefira o install ao symlink.
+Some ao preparo: `cp <raiz-principal>/.env* . 2>/dev/null || true`.
+`<raiz-principal>` é o caminho absoluto do diretório principal
+(`git rev-parse --show-toplevel` antes de disparar).
+
+**O agent**: roda o preparo, implementa, roda só os testes da tarefa,
+**não commita**, e informa no resumo o caminho da worktree
+(`pwd`) e a branch (`git branch --show-current`).
+
+**Depois de cada agent**, o orquestrador:
+
+1. Revisa pelo diff da worktree (ver "Diff da tarefa").
+2. Integra no diretório principal, na ordem do plano:
+   - Commitando por tarefa: commit **na worktree** com a mensagem de
+     `commit-conventions` (escopo pela branch **principal**, não a da
+     worktree), depois `git cherry-pick <sha>` no principal.
+   - Sem commit: `git -C <worktree> diff --staged --binary | git apply`
+     no principal.
+3. Remove: `git worktree remove --force <worktree>` e
+   `git branch -D <branch-da-worktree>`.
+
+Depois de integrar o grupo inteiro, rode a suíte relacionada uma vez no
+diretório principal.
 
 ## Modelo por criticidade
 
-`revisor-arquiteto`, `revisor-conformidade`, `parceiro-tdd`,
-`implementador-frontend`, `gerador-modulo` e `investigador-bugs` rodam
-com `model: inherit` por padrão, mas o modelo
-pode e deve variar por tarefa: ao disparar via `Agent`, passe o
-parâmetro `model` explicitamente conforme a criticidade da tarefa
-(avaliada no plano ou no momento do disparo).
+Agents herdam o modelo da conversa (`model: inherit`); passe `model` no
+`Agent` conforme a tag de criticidade do plano:
 
-- **Baixa** (typo, ajuste de string, mudança cosmética, tarefa
-  mecânica sem lógica de negócio) → `haiku`. Mais rápido e barato,
-  suficiente para revisão/implementação de baixo risco.
-- **Média** (tarefa comum do plano, CRUD, lógica de aplicação sem
-  impacto direto em dinheiro/segurança/dados sensíveis) → **não passe
-  `model`**, deixe herdar o modelo da conversa (padrão atual).
-- **Alta** (autenticação, autorização, pagamentos, migração ou
-  exclusão de dados, lógica de domínio central, qualquer coisa que
-  seria caro corrigir depois em produção) → `opus`. Mais capaz, vale o
-  custo extra quando o risco de um erro passar despercebido é alto.
+- `[baixa]` (mecânica, sem regra de negócio) → `haiku`.
+- média (padrão, sem tag) → não passe `model`.
+- `[alta]` (auth, pagamentos, migração/exclusão de dados, domínio
+  central) → `opus`.
 
-Se a criticidade da tarefa não estiver clara, trate como **média** —
-não force `haiku` para economizar nem `opus` "por segurança" sem
-motivo concreto. Marque a criticidade de cada tarefa já no plano
-(`writing-plans`), para não precisar decidir isso de novo na hora de
-disparar o agente.
+Criticidade incerta = média.
 
-## O que os subagents herdam automaticamente
+## Contexto que o subagent recebe
 
-Sempre que uma etapa rodar por subagent (`parceiro-tdd`,
-`implementador-frontend`, `revisor-arquiteto`, `gerador-modulo`,
-`revisor-conformidade`, `investigador-bugs`), ele
-segue as regras do projeto
-— mas não todas pela mesma via:
+- **Automático**: `CLAUDE.md` do projeto (e aninhados).
+- **Precisa ler o repo**: padrões que só existem no código.
+- **Só se estiver no prompt**: tudo que foi combinado nesta conversa e
+  não está em arquivo. Na dúvida, inclua.
 
-- **Automático, sem precisar passar nada**: o `CLAUDE.md` do projeto
-  (e qualquer `CLAUDE.md` aninhado) é carregado pelo Claude Code para
-  qualquer sessão que rode no diretório do projeto, incluindo a de
-  subagents. Convenções documentadas ali chegam sozinhas.
-- **Automático, mas exige que o agente vá olhar**: padrões que só
-  existem no código (nomenclatura observada, estrutura de pastas, lint
-  config) não são "empurrados" para o contexto do agente — ele precisa
-  ler o repositório. Por isso os subagents deste plugin têm
-  `Read`/`Grep`/`Glob` e as skills que eles carregam (`code-review-gate`,
-  `clean-architecture-scaffold`) mandam explicitamente checar contra
-  "as convenções do projeto" antes de aprovar ou gerar algo.
-- **Não é herdado — precisa ir no prompt**: o histórico desta
-  conversa. Um subagent começa sem nenhuma memória do que foi dito
-  aqui. Se uma decisão foi combinada só verbalmente comigo e ainda não
-  está no `CLAUDE.md` nem no código (ex: "usa Zod em vez de
-  class-validator nesse módulo", uma exceção combinada para essa
-  tarefa), ela só chega ao agente se for escrita explicitamente no
-  prompt de disparo.
+## Retorno enxuto dos agents
 
-Regra prática ao montar o prompt de qualquer `Agent` deste plugin:
-pergunte-se "isso está em um arquivo que o agente vai ler sozinho, ou
-foi combinado só na conversa?" — se for só conversa, inclua no prompt;
-não assuma que o agente vai "simplesmente saber".
+O resumo do agent entra inteiro no contexto principal. Todos os agents
+deste plugin devolvem só o essencial, sem repetir o diff nem colar
+saída de ferramenta:
+
+- Implementação: arquivos criados/alterados, testes adicionados (1
+  linha cada), resultado final dos testes, pendências.
+- Review: `✅ Sem achados.` quando limpo; senão só os achados
+  (severidade, `arquivo:linha`, correção sugerida).
 
 ## Quando pular etapas
 
-- Correções triviais (typo, ajuste de string, mudança de uma linha)
-  não precisam do fluxo completo — vá direto ao ponto.
-- Se o Matheus já forneceu uma spec ou plano explícito na conversa,
-  não refaça o brainstorming do zero; confirme o que já foi dito e
-  siga para o plano ou para o TDD.
-- Se o Matheus pedir explicitamente para pular uma etapa ("sem TDD
-  dessa vez", "pode ir direto"), respeite o pedido para aquela tarefa.
+- Tarefa trivial → direto ao ponto (ver "Tamanho da tarefa").
+- Spec/plano já dados pelo Matheus → confirme e siga, sem refazer.
+- Pedido explícito para pular uma etapa → respeite naquela tarefa.
 
-## Progresso visível na interface
+## Progresso na interface
 
-Sempre que houver um plano com mais de uma tarefa, use a ferramenta
-`TaskCreate`/`TaskUpdate` do Claude Code para registrar e atualizar o
-progresso — não deixe o acompanhamento só no texto da conversa. Isso
-garante que o progresso apareça tanto na interface do app quanto no
-terminal, em tempo real, tarefa por tarefa (ver detalhes em
-`writing-plans`).
+Plano com mais de uma tarefa → `TaskCreate`/`TaskUpdate`, espelhando o
+checklist de `docs/planos/` (detalhes em `writing-plans`).
 
 ## Subagents disponíveis
 
-Este plugin também inclui subagents que aplicam essas skills de forma
-isolada (contexto separado, ferramentas restritas). Todos respondem
-sempre em português do Brasil:
+Todos respondem em português do Brasil:
 
-- `revisor-arquiteto` — aplica `code-review-gate` como revisor
-  read-only.
-- `parceiro-tdd` — aplica `test-driven-development` para implementar uma
-  tarefa específica do plano (lógica testável: domain, application,
-  infra, `core` de frontend).
-- `implementador-frontend` — aplica `convencoes-frontend` para
-  implementar uma tela/componente de apresentação frontend, sem teste
-  e sem ciclo de TDD. Use no lugar do `parceiro-tdd` quando a tarefa
-  for puramente de UI (`components/`, `pages/`, JSX que só renderiza).
-- `gerador-modulo` — aplica `clean-architecture-scaffold` para
-  gerar um módulo novo.
-- `revisor-conformidade` — compara a implementação final com o
-  arquivo de spec em `docs/especificacao/`, ao fim de todas as tarefas
-  do plano.
-- `investigador-bugs` — aplica `debugging-sistematico` para investigar
-  um bug relatado até a causa raiz confirmada, antes de qualquer
-  correção.
+- `parceiro-tdd` — TDD de uma tarefa de lógica.
+- `implementador-frontend` — tela/componente de apresentação, sem TDD.
+- `revisor-arquiteto` — `code-review-gate` read-only.
+- `gerador-modulo` — `clean-architecture-scaffold`.
+- `revisor-conformidade` — implementação vs. spec, no fim do plano.
+- `investigador-bugs` — causa raiz de bug relatado.
 
-O modelo desses subagents não é fixo — veja "Modelo por
-criticidade" acima para saber quando passar `haiku` ou `opus` em vez
-de herdar o padrão. A mensagem de commit (`commit-conventions`) não
-usa subagent — é escrita pelo orquestrador da conversa, que já tem o
-contexto da tarefa.
-
-Use os subagents quando quiser manter o contexto da tarefa isolado da
-conversa principal (por exemplo, revisar um diff grande sem poluir o
-contexto com o código inteiro).
+Mensagem de commit não usa subagent: o orquestrador escreve.
