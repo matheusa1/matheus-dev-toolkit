@@ -84,8 +84,11 @@ por tarefa, ou poucos ciclos).
 
      ```gitignore
      *
-     !.gitignore
      ```
+
+     O conteúdo é exatamente essa única linha `*` — **não** adicione
+     `!.gitignore` nem qualquer outra exceção: o próprio `.gitignore`
+     também deve ficar fora do versionamento, junto com os planos.
    - Este arquivo é a fonte de verdade do plano durante toda a
      implementação — as tasks do `TaskCreate`/`TaskUpdate` espelham
      esse checklist, mas o arquivo é o que sobrevive a uma

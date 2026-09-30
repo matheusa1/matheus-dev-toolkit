@@ -96,8 +96,8 @@ o diff dela. Veja "Execução em paralelo" em `using-dev-methodology`.
 
 Specs ficam em `docs/especificacao/` e planos em `docs/planos/` no
 projeto onde a metodologia é usada, cada um com seu próprio
-`.gitignore` (`*` + `!.gitignore`) para não entrarem no versionamento
-do projeto.
+`.gitignore` contendo só `*` (sem `!.gitignore`), para que nem os
+arquivos nem o próprio `.gitignore` entrem no versionamento do projeto.
 
 ## Instalar localmente para testar
 

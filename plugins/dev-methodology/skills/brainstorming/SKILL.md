@@ -44,8 +44,11 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
 
      ```gitignore
      *
-     !.gitignore
      ```
+
+     O conteúdo é exatamente essa única linha `*` — **não** adicione
+     `!.gitignore` nem qualquer outra exceção: o próprio `.gitignore`
+     também deve ficar fora do versionamento, junto com as specs.
    - Este arquivo é a referência que o `revisor-conformidade` vai
      usar no fim da implementação para conferir se o que foi
      construído bate com o que foi especificado — por isso ele precisa
