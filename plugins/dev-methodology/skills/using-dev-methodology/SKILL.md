@@ -76,6 +76,9 @@ confirmada normalmente é trivial ou pequeno.
    b. **Code review** → `code-review-gate` (inline ou agent
       `revisor-arquiteto`), sempre com o diff **restrito à tarefa**
       (ver "Diff da tarefa"). Crítico bloqueia a próxima tarefa.
+      **Só se for "Diff de UI"** (ver abaixo), entram também os
+      revisores especialistas `revisor-acessibilidade` e
+      `revisor-responsividade`.
    c. **Commit** → `commit-conventions`, se a resposta da rodada de
       perguntas foi "um commit por tarefa" (ou se o Matheus pedir). Um
       commit atômico por tarefa, escrito pelo orquestrador.
@@ -125,8 +128,48 @@ puro, que mistura mudanças de outras tarefas ainda não commitadas:
   tarefa>` (lista vinda do plano/resumo do agent), mais
   `git status --short -- <arquivos>` para ver arquivos novos.
 
-Ao disparar o `revisor-arquiteto`, passe no prompt o comando exato de
-diff (ou a worktree + lista de arquivos) — ele não adivinha o escopo.
+Ao disparar o `revisor-arquiteto` (e os revisores de UI), passe no
+prompt o comando exato de diff (ou a worktree + lista de arquivos) —
+eles não adivinham o escopo.
+
+## Diff de UI: revisores de acessibilidade e responsividade
+
+Uma tarefa **altera interface de frontend** quando o diff dela cria ou
+muda pelo menos um destes arquivos:
+
+- componente/tela: `.tsx`, `.jsx`, `.vue`, `.svelte`, `.html`;
+- estilo: `.css`, `.scss`, `.sass`, `.less`, CSS Modules,
+  `*.styles.ts`/`*.styled.ts` (styled-components/emotion), `StyleSheet`
+  do React Native;
+- tema/layout global: `tailwind.config.*`, `globals.css`, tokens de
+  tema do design system.
+
+Não conta: teste (`*.test.tsx`, `*.spec.tsx`), story
+(`*.stories.tsx`), arquivo de `core` sem JSX, ou `.tsx` cuja mudança é
+só em lógica/tipos sem tocar no JSX nem em estilo.
+
+Com diff de UI e execução por **subagents**, dispare no **mesmo turno**
+do `revisor-arquiteto`, cada um com o mesmo escopo de diff:
+
+- `revisor-acessibilidade` — semântica, teclado, leitor de tela,
+  contraste.
+- `revisor-responsividade` — mobile first, overflow, toque, telas
+  estreitas e largas.
+
+Regras:
+- **Sem diff de UI, não dispare** nenhum dos dois — nem "por garantia".
+- Tarefa **trivial** não dispara revisor (a autorrevisão do diff cobre).
+- Execução **inline**: o `code-review-gate` inline já cobre as regras
+  7 e 10 de `convencoes-frontend`; não dispare os agents.
+- Com eles no ar, o `revisor-arquiteto` deixa as regras 7 e 10 para os
+  especialistas, sem achado duplicado.
+- Crítico de qualquer um dos três bloqueia a próxima tarefa, como no
+  `code-review-gate`. Junte os achados dos três numa lista só antes de
+  corrigir.
+- Os revisores não contam no limite de 4 agents simultâneos de
+  "Execução em paralelo" — o limite é para implementação.
+- Se a tarefa reduziu acessibilidade por decisão confirmada pelo
+  Matheus, diga isso no prompt do `revisor-acessibilidade`.
 
 ## Execução em paralelo
 
@@ -241,6 +284,9 @@ Todos respondem em português do Brasil:
 - `parceiro-tdd` — TDD de uma tarefa de lógica.
 - `implementador-frontend` — tela/componente de apresentação, sem TDD.
 - `revisor-arquiteto` — `code-review-gate` read-only.
+- `revisor-acessibilidade` — acessibilidade do diff, só em diff de UI.
+- `revisor-responsividade` — responsividade/mobile first do diff, só
+  em diff de UI.
 - `gerador-modulo` — `clean-architecture-scaffold`.
 - `revisor-conformidade` — implementação vs. spec, no fim do plano.
 - `investigador-bugs` — causa raiz de bug relatado.
