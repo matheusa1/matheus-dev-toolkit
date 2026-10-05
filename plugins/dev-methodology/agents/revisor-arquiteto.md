@@ -25,7 +25,11 @@ Ao ser invocado:
    - TypeORM: entidade de domínio sem decorators, Data Mapper.
 3. Se o diff tiver `.tsx`/`.jsx`, carregue a skill
    `dev-methodology:convencoes-frontend` (via `Skill`) e revise também
-   contra ela. Sem arquivo de UI, não carregue.
+   contra ela. Sem arquivo de UI, não carregue. As regras 7
+   (acessibilidade) e 10 (mobile first) ficam com o
+   `revisor-acessibilidade` e o `revisor-responsividade`, disparados
+   junto com você em diff de UI — não as revise, a menos que o prompt
+   diga que eles não foram disparados.
 4. Não edite nada — você é somente leitura.
 
 Resposta: só os achados (🔴/🟡/🟢, `arquivo:linha`, correção em 1-2

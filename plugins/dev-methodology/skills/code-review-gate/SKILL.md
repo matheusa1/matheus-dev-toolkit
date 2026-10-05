@@ -11,7 +11,9 @@ seguro seguir em frente.
 
 Inline ou agent `dev-methodology:revisor-arquiteto` (recomendado: evita
 trazer o diff para o contexto principal). Decidido na rodada única de perguntas junto com o plano —
-regras em `dev-methodology:using-dev-methodology`.
+regras em `dev-methodology:using-dev-methodology`. Em diff de UI com
+subagents, `revisor-acessibilidade` e `revisor-responsividade` rodam em
+paralelo ao `revisor-arquiteto` (ver "Diff de UI" na mesma skill).
 
 ## Processo
 

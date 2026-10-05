@@ -46,6 +46,14 @@ juntos, numa rodada única, e não se repetem durante a execução.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.
+  - `revisor-acessibilidade` — revisor read-only de acessibilidade
+    (semântica, teclado, leitor de tela, contraste). Só disparado em
+    tarefa que altera interface de frontend, junto com o
+    `revisor-arquiteto`.
+  - `revisor-responsividade` — revisor read-only de responsividade
+    (mobile first, overflow, toque, telas estreitas e largas). Só
+    disparado em tarefa que altera interface de frontend, junto com o
+    `revisor-arquiteto`.
   - `parceiro-tdd` — implementa uma tarefa em TDD estrito.
   - `implementador-frontend` — implementa uma tela/componente de
     apresentação frontend sem teste e sem TDD, seguindo
@@ -60,7 +68,7 @@ juntos, numa rodada única, e não se repetem durante a execução.
 - **Hook**: lembrete no início da sessão apontando para
   `using-dev-methodology`.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
-  `parceiro-tdd`, `implementador-frontend`, `gerador-modulo`,
+  `revisor-acessibilidade`, `revisor-responsividade`, `parceiro-tdd`, `implementador-frontend`, `gerador-modulo`,
   `revisor-conformidade` e `investigador-bugs` não é fixo — varia entre
   `haiku` (baixa), padrão da conversa (média) e `opus` (alta), conforme
   a criticidade marcada na tarefa do plano. Ver "Modelo por
@@ -71,7 +79,7 @@ juntos, numa rodada única, e não se repetem durante a execução.
 ```
 brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
   → writing-plans (plano em docs/planos/AAAA-MM-DD-nome-tarefa.md, marca tarefas independentes com [P<n>])
-  → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD (lógica) ou convencoes-frontend sem teste (tela/UI) → code-review-gate → commit-conventions ]
+  → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD (lógica) ou convencoes-frontend sem teste (tela/UI) → code-review-gate (+ revisores de acessibilidade e responsividade se o diff altera UI) → commit-conventions ]
   → (opcional) clean-architecture-scaffold
   → revisor-conformidade (compara implementação final x spec e x plano)
 ```
