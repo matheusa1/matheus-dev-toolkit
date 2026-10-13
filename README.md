@@ -5,58 +5,41 @@ Marketplace pessoal de plugins para o Claude Code e para o Codex CLI.
 ## Plugins
 
 - **dev-methodology** — metodologia de desenvolvimento agnóstica de
-  projeto (brainstorm→spec, TDD, code review com gate, scaffolding de
-  Clean Architecture/DDD). Ver `plugins/dev-methodology/README.md`.
+  projeto: brainstorm→spec, TDD forçado, code review com gate de
+  severidade (+ revisores de acessibilidade e responsividade em diff de
+  UI), debugging sistemático, execução paralela em worktrees, commits
+  em Conventional Commits, scaffolding de Clean Architecture/DDD e
+  documentação final da implementação. Ver
+  `plugins/dev-methodology/README.md`.
 
-## Como usar
+## Instalar (Claude Code)
 
-### 1. Testar localmente, sem subir pro GitHub ainda
+O marketplace já está publicado em
+[`matheusa1/matheus-dev-toolkit`](https://github.com/matheusa1/matheus-dev-toolkit)
+(branch `main`).
 
-Dentro de qualquer projeto:
-
-```bash
-claude --plugin-dir /caminho/para/matheus-dev-toolkit/plugins/dev-methodology
-```
-
-Isso carrega o plugin só para essa sessão, sem precisar de marketplace.
-
-### 2. Publicar como marketplace pessoal (recomendado)
-
-1. Crie um repositório no GitHub (público ou privado) e suba esta
-   pasta inteira (`matheus-dev-toolkit/`) como o conteúdo do repo.
+1. Registre o marketplace (uma vez por máquina):
 
    ```bash
-   cd matheus-dev-toolkit
-   git init
-   git add .
-   git commit -m "dev-methodology plugin v0.1.0"
-   git branch -M main
-   git remote add origin git@github.com:<seu-usuario>/<repo>.git
-   git push -u origin main
+   /plugin marketplace add matheusa1/matheus-dev-toolkit
    ```
 
-2. Em qualquer máquina/projeto, registre o marketplace:
-
-   ```bash
-   /plugin marketplace add <seu-usuario>/<repo>
-   ```
-
-3. Instale o plugin:
+2. Instale o plugin:
 
    ```bash
    /plugin install dev-methodology@matheus-toolkit
    /reload-plugins
    ```
 
-4. Para usar em todo projeto por padrão sem reinstalar toda vez, você
-   pode declarar no `.claude/settings.json` de cada projeto (ou no seu
-   `~/.claude/settings.json` para todos os projetos):
+3. Para deixar ativo em todo projeto sem instalar de novo, declare no
+   `~/.claude/settings.json` (todos os projetos) ou no
+   `.claude/settings.json` de um projeto:
 
    ```json
    {
      "extraKnownMarketplaces": {
        "matheus-toolkit": {
-         "source": { "source": "github", "repo": "<seu-usuario>/<repo>" }
+         "source": { "source": "github", "repo": "matheusa1/matheus-dev-toolkit" }
        }
      },
      "enabledPlugins": {
@@ -65,21 +48,46 @@ Isso carrega o plugin só para essa sessão, sem precisar de marketplace.
    }
    ```
 
-### Atualizar depois de mudar algo
+## Desenvolver o plugin
+
+### Testar uma mudança local antes de publicar
+
+Dentro de qualquer projeto, aponte para o clone deste repo:
 
 ```bash
-git add . && git commit -m "ajuste na skill X" && git push
-/plugin marketplace update matheus-toolkit
-/reload-plugins
+claude --plugin-dir /caminho/para/matheus-dev-toolkit/plugins/dev-methodology
 ```
 
-Como o `plugin.json` não fixa uma `version`, cada commit novo já conta
-como uma versão nova — não precisa bumpar nada manualmente.
+Isso carrega a versão local só nessa sessão, sem passar pelo
+marketplace.
 
-## Validar antes de subir
+### Versionar
+
+O `plugin.json` fixa uma `version` (semver), e o Claude Code usa esse
+campo para saber se há atualização: **mudança sem subir a versão não
+chega a quem já tem o plugin instalado.** A cada mudança:
+
+- Suba a versão em `plugins/dev-methodology/.claude-plugin/plugin.json`
+  **e** em `plugins/dev-methodology/.codex-plugin/plugin.json` (as duas
+  sempre iguais): patch para ajuste/correção de regra, minor para
+  skill/agent/etapa nova.
+- Registre a mudança no README do plugin (quando muda o que ele faz) e
+  no corpo do commit, citando a versão nova.
+
+### Validar antes de subir
 
 ```bash
 claude plugin validate .
+```
+
+### Publicar uma mudança
+
+Mudanças entram na `main` por pull request. Depois do merge, em cada
+máquina:
+
+```bash
+/plugin marketplace update matheus-toolkit
+/reload-plugins
 ```
 
 ## Codex CLI
@@ -88,26 +96,23 @@ Este repo também expõe um marketplace pro [Codex CLI](https://developers.opena
 (`.agents/plugins/marketplace.json` na raiz + `.codex-plugin/plugin.json`
 dentro de cada plugin, ex. `plugins/dev-methodology/.codex-plugin/plugin.json`).
 
-### 1. Testar localmente
+### Instalar
+
+```bash
+codex plugin marketplace add matheusa1/matheus-dev-toolkit
+codex plugin add dev-methodology@matheus-toolkit
+```
+
+### Testar uma mudança local
 
 ```bash
 codex plugin marketplace add /caminho/para/matheus-dev-toolkit
 codex plugin add dev-methodology@matheus-toolkit
 ```
 
-### 2. Publicar como marketplace remoto
-
-Depois de subir esta pasta pro GitHub:
+### Atualizar depois do merge
 
 ```bash
-codex plugin marketplace add <seu-usuario>/<repo>
-codex plugin add dev-methodology@matheus-toolkit
-```
-
-### Atualizar depois de mudar algo
-
-```bash
-git add . && git commit -m "ajuste na skill X" && git push
 codex plugin add dev-methodology@matheus-toolkit
 ```
 

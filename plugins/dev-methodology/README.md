@@ -47,7 +47,10 @@ juntos, numa rodada única, e não se repetem durante a execução.
     Formato de referência em `exemplo.md`, com domínio fictício.
 - **Regras de código** (em `using-dev-methodology`, valem para todo
   desenvolvimento): código majoritariamente em inglês (specs, planos e
-  commits seguem em português) e sempre respeitando SOLID.
+  commits seguem em português), sempre respeitando SOLID, e vizinho
+  legado não é convenção: com dois padrões no repo, vale o documentado
+  no `CLAUDE.md` ou o que respeita camadas/SOLID, com a divergência
+  sinalizada.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.
@@ -118,12 +121,16 @@ metodologia é usada, cada um com seu próprio
 `.gitignore` contendo só `*` (sem `!.gitignore`), para que nem os
 arquivos nem o próprio `.gitignore` entrem no versionamento do projeto.
 
-## Instalar localmente para testar
+## Instalar
+
+Publicado no marketplace `matheus-toolkit`
+([`matheusa1/matheus-dev-toolkit`](https://github.com/matheusa1/matheus-dev-toolkit)):
 
 ```bash
-claude --plugin-dir ./plugins/dev-methodology
+/plugin marketplace add matheusa1/matheus-dev-toolkit
+/plugin install dev-methodology@matheus-toolkit
 ```
 
-## Instalar via marketplace
-
-Veja o README na raiz do repositório.
+Ativação em todo projeto, Codex CLI, teste local com `--plugin-dir` e
+como versionar/publicar uma mudança: veja o README na raiz do
+repositório.
