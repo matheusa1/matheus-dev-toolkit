@@ -202,6 +202,14 @@ Regras:
 - Se a tarefa reduziu acessibilidade por decisão confirmada pelo
   Matheus, diga isso no prompt do `revisor-acessibilidade`.
 
+**Validação além do código** (fim de tarefa com diff de UI, inline ou
+subagent): revisor lê código, não ouve a tela. Antes de reportar:
+
+- No navegador, confira a ordem de Tab (o que recebe foco e em que
+  ordem) e o nome dos elementos novos na árvore de acessibilidade.
+- Entregue ao Matheus um roteiro curto de teste com leitor de tela
+  (VoiceOver/NVDA): onde focar, que tecla apertar e a frase esperada.
+
 ## Execução em paralelo
 
 Tarefas do mesmo grupo `[P<n>]` rodam ao mesmo tempo, uma `Agent` por

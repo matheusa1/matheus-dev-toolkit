@@ -55,9 +55,13 @@ juntos, numa rodada única, e não se repetem durante a execução.
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.
   - `revisor-acessibilidade` — revisor read-only de acessibilidade
-    (semântica, teclado, leitor de tela, contraste). Só disparado em
-    tarefa que altera interface de frontend, junto com o
-    `revisor-arquiteto`.
+    (semântica, teclado, leitor de tela, contraste por estado,
+    gráficos). Só disparado em tarefa que altera interface de
+    frontend, junto com o `revisor-arquiteto`; limitação global (tema,
+    `#root` do React) sai como pendência, sem bloquear a tarefa. Toda
+    tarefa com diff de UI termina com conferência de Tab e da árvore de
+    acessibilidade no navegador e um roteiro curto de teste com leitor
+    de tela para o Matheus.
   - `revisor-responsividade` — revisor read-only de responsividade
     (mobile first, overflow, toque, telas estreitas e largas). Só
     disparado em tarefa que altera interface de frontend, junto com o
