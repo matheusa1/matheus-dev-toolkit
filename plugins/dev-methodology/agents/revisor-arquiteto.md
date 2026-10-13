@@ -19,6 +19,11 @@ Ao ser invocado:
 2. Revise conforme o `code-review-gate`, com atenção a:
    - `domain` sem imports de `infra`/frameworks; `application` só
      depende de `domain` via ports `I*`.
+   - `application`/`domain` sem `new` de logger, telemetria ou classe
+     de framework (ex: `Logger` do NestJS) — vem injetado (`Pick<...>`
+     ou `I*`).
+   - Com `paths` no tsconfig, import que sai do módulo usa o alias,
+     nunca `../../..`; vizinho legado com relativo não justifica.
    - Nomenclatura `T`/`I`/`E`.
    - Bindings Inversify no `container-module.ts` do próprio módulo,
      singleton salvo razão explícita.

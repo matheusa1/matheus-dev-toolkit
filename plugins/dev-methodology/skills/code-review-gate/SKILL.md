@@ -33,7 +33,16 @@ paralelo ao `revisor-arquiteto` (ver "Diff de UI" na mesma skill).
    - **Arquitetura**: camadas respeitadas (domain não importa infra,
      application não conhece detalhes de framework), convenções de
      nomenclatura (`T`/`I`/`E` em TypeScript), DI correta (bindings
-     Inversify no módulo certo).
+     Inversify no módulo certo). `application`/`domain` não instanciam
+     logger, cliente de telemetria nem qualquer classe de framework
+     (ex: `new Logger(...)` do NestJS): log e telemetria entram como
+     dependência injetada pelo container (porta `Pick<...>` ou `I*`).
+     🟡 aviso; 🔴 se o use case passa a depender do framework para
+     funcionar.
+   - **Imports**: se o projeto define path aliases (`paths` no
+     tsconfig), import que sai do módulo atual usa o alias, nunca
+     `../../..`. Relativo só dentro do próprio módulo. Arquivo legado
+     com relativo não é justificativa. 🟡 aviso.
    - **Segurança básica**: segredos expostos, entrada não validada,
      SQL/queries não parametrizadas.
    - **Legibilidade**: nomes claros, sem duplicação óbvia.

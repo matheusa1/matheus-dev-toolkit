@@ -47,7 +47,10 @@ juntos, numa rodada única, e não se repetem durante a execução.
     Formato de referência em `exemplo.md`, com domínio fictício.
 - **Regras de código** (em `using-dev-methodology`, valem para todo
   desenvolvimento): código majoritariamente em inglês (specs, planos e
-  commits seguem em português) e sempre respeitando SOLID.
+  commits seguem em português), sempre respeitando SOLID, e vizinho
+  legado não é convenção: com dois padrões no repo, vale o documentado
+  no `CLAUDE.md` ou o que respeita camadas/SOLID, com a divergência
+  sinalizada.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.

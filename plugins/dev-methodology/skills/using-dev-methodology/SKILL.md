@@ -32,6 +32,12 @@ e agents apontam para cá em vez de repeti-las.
   substituíveis pelo contrato (L); interfaces pequenas (I); depender de
   abstrações `I*`/ports, nunca de concretas (D). Se a tarefa parecer
   exigir violar algum, pare e pergunte.
+- **Vizinho legado não é convenção.** Se o repo tem dois padrões para
+  a mesma coisa (ex: logger instanciado vs. telemetria injetada; import
+  relativo vs. path alias), siga o que está documentado no `CLAUDE.md`
+  do projeto ou, sem documentação, o que respeita as camadas/SOLID —
+  não o arquivo vizinho só por estar ao lado. Sinalize a divergência
+  no relatório em vez de escolher em silêncio.
 
 ## Bug relatado? Investigue antes de corrigir
 
