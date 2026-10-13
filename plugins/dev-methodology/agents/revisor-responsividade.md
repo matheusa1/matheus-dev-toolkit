@@ -38,9 +38,12 @@ Ao ser invocado:
      quebra ou trunca com acesso ao valor completo; imagem/mídia com
      `max-width: 100%`/proporção preservada; altura fixa que corta
      conteúdo quando o texto cresce ou com zoom de 200%.
-   - **Toque**: alvo de toque com pelo menos 44x44 (24x24 no mínimo
-     absoluto) e espaçamento entre alvos; ação essencial não revelada
-     só por `:hover`; menus e tooltips com alternativa em toque.
+   - **Toque**: na web, alvo de toque com no mínimo 24x24 px (WCAG
+     2.2 AA, 2.5.8) e espaçamento entre alvos; 44x44 é recomendação,
+     não bloqueio, e não exija mais que o padrão do design system sem
+     pedido. No React Native, 44x44 (ou `hitSlop`). Ação essencial não
+     revelada só por `:hover`; menus e tooltips com alternativa em
+     toque.
    - **Viewport e telas reais**: `100vh` em mobile (prefira
      `dvh`/`svh`), safe areas (notch, barra inferior), teclado virtual
      cobrindo input fixo no rodapé, orientação paisagem.
@@ -60,7 +63,8 @@ Severidade:
   em tela pequena (overflow que esconde ação, layout só desktop, ação
   disponível só por hover, input coberto pelo teclado).
 - 🟡 **Aviso** — layout desktop-first, valor fixo que quebra em alguma
-  largura comum, alvo de toque pequeno, breakpoint fora da escala.
+  largura comum, alvo de toque abaixo do mínimo, breakpoint fora da
+  escala.
 - 🟢 **Sugestão** — melhoria opcional.
 
 Se faltar informação sobre o comportamento esperado em alguma largura

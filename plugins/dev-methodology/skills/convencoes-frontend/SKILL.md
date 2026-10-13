@@ -181,6 +181,9 @@ skill precisa manter um nível mínimo aceitável de acessibilidade — não
   alcançável e operável via teclado (`Tab`, `Enter`/`Espaço`), sem
   remover o `outline`/foco visível do navegador ou do design system
   sem substituí-lo por um indicador de foco equivalente.
+- **Tab é só para interativo**: botão, link, campo ou widget operável
+  por teclado. Texto fixo não recebe `tabIndex` para "ser lido" — o
+  leitor de tela já lê pelas próprias teclas de leitura.
 - **Texto alternativo**: `<img>`/`<Image>`/`<Avatar>` com conteúdo
   informativo sempre com `alt` descritivo; imagem puramente decorativa
   usa `alt=""` (não omite o atributo).
@@ -190,21 +193,48 @@ skill precisa manter um nível mínimo aceitável de acessibilidade — não
 - **Contraste**: use os tokens de tema do design system (regra 2), que
   já são calibrados para contraste adequado; se precisar de uma cor
   fora dos tokens, isso é ainda mais motivo para questionar antes de
-  aplicar (ver abaixo).
+  aplicar (ver abaixo). Confira texto e ícone em todos os estados
+  (normal, hover, active, foco, desabilitado), inclusive tokens
+  sobrescritos no tema global (ex: `ConfigProvider`/`theme` em
+  `src/main.tsx`). Problema que vem do tema global vira pendência
+  registrada, não ajuste local escondido.
+
+### Gráficos e visualizações
+
+- **Nada só no hover/tooltip**: informação que só aparece no tooltip
+  precisa de alternativa por teclado e leitor de tela — legenda/tabela
+  visível, ou navegação por teclado que mostre o tooltip, mais texto
+  alternativo com os valores.
+- **Nome com os dados**: o gráfico tem nome acessível com o resumo
+  (ex: `role="img"` + `aria-label` com cada grupo, valor e percentual).
+- **Camada a11y da biblioteca pode atrapalhar**: no recharts,
+  `accessibilityLayer` põe `role="application"` e foco no SVG (o
+  VoiceOver pede para "interagir" e não há nada para ler); o `Pie` tem
+  `rootTabIndex` 0 por padrão (parada de Tab sem nome); o wrapper
+  registra `onClick` e o VoiceOver anuncia "clicável".
+- **Padrão recomendado**: wrapper próprio com `role="img"`,
+  `tabIndex={0}`, `aria-label` e `onKeyDown` (setas controlam o
+  tooltip via `defaultIndex`/`active`); a árvore da biblioteca fica em
+  `aria-hidden`, sem nada focável dentro.
+- Nunca deixe elemento focável dentro de `aria-hidden` nem de
+  `role="img"`.
 
 ### Se uma decisão da tarefa prejudicar a acessibilidade, questione antes de implementar
 
 Se, ao implementar a tarefa como descrita, você perceber que o
 resultado vai prejudicar a acessibilidade (ex: pedido explícito para
 remover o foco visível, usar `<div>` clicável em vez de botão, omitir
-`alt`/label, usar só cor para indicar estado, ou aplicar uma cor fora
-dos tokens que reduz o contraste), **não implemente isso em silêncio
-nem "corrija" por conta própria** — pare e pergunte se o objetivo é
-mesmo abrir mão da acessibilidade ali (ex: "isso remove o indicador de
+`alt`/label, usar só cor para indicar estado, aplicar uma cor fora
+dos tokens que reduz o contraste, ou remover legenda, tabela ou texto
+que era a alternativa a uma informação só de hover), **não implemente
+isso em silêncio nem "corrija" por conta própria** — pare e pergunte
+se o objetivo é mesmo abrir mão da acessibilidade ali (ex: "isso remove o indicador de
 foco do teclado para todos os usuários desse componente — é essa a
 intenção, ou posso manter/adaptar o foco visível?"). Só prossiga do
 jeito que reduz acessibilidade se a resposta confirmar que é
-intencional; caso contrário, implemente a alternativa acessível.
+intencional; caso contrário, implemente a alternativa acessível. Ao
+perguntar, proponha outra alternativa (ex: navegação por teclado no
+gráfico no lugar da legenda removida).
 
 ## 8. Sem lógica de negócio em `.tsx`, nem dentro de `useEffect`
 

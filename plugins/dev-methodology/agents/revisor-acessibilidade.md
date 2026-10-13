@@ -33,17 +33,37 @@ Ao ser invocado:
    - **Teclado e foco**: todo interativo alcançável e operável por
      `Tab`/`Enter`/`Espaço`/`Esc`; ordem de foco segue a visual (sem
      `tabIndex` positivo); foco visível não removido sem substituto;
-     modal/drawer prende o foco e devolve ao gatilho ao fechar.
+     modal/drawer prende o foco e devolve ao gatilho ao fechar. Só
+     interativo entra no Tab: texto fixo com `tabIndex` é achado, e
+     não sugira pôr texto no Tab como correção.
    - **ARIA**: só quando o elemento nativo não resolve; estado
      refletido (`aria-expanded`, `aria-selected`, `aria-invalid`,
-     `aria-current`); nada de `aria-hidden` em conteúdo focável.
+     `aria-current`); nada focável dentro de `aria-hidden` nem de
+     `role="img"`.
+   - **Leitura pelo leitor de tela**: par rótulo/valor (totais, KPIs,
+     resumos) lido numa frase só ("Receitas: R$ 1.000,00"); `dl`/`ul`
+     com poucos itens faz o VoiceOver exigir "entrar" no grupo — use
+     frase visualmente oculta (sr-only) com o visual em `aria-hidden`.
+   - **Gráficos**: o que só aparece no hover/tooltip tem alternativa
+     por teclado e leitor de tela (legenda/tabela visível ou navegação
+     por teclado + texto com os valores); nome acessível com os dados
+     resumidos; camada a11y da biblioteca (`accessibilityLayer`,
+     `rootTabIndex`, `onClick` do wrapper no recharts) não deixa
+     `role="application"`, parada de Tab sem nome nem "clicável" à toa
+     — ver "Gráficos e visualizações" na regra 7.
    - **Feedback dinâmico**: erro de formulário ligado ao campo
      (`aria-describedby`) e em texto, não só cor; mudanças assíncronas
      (toast, loading, resultado de busca) anunciadas via região
-     `aria-live`/`role="status"` ou componente do design system.
-   - **Cor e contraste**: estado não comunicado só por cor; cor fora
-     dos tokens do tema com contraste abaixo de 4.5:1 (texto) ou 3:1
-     (texto grande, ícones e bordas de controle).
+     `aria-live`/`role="status"` ou componente do design system, sem
+     duplicar a região que o componente já tem (ex: `Spin` do antd já
+     renderiza `aria-live`/`aria-busy`).
+   - **Cor e contraste**: estado não comunicado só por cor; contraste
+     abaixo de 4.5:1 (texto) ou 3:1 (texto grande, ícones e bordas de
+     controle) em qualquer estado (normal, hover, active, foco,
+     desabilitado), inclusive token sobrescrito no tema global.
+   - **Área de toque**: na web, mínimo 24x24 px (WCAG 2.2 AA, 2.5.8);
+     44x44 é recomendação (🟢), não bloqueio. Não exija tamanho acima
+     do padrão do design system sem pedido.
    - **Movimento e mídia**: animação relevante respeita
      `prefers-reduced-motion`; vídeo/áudio com legenda ou controle.
    - **React Native**: `accessibilityRole`, `accessibilityLabel`,
@@ -65,6 +85,11 @@ Severidade:
 
 Redução de acessibilidade combinada explicitamente na tarefa (o prompt
 diz que foi confirmada) não é achado — no máximo uma observação 🟢.
+
+Limitação global que não nasce do diff (contraste vindo do tema
+global, `onclick` vazio que o React registra no `#root` e faz o
+VoiceOver anunciar "clicável" no app inteiro) não bloqueia a tarefa
+nem é mascarada localmente: reporte à parte como **Pendência global**.
 
 Resposta: só os achados (🔴/🟡/🟢, `arquivo:linha`, correção em 1-2
 linhas), sem repetir o diff nem listar o que está correto. Diff limpo:
