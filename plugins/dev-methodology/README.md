@@ -40,6 +40,11 @@ juntos, numa rodada única, e não se repetem durante a execução.
   - `debugging-sistematico` — investiga um bug relatado (reproduzir,
     coletar evidência, testar hipóteses, isolar causa raiz) antes de
     qualquer correção.
+  - `documentacao-implementacao` — gera, quando o Matheus aceita ou
+    pede, a documentação final da entrega em markdown (ticket,
+    contratos, rotas novas e alteradas, mudanças de tela, impacto) a
+    partir do diff real da branch, salva em `docs/implementacao/`.
+    Formato de referência em `exemplo.md`, com domínio fictício.
 - **Regras de código** (em `using-dev-methodology`, valem para todo
   desenvolvimento): código majoritariamente em inglês (specs, planos e
   commits seguem em português) e sempre respeitando SOLID.
@@ -82,7 +87,12 @@ brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
   → [ para cada tarefa (ou grupo [P<n>] em paralelo): TDD (lógica) ou convencoes-frontend sem teste (tela/UI) → code-review-gate (+ revisores de acessibilidade e responsividade se o diff altera UI) → commit-conventions ]
   → (opcional) clean-architecture-scaffold
   → revisor-conformidade (compara implementação final x spec e x plano)
+  → (opcional, se aceito) documentacao-implementacao (doc final em docs/implementacao/AAAA-MM-DD-ticket.md)
 ```
+
+A documentação final nunca é gerada sem aceite: na tarefa pequena ela é
+a 4ª pergunta da rodada única; na grande e em bug, é oferecida em uma
+linha no relatório final; na trivial, só sob pedido.
 
 Para um **bug relatado** (em vez de feature nova), o fluxo entra por
 `debugging-sistematico` em vez de `brainstorming`:
@@ -102,8 +112,9 @@ worktree é detectado pelo lockfile (Bun, Yarn Berry/PnP, Yarn Classic
 com symlink de `node_modules`), e o code review de cada tarefa olha só
 o diff dela. Veja "Execução em paralelo" em `using-dev-methodology`.
 
-Specs ficam em `docs/especificacao/` e planos em `docs/planos/` no
-projeto onde a metodologia é usada, cada um com seu próprio
+Specs ficam em `docs/especificacao/`, planos em `docs/planos/` e
+documentações finais em `docs/implementacao/` no projeto onde a
+metodologia é usada, cada um com seu próprio
 `.gitignore` contendo só `*` (sem `!.gitignore`), para que nem os
 arquivos nem o próprio `.gitignore` entrem no versionamento do projeto.
 

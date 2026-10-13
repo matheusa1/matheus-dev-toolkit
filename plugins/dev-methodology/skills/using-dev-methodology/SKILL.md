@@ -86,6 +86,8 @@ confirmada normalmente é trivial ou pequeno.
    (inline ou agent `gerador-modulo`).
 5. **Fim do plano** → comparação com a spec (inline ou agent
    `revisor-conformidade`, recomendado). Feature pronta só sem crítico.
+6. **Documentação final** (opcional) → `documentacao-implementacao`,
+   só se o Matheus aceitar (ver "Documentação final").
 
 ## Perguntas: uma rodada só
 
@@ -102,19 +104,42 @@ espalhadas pelo fluxo:
    Define também como as worktrees paralelas são integradas.
 4. **Conformidade final** (só tarefa grande) — Agent
    `revisor-conformidade` (recomendado) / Inline.
+   **Documentação final** (só tarefa pequena, no lugar desta) —
+   Gerar no fim (recomendado quando a entrega tem ticket) / Não gerar.
 
 Regras:
 - Sempre com a opção recomendada primeiro e o motivo na descrição.
 - Pule a pergunta cuja resposta o Matheus já deu nesta conversa
   (ex: "usa subagent pra tudo", "commita cada tarefa").
-- Depois dessa rodada, **não pergunte de novo** sobre execução, commit
-  ou conformidade — aplique as respostas até o fim do plano. Só volte
-  a perguntar se ele pedir para decidir tarefa a tarefa.
+- Depois dessa rodada, **não pergunte de novo** sobre execução, commit,
+  conformidade ou documentação — aplique as respostas até o fim do
+  plano. Só volte a perguntar se ele pedir para decidir tarefa a
+  tarefa.
 - Grupos `[P<n>]` sempre usam agents, qualquer que seja a resposta 2.
 - Etapas fora de plano (ex: investigar bug) perguntam inline vs.
   agent na primeira vez que forem necessárias, e a resposta vale para
   o resto da conversa.
 - `brainstorming` é sempre inline.
+
+## Documentação final
+
+`documentacao-implementacao` gera um markdown da entrega (contratos,
+rotas, comportamento de tela, impacto) a partir do diff real. Nunca
+roda sem aceite:
+
+| Fluxo | Como oferecer |
+|---|---|
+| **Trivial** | Não oferece. Só gera se o Matheus pedir. |
+| **Pequena** | Pergunta 4 da rodada única. "Gerar no fim" → gera depois da conformidade inline. |
+| **Grande** | Não entra na rodada (já tem 4 perguntas). No relatório final, depois da conformidade sem crítico, uma linha: "Quer a documentação final da implementação?". |
+| **Bug** | Igual à grande: uma linha no relatório final, depois da correção revisada. |
+
+- Pedido explícito em qualquer momento ("documenta isso") → gera, sem
+  pergunta.
+- Resposta já dada nesta conversa (ex: "sempre gera a doc") → aplique
+  sem perguntar.
+- A oferta é feita uma vez. "Não" ou silêncio encerra o assunto.
+- Roda inline: quem orquestrou acompanhou a entrega inteira.
 
 ## Diff da tarefa
 

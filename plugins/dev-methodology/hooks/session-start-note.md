@@ -14,7 +14,9 @@ pequena junta spec e plano num arquivo com uma confirmação; grande
 segue `dev-methodology:brainstorming` → `dev-methodology:writing-plans`
 → (`dev-methodology:test-driven-development` +
 `dev-methodology:code-review-gate` + `dev-methodology:commit-conventions`
-por tarefa, tarefas `[P<n>]` em paralelo) → revisão de conformidade.
+por tarefa, tarefas `[P<n>]` em paralelo) → revisão de conformidade
+→ documentação final (`dev-methodology:documentacao-implementacao`),
+só se aceita.
 
 Todas as skills deste plugin são invocadas com o prefixo
 `dev-methodology:`. Se uma chamada `Skill` falhar com "Unknown skill",
