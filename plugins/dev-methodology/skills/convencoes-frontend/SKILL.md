@@ -89,6 +89,9 @@ menores e mais específicos sempre que possível.
   menores, cada um com uma responsabilidade única.
 - Isso anda junto com a regra 3: eliminar ternário/condicional do
   `return` naturalmente empurra para mais componentização.
+- Limite objetivo: componente com no máximo 20 linhas e arquivo `.tsx`
+  com no máximo 150 (ver "Regras de código" em
+  `using-dev-methodology`). Passou, divida em componentes filhos.
 
 ## 5. Nunca use estilo inline
 

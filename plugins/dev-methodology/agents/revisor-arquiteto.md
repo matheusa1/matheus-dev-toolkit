@@ -28,6 +28,9 @@ Ao ser invocado:
    - Bindings Inversify no `container-module.ts` do próprio módulo,
      singleton salvo razão explícita.
    - TypeORM: entidade de domínio sem decorators, Data Mapper.
+   - Tamanho: arquivo ≤ 150 linhas e função/componente ≤ 20 (meça com
+     `wc -l` e nas funções tocadas pelo diff); severidade conforme o
+     `code-review-gate`.
 3. Se o diff tiver `.tsx`/`.jsx`, carregue a skill
    `dev-methodology:convencoes-frontend` (via `Skill`) e revise também
    contra ela. Sem arquivo de UI, não carregue. As regras 7

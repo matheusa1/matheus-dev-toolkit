@@ -54,6 +54,13 @@ paralelo ao `revisor-arquiteto` (ver "Diff de UI" na mesma skill).
      inchada, subtipo que quebra o contrato do pai, ou alteração de
      código existente onde bastava estender. Violação clara é 🔴
      crítico quando compromete a arquitetura; caso contrário 🟡.
+   - **Tamanho**: arquivo com no máximo 150 linhas e função (método,
+     componente) com no máximo 20, da assinatura ao fechamento. Meça
+     com `wc -l` nos arquivos do diff e olhando as funções que o diff
+     cria ou altera. Fora do limite: teste, gerado, migration e
+     config. Arquivo ou função criado pelo diff acima do limite é 🔴
+     crítico; legado que o diff fez crescer além do limite é 🟡 aviso,
+     com a extração sugerida.
    - **Só se o diff tiver `.tsx`/`.jsx`** (UI): carregue a skill
      `dev-methodology:convencoes-frontend` e revise contra ela. Diff
      sem arquivo de UI não carrega essa skill. Redução de

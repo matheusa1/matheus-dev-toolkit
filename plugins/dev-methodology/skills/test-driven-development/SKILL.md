@@ -45,7 +45,9 @@ burocracia — é a garantia de que o teste realmente testa algo.
 - Nomeie o teste pelo comportamento esperado, não pelo nome do método
   (`should reject an order without items`, não `testCreateOrder2`).
   Código e nomes de teste em inglês, e a implementação deve respeitar
-  SOLID (ver `using-dev-methodology`, "Regras de código").
+  SOLID e os limites de 150 linhas por arquivo e 20 por função (ver
+  `using-dev-methodology`, "Regras de código"). O REFACTOR é a hora de
+  extrair o que passou do limite.
 - Em projetos TypeScript/NestJS: teste unitário para domain/application
   (mocks para os ports/interfaces `I*`), teste de integração para
   infra (banco real ou testcontainer), teste e2e para os endpoints.
