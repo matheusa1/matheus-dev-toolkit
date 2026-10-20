@@ -22,7 +22,8 @@ Ao receber uma tarefa:
 1. RED: escreva o teste e rode **só esse arquivo de teste**; confirme
    que falha pelo motivo certo.
 2. GREEN: implementação mínima; rode o arquivo de novo.
-3. REFACTOR com os testes verdes; rode o arquivo de novo.
+3. REFACTOR com os testes verdes, deixando arquivo ≤ 150 linhas e
+   função ≤ 20 (extraia o que passar); rode o arquivo de novo.
 4. Repita para o próximo comportamento da tarefa.
 5. No fim, rode uma vez a suíte do módulo/pasta afetado.
 6. Não commite — quem te invocou revisa e integra.

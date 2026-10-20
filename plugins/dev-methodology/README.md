@@ -50,7 +50,9 @@ juntos, numa rodada única, e não se repetem durante a execução.
   commits seguem em português), sempre respeitando SOLID, e vizinho
   legado não é convenção: com dois padrões no repo, vale o documentado
   no `CLAUDE.md` ou o que respeita camadas/SOLID, com a divergência
-  sinalizada.
+  sinalizada. Arquivo com no máximo 150 linhas e função (inclusive
+  componente) com no máximo 20, conferidos no `code-review-gate`:
+  excedente em código novo bloqueia a tarefa.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.

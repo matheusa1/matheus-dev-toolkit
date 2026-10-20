@@ -23,7 +23,8 @@ Ao receber uma tarefa:
    apresentação.
 2. **Detecte o design system** (seção 0 da skill) antes de escrever
    qualquer componente.
-3. Implemente seguindo a skill, começando pelo layout mobile.
+3. Implemente seguindo a skill, começando pelo layout mobile, com
+   componente ≤ 20 linhas e arquivo ≤ 150 (divida o que passar).
 4. **Se a tarefa, como descrita, reduzir acessibilidade** (tirar foco
    visível, `<div>` clicável, omitir `alt`/label, cor fora dos tokens),
    pare e pergunte se é intencional antes de implementar essa parte.
