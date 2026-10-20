@@ -42,8 +42,9 @@ e agents apontam para cá em vez de repeti-las.
   a função inteira, da assinatura ao fechamento, inclusive método e
   componente React. Passou do limite: extraia função, componente ou
   arquivo com uma responsabilidade (anda junto com o S do SOLID).
-  Ficam de fora arquivos de teste, gerados, migrations e config; num
-  `describe`/`it` longo, prefira helper ou fixture. Arquivo legado já
+  Ficam de fora arquivos de teste, gerados, migrations, config e
+  documentação (`.md`); num `describe`/`it` longo, prefira helper ou
+  fixture. Arquivo legado já
   acima do limite: não refatore fora do escopo, mas não o faça crescer
   — o que você adicionar vai para um arquivo novo — e sinalize.
 
