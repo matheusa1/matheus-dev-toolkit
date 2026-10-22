@@ -44,9 +44,11 @@ fictício) — use a estrutura, não o domínio.
    - Resultado esperado: status HTTP e o que o corpo da resposta deve
      ter (campos e valores observáveis), e o efeito visível numa
      consulta posterior (ex: `GET` seguinte já traz o item).
-   - Inclua sempre: sucesso, validação (400/422), sem autenticação
-     (401), sem permissão (403), recurso inexistente (404) e cada regra
-     de negócio que bloqueia a operação.
+   - Inclua sempre sucesso, validação (400/422) e cada regra de
+     negócio que bloqueia a operação. Inclua sem autenticação (401),
+     sem permissão (403) e recurso inexistente (404) quando a rota os
+     tiver (rota pública não tem 401; rota sem recurso por id não tem
+     404).
    - Rota ainda não definida na spec → use `<rota a definir>`; o
      `writing-plans` substitui quando fixar o contrato.
    Entrega só de API (sem tela) → só CTs de endpoint.

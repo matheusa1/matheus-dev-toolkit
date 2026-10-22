@@ -10,7 +10,9 @@ criticidade, execução paralela com worktree, rastreio de progresso)
 que não existem em nenhuma outra skill.
 
 O tamanho da tarefa define o fluxo: trivial vai direto ao código;
-pequena junta spec e plano num arquivo com uma confirmação; grande
+pequena junta spec e plano num arquivo com uma confirmação, com os
+casos de teste (`dev-methodology:casos-de-teste`) gerados logo após a
+spec e executados no fim (agent `executor-casos-teste`); grande
 segue `dev-methodology:brainstorming` → `dev-methodology:casos-de-teste`
 → `dev-methodology:writing-plans`
 → (`dev-methodology:test-driven-development` +

@@ -124,8 +124,8 @@ tarefa" em `using-dev-methodology`), não crie arquivo em
 - Se o pedido já é uma spec completa (o Matheus já detalhou tudo),
   resuma de volta em 3-4 linhas para confirmar entendimento, salve o
   arquivo da mesma forma (convertido para o formato acima, se ele veio
-  em outro) e siga direto para o plano, sem reabrir
-  perguntas já respondidas.
+  em outro), gere os casos de teste (`casos-de-teste`) e só então siga
+  para o plano, sem reabrir perguntas já respondidas.
 - Se a spec mudar depois de confirmada (novo requisito descoberto
   durante o plano ou a implementação), atualize o mesmo arquivo em vez
   de criar um segundo — a spec em disco deve refletir a versão vigente.

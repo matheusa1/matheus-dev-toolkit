@@ -1,6 +1,6 @@
 # Casos de teste Xray: Anexos da ordem de serviço
 
-História: Anexos da ordem de serviço (chave Jira a preencher). No web,
+História: Anexos da ordem de serviço (chave Jira a preencher). Na web,
 fica na aba "Anexos" da ordem de serviço; na API, nas rotas de anexos
 da ordem. Tipo de teste: Manual. Cada caso tem Pré-condição e passos no
 formato Ação | Dados | Resultado esperado.
@@ -13,7 +13,7 @@ formato Ação | Dados | Resultado esperado.
 | CA02 | CT01, CT04 |
 | CA03 | CT02, CT04 |
 | CA04 | CT03, CT05 |
-| CA05 | CT03 |
+| CA05 | CT03, CT05 |
 
 ## CT01 — Exibir os anexos e enviar um arquivo
 
@@ -142,8 +142,9 @@ o motivo.
 ## CT05 — API: remover anexo
 
 **Pré-condição:**  
-Token de um técnico com acesso à ordem `OS-1` (aberta, com o anexo
-`A-1` de 2 MB)
+Token de um técnico com acesso à ordem `OS-1` (aberta, com os anexos
+`A-1` e `A-2` de 2 MB); token de um técnico sem acesso à `OS-1`; ordem
+`OS-2` encerrada com o anexo `A-3`
 
 **Requisito CA04 — Remover anexo**  
 Dado que a ordem possui um ou mais anexos,  
@@ -165,3 +166,6 @@ não deve apresentar o anexo como salvo ou removido.
 | 1 | `DELETE /service-orders/{id}/attachments/{attachmentId}` | `id=OS-1`, `attachmentId=A-1` | 204 |
 | 2 | `GET /service-orders/{id}/attachments` | `id=OS-1` | 200; `A-1` não aparece e o espaço utilizado não conta os 2 MB |
 | 3 | `DELETE /service-orders/{id}/attachments/{attachmentId}` | `attachmentId=A-1` de novo | 404 |
+| 4 | `DELETE /service-orders/{id}/attachments/{attachmentId}` | `id=OS-1`, `attachmentId=A-2`, sem token | 401; `A-2` continua na lista |
+| 5 | `DELETE /service-orders/{id}/attachments/{attachmentId}` | `id=OS-1`, `attachmentId=A-2`, token sem acesso | 403; `A-2` continua na lista |
+| 6 | `DELETE /service-orders/{id}/attachments/{attachmentId}` | `id=OS-2` (encerrada), `attachmentId=A-3` | 422; mensagem informando que a ordem está encerrada; `A-3` continua na lista |
