@@ -111,7 +111,9 @@ confirmada normalmente é trivial ou pequeno.
       mesmo roteiro do agent), sempre (pequena e grande), depois da
       conformidade sem crítico.
       CT que falhou = divergência: corrija (volta ao passo 3) ou, se o
-      Matheus aceitar o comportamento, atualize spec e casos de teste.
+      Matheus aceitar o comportamento, atualize a spec, refaça os casos
+      afetados só a partir dela, ajuste no plano os `CAxx` de cada
+      tarefa, repita a conformidade e execute os casos de novo.
       Feature pronta só sem CT falhando; CT "não executado" vai como
       pendência manual no relatório final.
 6. **Documentação final** (opcional) → `documentacao-implementacao`,

@@ -144,7 +144,8 @@ o motivo.
 **Pré-condição:**  
 Token de um técnico com acesso à ordem `OS-1` (aberta, com os anexos
 `A-1` e `A-2` de 2 MB); token de um técnico sem acesso à `OS-1`; ordem
-`OS-2` encerrada com o anexo `A-3`
+`OS-2` encerrada com o anexo `A-3` e token de um técnico com acesso à
+`OS-2` (passo 6)
 
 **Requisito CA04 — Remover anexo**  
 Dado que a ordem possui um ou mais anexos,  
