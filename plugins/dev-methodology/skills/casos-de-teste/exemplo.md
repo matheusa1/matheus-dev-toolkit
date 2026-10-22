@@ -47,9 +47,10 @@ recalcular o espaço utilizado.
 ## CT02 — Validar tipo e tamanho do arquivo
 
 **Pré-condição:**  
-Técnico autenticado com acesso à ordem de serviço; ordem aberta com
-45 MB em anexos; arquivos `planilha.xlsx` (1 MB), `video.jpg` (11 MB)
-e `foto.jpg` (6 MB) disponíveis
+Técnico autenticado com acesso a duas ordens de serviço abertas: a
+ordem A, com 45 MB em anexos, e a ordem B, com 10 MB (passo 2); arquivos
+`planilha.xlsx` (1 MB), `video.jpg` (11 MB) e `foto.jpg` (6 MB)
+disponíveis
 
 **Requisito CA03 — Validar o arquivo enviado**  
 Dado que o técnico selecionou um arquivo,  
@@ -66,10 +67,10 @@ o motivo.
 
 | # | Ação | Dados | Resultado esperado |
 |---|---|---|---|
-| 1 | Enviar um arquivo que não é imagem nem PDF | `planilha.xlsx` | Envio impedido; mensagem informando que só imagem ou PDF são aceitos |
-| 2 | Enviar uma imagem acima de 10 MB | `video.jpg` (11 MB) | Envio impedido; mensagem informando o limite de 10 MB |
-| 3 | Enviar uma imagem que faz o total passar de 50 MB | `foto.jpg` (6 MB) | Envio impedido; mensagem informando que o espaço da ordem seria excedido |
-| 4 | Verificar a lista e o espaço utilizado |  | Nenhum arquivo novo na lista; espaço segue "45 MB" |
+| 1 | Na ordem A, enviar um arquivo que não é imagem nem PDF | `planilha.xlsx` | Envio impedido; mensagem informando que só imagem ou PDF são aceitos |
+| 2 | Na ordem B, enviar uma imagem acima de 10 MB | `video.jpg` (11 MB) | Envio impedido; mensagem informando o limite de 10 MB (o total de 21 MB não estoura os 50 MB); espaço segue "10 MB" |
+| 3 | Na ordem A, enviar uma imagem que faz o total passar de 50 MB | `foto.jpg` (6 MB) | Envio impedido; mensagem informando que o espaço da ordem seria excedido |
+| 4 | Verificar a lista e o espaço utilizado da ordem A |  | Nenhum arquivo novo na lista; espaço segue "45 MB" |
 
 ## CT03 — Remover anexo, cancelar e falha na operação
 
