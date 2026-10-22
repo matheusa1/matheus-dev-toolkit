@@ -138,6 +138,8 @@ o motivo.
 | 6 | `POST /service-orders/{id}/attachments` | `id=OS-1`, token sem acesso | 403 |
 | 7 | `POST /service-orders/{id}/attachments` | `id=OS-2` (encerrada), token com acesso | 422; mensagem informando que a ordem está encerrada |
 | 8 | `POST /service-orders/{id}/attachments` | `id` inexistente | 404 |
+| 9 | `POST /service-orders/{id}/attachments` | `id=OS-1`, `video.jpg` (11 MB), token com acesso | 422; mensagem informando o limite de 10 MB |
+| 10 | `GET /service-orders/{id}/attachments` | `id=OS-1`, token com acesso | 200; mesma lista do passo 2 (nada dos passos 3 a 9 foi salvo) e espaço utilizado 48 MB |
 
 ## CT05 — API: remover anexo
 
