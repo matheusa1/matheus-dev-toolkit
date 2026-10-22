@@ -22,7 +22,10 @@ juntos, numa rodada única, e não se repetem durante a execução.
 
 - **Skills** (auto-ativadas por descrição):
   - `using-dev-methodology` — explica a ordem do fluxo (meta skill).
-  - `brainstorming` — refina um pedido vago em spec antes de codar.
+  - `brainstorming` — refina um pedido vago em spec antes de codar,
+    sempre no formato história de usuário + critérios de aceitação
+    `CAxx` em Dado/quando/então (base para casos de teste). Modelo em
+    `exemplo.md`, com domínio fictício.
   - `writing-plans` — quebra a spec em tarefas pequenas e testáveis.
   - `test-driven-development` — força RED-GREEN-REFACTOR.
   - `code-review-gate` — revisa cada tarefa com gate de severidade.

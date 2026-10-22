@@ -42,6 +42,9 @@ burocracia — é a garantia de que o teste realmente testa algo.
 
 - Um teste por comportamento/caso de borda, não um teste gigante
   cobrindo tudo.
+- Quando a tarefa cobre um critério de aceitação da spec, comece o
+  nome do teste pelo id dele (ex: `it('CA03: blocks saving without
+  required fields')`), para rastrear teste ↔ CA.
 - Nomeie o teste pelo comportamento esperado, não pelo nome do método
   (`should reject an order without items`, não `testCreateOrder2`).
   Código e nomes de teste em inglês, e a implementação deve respeitar

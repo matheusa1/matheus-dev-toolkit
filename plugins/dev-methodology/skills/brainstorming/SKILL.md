@@ -14,25 +14,64 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
    novo — apenas confirme seu entendimento.
 2. **Faça perguntas objetivas, uma de cada vez (ou em lote curto)**,
    focadas no que muda a decisão de design:
+   - Quem usa e para quê (a história de usuário)?
    - Qual é o objetivo real (o problema que isso resolve)?
-   - O que está fora de escopo (não-objetivos)?
-   - Há restrições técnicas (stack, performance, compatibilidade)?
-   - Quais são os casos de borda que importam?
-   - Como saberemos que está pronto (critérios de aceite)?
-3. **Escreva a spec** em formato curto:
+   - Quais comportamentos e casos de borda precisam acontecer
+     (viram os critérios de aceitação)?
+   - Que regras de negócio valem (status, permissão, cálculo)?
+   - O que está fora do escopo?
+3. **Escreva a spec sempre no formato abaixo.** Ele existe para que os
+   casos de teste possam ser derivados depois direto dos critérios de
+   aceitação, um ou mais por `CAxx`. Modelo completo, com domínio
+   fictício, em [`exemplo.md`](exemplo.md) — use a estrutura, não o
+   domínio.
 
    ```markdown
+   # <Título da funcionalidade>
+
+   Como <papel do usuário>,
+   quero <ação ou capacidade>,
+   para <benefício ou motivo>.
+
    ## Objetivo
-   ...
-   ## Não-objetivos
-   ...
-   ## Restrições
-   ...
-   ## Casos de borda
-   ...
-   ## Critérios de aceite
-   ...
+   <1 parágrafo: o que será disponibilizado e o problema que resolve>
+
+   ## Critérios de aceitação
+
+   ### CA01 — <Título curto do comportamento>
+   Dado que <contexto/estado inicial>,
+   quando <ação ou evento>,
+   então o sistema deve <resultado observável>.
+
+   ## Regras de negócio
+   - <regra que vale em toda a funcionalidade>
+
+   ## Fora do escopo
+   - <o que não será feito nesta entrega>
+
+   ## Resultado esperado
+   Ao final, o usuário deverá conseguir <estado final verificável>.
    ```
+
+   Regras do formato:
+   - Seções sempre nessa ordem e com esses nomes. Sem item para uma
+     seção, escreva "Nenhuma." em vez de omiti-la.
+   - Cada CA descreve **um** comportamento observável, em
+     Dado/quando/então, sem detalhe de implementação (nada de nome de
+     classe, tabela ou endpoint). Vários resultados no mesmo `então`
+     viram lista; desdobramentos (confirmar/cancelar) viram pares
+     `Quando…/então…` extras dentro do mesmo CA.
+   - Casos de borda, validações e tratamento de erro são CAs próprios,
+     não uma seção à parte.
+   - Numeração `CA01`, `CA02`… sequencial, sem buracos. Depois da spec
+     aprovada, os números não mudam (testes vão referenciá-los): CA
+     novo pega o próximo número livre; CA removido sai sem renumerar os
+     demais.
+   - Regras de negócio são invariantes que valem para vários CAs
+     (status, permissão, cálculo); comportamento de um fluxo só vai no
+     CA dele.
+   - Restrições técnicas (stack, performance, compatibilidade) não
+     entram na spec: registre-as no plano (`writing-plans`).
 
 4. **Salve a spec em arquivo**, não só na conversa:
    `docs/especificacao/AAAA-MM-DD-nome-tarefa.md`, usando a data atual
@@ -64,9 +103,12 @@ tarefa" em `using-dev-methodology`), não crie arquivo em
 `docs/especificacao/` nem peça confirmação separada:
 
 - Faça só as perguntas indispensáveis (muitas vezes nenhuma).
-- Escreva a spec como seção `## Spec` (com os mesmos cinco blocos,
-  cada um em 1-3 linhas) no topo do arquivo de plano em
-  `docs/planos/AAAA-MM-DD-nome-tarefa.md`.
+- Escreva a spec como seção `## Spec` no topo do arquivo de plano em
+  `docs/planos/AAAA-MM-DD-nome-tarefa.md`, no mesmo formato (história,
+  Objetivo, CAs, Regras de negócio, Fora do escopo, Resultado
+  esperado) um nível de título abaixo (`###` para as seções, `####`
+  para cada CA). Pode ser enxuta, mas os CAs continuam em
+  Dado/quando/então.
 - Siga direto para `writing-plans`, que acrescenta o checklist no mesmo
   arquivo e faz **uma** confirmação para spec + plano.
 
@@ -77,7 +119,8 @@ tarefa" em `using-dev-methodology`), não crie arquivo em
 - Prefira poucas perguntas de alto impacto a um questionário longo.
 - Se o pedido já é uma spec completa (o Matheus já detalhou tudo),
   resuma de volta em 3-4 linhas para confirmar entendimento, salve o
-  arquivo da mesma forma e siga direto para o plano, sem reabrir
+  arquivo da mesma forma (convertido para o formato acima, se ele veio
+  em outro) e siga direto para o plano, sem reabrir
   perguntas já respondidas.
 - Se a spec mudar depois de confirmada (novo requisito descoberto
   durante o plano ou a implementação), atualize o mesmo arquivo em vez

@@ -66,7 +66,7 @@ diga"). O Matheus pode reclassificar a qualquer momento.
 | Tamanho | Quando | Fluxo |
 |---|---|---|
 | **Trivial** | typo, ajuste de string/config, mudança de 1 a poucas linhas óbvias, sem lógica nova | Direto ao código. Sem spec, plano ou pergunta. Rode o teste/lint relacionado e revise você mesmo o diff antes de reportar. |
-| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando os critérios de aceite do arquivo. |
+| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando cada `CAxx` da seção `## Spec` do arquivo. |
 | **Grande** | mais de ~3 tarefas, vários módulos, decisão arquitetural, contrato público novo/alterado, ou qualquer tarefa `[alta]` (auth, pagamentos, migração/exclusão de dados, domínio central) | Fluxo completo abaixo: spec e plano em arquivos separados, duas confirmações. |
 
 Na dúvida entre dois tamanhos, escolha o maior. Bug com causa raiz
@@ -227,9 +227,10 @@ tela), **todas disparadas no mesmo turno**.
 
 - **Máximo de 4 simultâneas.** Grupo maior → lotes de até 4; o próximo
   lote só sai depois que o anterior foi revisado e integrado.
-- Cada agent recebe só a sua tarefa: descrição, critérios de aceite,
-  arquivos que pode tocar e qualquer decisão combinada só na conversa
-  (ele não vê esta conversa nem os arquivos gitignored de spec/plano).
+- Cada agent recebe só a sua tarefa: descrição, texto completo dos
+  `CAxx` que ela cobre, arquivos que pode tocar e qualquer decisão
+  combinada só na conversa (ele não vê esta conversa nem os arquivos
+  gitignored de spec/plano).
 - Marque cada task em andamento (`TaskUpdate`) ao disparar o agent.
 - Revise cada tarefa assim que o agent dela termina, sem esperar o
   grupo. Tarefas dependentes do grupo só começam com **todas** as do

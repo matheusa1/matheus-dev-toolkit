@@ -19,25 +19,34 @@ Ao ser invocado:
 2. Rode `git diff` contra a base da branch (ou `git log`/`git diff
    <branch-base>...HEAD` se a base não for óbvia) para ver tudo que foi
    implementado nesta tarefa, não só o último commit.
-3. Compare, item a item:
-   - **Objetivo**: o problema descrito na spec foi de fato resolvido?
-   - **Não-objetivos**: a implementação ficou dentro do escopo, sem
+3. Compare, seção a seção da spec (formato definido em
+   `brainstorming`: história, Objetivo, Critérios de aceitação,
+   Regras de negócio, Fora do escopo, Resultado esperado):
+   - **História e Objetivo**: o problema descrito foi de fato
+     resolvido para o papel de usuário citado?
+   - **Critérios de aceitação**: avalie **cada `CAxx` separadamente**.
+     Para cada um, o `Dado/quando/então` (e os pares `Quando/então`
+     extras) é verificável no estado atual do código? Aponte onde está
+     o comportamento e o teste que o cobre — não aceite "deve estar
+     implícito". Confira também no plano se o CA foi citado por alguma
+     tarefa.
+   - **Regras de negócio**: cada regra é respeitada em todos os fluxos
+     em que se aplica, não só no primeiro CA que a usa?
+   - **Fora do escopo**: a implementação ficou dentro do escopo, sem
      invadir o que foi marcado como fora?
-   - **Restrições**: as restrições técnicas listadas foram respeitadas?
-   - **Casos de borda**: cada caso de borda da spec tem tratamento
-     visível no código (e idealmente teste cobrindo)?
-   - **Critérios de aceite**: cada critério é verificável no estado
-     atual do código (teste, endpoint, comportamento)? Não aceite "deve
-     estar implícito" — aponte onde está.
+   - **Resultado esperado**: o estado final descrito é alcançável de
+     ponta a ponta com o que foi entregue?
+   - **Restrições técnicas** (seção do plano, se houver): foram
+     respeitadas?
 4. Classifique cada divergência:
-   - 🔴 **Crítico** — critério de aceite não atendido, requisito da
+   - 🔴 **Crítico** — CA não atendido, requisito da
      spec ignorado, ou comportamento diferente do especificado.
    - 🟡 **Parcial** — atendido de forma incompleta ou com lacuna de
      teste.
    - 🟢 **Conforme** — bate com a spec, sem ressalva.
 5. Apresente um relatório final enxuto: uma linha de veredito por
-   seção da spec; detalhe (`arquivo:linha` e o que falta) só para itens
-   🔴/🟡. Não descreva o que está conforme nem cole o diff.
+   `CAxx` e uma por seção restante da spec; detalhe (`arquivo:linha`
+   e o que falta) só para itens 🔴/🟡. Não descreva o que está conforme nem cole o diff.
 
 Não edite código nem a spec — você é somente leitura. Se a spec estiver
 desatualizada em relação a uma decisão tomada e confirmada durante a
