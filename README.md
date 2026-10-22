@@ -5,7 +5,8 @@ Marketplace pessoal de plugins para o Claude Code e para o Codex CLI.
 ## Plugins
 
 - **dev-methodology** — metodologia de desenvolvimento agnóstica de
-  projeto: brainstorm→spec, TDD forçado, code review com gate de
+  projeto: brainstorm→spec, casos de teste derivados da spec e
+  executados no fim, TDD forçado, code review com gate de
   severidade (+ revisores de acessibilidade e responsividade em diff de
   UI), debugging sistemático, execução paralela em worktrees, commits
   em Conventional Commits, scaffolding de Clean Architecture/DDD e

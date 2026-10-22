@@ -29,7 +29,9 @@ paralelo ao `revisor-arquiteto` (ver "Diff de UI" na mesma skill).
    - **O plano**: a tarefa entrega o que foi prometido, nem mais nem
      menos?
    - **Testes**: existe teste cobrindo o comportamento novo? Ele
-     passou de fato (RED antes, GREEN depois)?
+     passou de fato (RED antes, GREEN depois)? Tarefa só de
+     apresentação (`implementador-frontend`) não tem teste unitário
+     por regra — não aponte falta de teste nela.
    - **Arquitetura**: camadas respeitadas (domain não importa infra,
      application não conhece detalhes de framework), convenções de
      nomenclatura (`T`/`I`/`E` em TypeScript), DI correta (bindings

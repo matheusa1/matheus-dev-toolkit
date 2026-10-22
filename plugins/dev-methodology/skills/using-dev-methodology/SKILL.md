@@ -106,8 +106,10 @@ confirmada normalmente é trivial ou pequeno.
    (inline ou agent `gerador-modulo`).
 5. **Fim do plano** → comparação com a spec (inline ou agent
    `revisor-conformidade`, recomendado). Feature pronta só sem crítico.
-   5b. **Execução dos casos de teste** → agent `executor-casos-teste`,
-      sempre (pequena e grande), depois da conformidade sem crítico.
+   5b. **Execução dos casos de teste** → agent `executor-casos-teste`
+      (sem suporte a subagent, como no Codex: inline, seguindo o
+      mesmo roteiro do agent), sempre (pequena e grande), depois da
+      conformidade sem crítico.
       CT que falhou = divergência: corrija (volta ao passo 3) ou, se o
       Matheus aceitar o comportamento, atualize spec e casos de teste.
       Feature pronta só sem CT falhando; CT "não executado" vai como
@@ -156,8 +158,8 @@ roda sem aceite:
 | Fluxo | Como oferecer |
 |---|---|
 | **Trivial** | Não oferece. Só gera se o Matheus pedir. |
-| **Pequena** | Pergunta 4 da rodada única. "Gerar no fim" → gera depois da conformidade inline. |
-| **Grande** | Não entra na rodada (já tem 4 perguntas). No relatório final, depois da conformidade sem crítico, uma linha: "Quer a documentação final da implementação?". |
+| **Pequena** | Pergunta 4 da rodada única. "Gerar no fim" → gera depois da conformidade inline e dos casos de teste executados. |
+| **Grande** | Não entra na rodada (já tem 4 perguntas). No relatório final, depois da conformidade sem crítico e dos casos de teste executados, uma linha: "Quer a documentação final da implementação?". |
 | **Bug** | Igual à grande: uma linha no relatório final, depois da correção revisada. |
 
 - Pedido explícito em qualquer momento ("documenta isso") → gera, sem
