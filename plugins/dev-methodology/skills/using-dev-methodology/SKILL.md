@@ -66,7 +66,7 @@ diga"). O Matheus pode reclassificar a qualquer momento.
 | Tamanho | Quando | Fluxo |
 |---|---|---|
 | **Trivial** | typo, ajuste de string/config, mudança de 1 a poucas linhas óbvias, sem lógica nova | Direto ao código. Sem spec, plano ou pergunta. Rode o teste/lint relacionado e revise você mesmo o diff antes de reportar. |
-| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando cada `CAxx` da seção `## Spec` do arquivo. |
+| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), casos de teste em `docs/casos-teste/` logo após a spec, **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando cada `CAxx` da seção `## Spec` do arquivo, e execução dos casos de teste (passo 5b). |
 | **Grande** | mais de ~3 tarefas, vários módulos, decisão arquitetural, contrato público novo/alterado, ou qualquer tarefa `[alta]` (auth, pagamentos, migração/exclusão de dados, domínio central) | Fluxo completo abaixo: spec e plano em arquivos separados, duas confirmações. |
 
 Na dúvida entre dois tamanhos, escolha o maior. Bug com causa raiz
@@ -76,6 +76,11 @@ confirmada normalmente é trivial ou pequeno.
 
 1. **Spec** → `brainstorming`. Salva em
    `docs/especificacao/AAAA-MM-DD-nome-tarefa.md`, pede confirmação.
+   1b. **Casos de teste** → `casos-de-teste`, logo após a spec
+      confirmada e antes do plano, só a partir da spec (sem viés de
+      implementação; CTs de endpoint quando há API). Salva em
+      `docs/casos-teste/AAAA-MM-DD-nome-tarefa.md`, sem confirmação
+      separada: vai junto na rodada do plano.
 2. **Plano** → `writing-plans`. Checklist com tags `[P<n>]`,
    criticidade e arquivos de cada tarefa, salvo em
    `docs/planos/AAAA-MM-DD-nome-tarefa.md`, pede confirmação com a
@@ -101,6 +106,12 @@ confirmada normalmente é trivial ou pequeno.
    (inline ou agent `gerador-modulo`).
 5. **Fim do plano** → comparação com a spec (inline ou agent
    `revisor-conformidade`, recomendado). Feature pronta só sem crítico.
+   5b. **Execução dos casos de teste** → agent `executor-casos-teste`,
+      sempre (pequena e grande), depois da conformidade sem crítico.
+      CT que falhou = divergência: corrija (volta ao passo 3) ou, se o
+      Matheus aceitar o comportamento, atualize spec e casos de teste.
+      Feature pronta só sem CT falhando; CT "não executado" vai como
+      pendência manual no relatório final.
 6. **Documentação final** (opcional) → `documentacao-implementacao`,
    só se o Matheus aceitar (ver "Documentação final").
 
@@ -228,7 +239,8 @@ tela), **todas disparadas no mesmo turno**.
 - **Máximo de 4 simultâneas.** Grupo maior → lotes de até 4; o próximo
   lote só sai depois que o anterior foi revisado e integrado.
 - Cada agent recebe só a sua tarefa: descrição, texto completo dos
-  `CAxx` que ela cobre, arquivos que pode tocar e qualquer decisão
+  `CAxx` que ela cobre, as regras de negócio e restrições técnicas
+  que se aplicam a ela, arquivos que pode tocar e qualquer decisão
   combinada só na conversa (ele não vê esta conversa nem os arquivos
   gitignored de spec/plano).
 - Marque cada task em andamento (`TaskUpdate`) ao disparar o agent.
@@ -338,6 +350,8 @@ Todos respondem em português do Brasil:
   em diff de UI.
 - `gerador-modulo` — `clean-architecture-scaffold`.
 - `revisor-conformidade` — implementação vs. spec, no fim do plano.
+- `executor-casos-teste` — executa os casos de teste de
+  `docs/casos-teste/` (endpoints e telas), depois da conformidade.
 - `investigador-bugs` — causa raiz de bug relatado.
 
 Mensagem de commit não usa subagent: o orquestrador escreve.

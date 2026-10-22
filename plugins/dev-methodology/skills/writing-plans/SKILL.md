@@ -26,6 +26,9 @@ por tarefa, ou poucos ciclos).
      performance, compatibilidade) ficam registradas no plano, numa
      seção `## Restrições técnicas` acima do checklist — a spec não as
      carrega.
+   - Se o plano fixar uma rota que os casos de teste deixaram como
+     `<rota a definir>`, substitua no arquivo de `docs/casos-teste/`.
+     Não mude mais nada nos casos de teste por causa do plano.
 2. **Aponte decisões arquiteturais que a tarefa afeta** (nova camada,
    novo módulo, mudança de contrato) para que o code review saiba o
    que checar depois.
@@ -108,7 +111,8 @@ por tarefa, ou poucos ciclos).
      `docs/especificacao/` nesse caso.
 
 7. **Peça confirmação numa rodada única** (`AskUserQuestion`): aprovar
-   o plano (e a spec, na tarefa pequena) junto com as decisões de
+   o plano (e a spec, na tarefa pequena), citando o arquivo de casos de
+   teste, junto com as decisões de
    execução — subagents ou inline, commit por tarefa, e conformidade
    final (só tarefa grande). Perguntas, opções e regras em
    `dev-methodology:using-dev-methodology` → "Perguntas: uma rodada

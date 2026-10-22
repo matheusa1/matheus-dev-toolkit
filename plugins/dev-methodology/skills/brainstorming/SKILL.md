@@ -63,10 +63,10 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
      `Quando…/então…` extras dentro do mesmo CA.
    - Casos de borda, validações e tratamento de erro são CAs próprios,
      não uma seção à parte.
-   - Numeração `CA01`, `CA02`… sequencial, sem buracos. Depois da spec
-     aprovada, os números não mudam (testes vão referenciá-los): CA
-     novo pega o próximo número livre; CA removido sai sem renumerar os
-     demais.
+   - Na primeira versão, numeração `CA01`, `CA02`… sequencial, sem
+     buracos. Depois da spec aprovada, os números não mudam (testes e
+     casos de teste referenciam): CA novo pega o próximo número livre;
+     CA removido sai sem renumerar os demais, e o buraco fica.
    - Regras de negócio são invariantes que valem para vários CAs
      (status, permissão, cálculo); comportamento de um fluxo só vai no
      CA dele.
@@ -93,8 +93,10 @@ ANTES de escrever qualquer código. Não pule direto para a implementação.
      construído bate com o que foi especificado — por isso ele precisa
      existir em disco, não só ter sido dito na conversa.
 
-5. **Pare e peça confirmação** antes de seguir para o plano
-   (`writing-plans`). Não implemente nada nesta etapa.
+5. **Pare e peça confirmação** da spec. Não implemente nada nesta
+   etapa.
+6. **Gere os casos de teste** com a skill `casos-de-teste` logo depois
+   da confirmação, antes do plano, e então siga para `writing-plans`.
 
 ## Tarefa pequena: spec dentro do plano
 
@@ -109,8 +111,10 @@ tarefa" em `using-dev-methodology`), não crie arquivo em
   esperado) um nível de título abaixo (`###` para as seções, `####`
   para cada CA). Pode ser enxuta, mas os CAs continuam em
   Dado/quando/então.
-- Siga direto para `writing-plans`, que acrescenta o checklist no mesmo
-  arquivo e faz **uma** confirmação para spec + plano.
+- Gere os casos de teste (`casos-de-teste`, arquivo próprio em
+  `docs/casos-teste/`) e siga direto para `writing-plans`, que
+  acrescenta o checklist no mesmo arquivo e faz **uma** confirmação
+  para spec + casos de teste + plano.
 
 ## Regras
 

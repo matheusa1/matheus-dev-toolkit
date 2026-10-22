@@ -28,7 +28,10 @@ Ao ser invocado:
      Para cada um, o `Dado/quando/então` (e os pares `Quando/então`
      extras) é verificável no estado atual do código? Aponte onde está
      o comportamento e o teste que o cobre — não aceite "deve estar
-     implícito". Confira também no plano se o CA foi citado por alguma
+     implícito". CA só de apresentação (tarefa do
+     `implementador-frontend`, sem teste unitário pelo fluxo) não
+     exige teste: aponte o componente e a verificação de tela; a
+     execução dos casos de teste confere o resto. Confira também no plano se o CA foi citado por alguma
      tarefa.
    - **Regras de negócio**: cada regra é respeitada em todos os fluxos
      em que se aplica, não só no primeiro CA que a usa?
