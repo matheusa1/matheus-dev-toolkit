@@ -107,7 +107,8 @@ não deve apresentar o anexo como salvo ou removido.
 **Pré-condição:**  
 Token de um técnico com acesso à ordem `OS-1` (aberta, 45 MB em
 anexos); token de um técnico sem acesso à `OS-1`; ordem `OS-2`
-encerrada
+encerrada; ordem `OS-3` aberta, com 10 MB em anexos, à qual o mesmo
+técnico tem acesso (passos 9 e 11)
 
 **Requisito CA02 — Enviar anexo**  
 Dado que o técnico está na área de anexos,  
@@ -138,8 +139,9 @@ o motivo.
 | 6 | `POST /service-orders/{id}/attachments` | `id=OS-1`, token sem acesso | 403 |
 | 7 | `POST /service-orders/{id}/attachments` | `id=OS-2` (encerrada), token com acesso | 422; mensagem informando que a ordem está encerrada |
 | 8 | `POST /service-orders/{id}/attachments` | `id` inexistente | 404 |
-| 9 | `POST /service-orders/{id}/attachments` | `id=OS-1`, `video.jpg` (11 MB), token com acesso | 422; mensagem informando o limite de 10 MB |
-| 10 | `GET /service-orders/{id}/attachments` | `id=OS-1`, token com acesso | 200; mesma lista do passo 2 (nada dos passos 3 a 9 foi salvo) e espaço utilizado 48 MB |
+| 9 | `POST /service-orders/{id}/attachments` | `id=OS-3`, `video.jpg` (11 MB), token com acesso | 422; mensagem informando o limite de 10 MB (o total de 21 MB não estoura os 50 MB) |
+| 10 | `GET /service-orders/{id}/attachments` | `id=OS-1`, token com acesso | 200; mesma lista do passo 2 (nada dos passos 3 a 8 foi salvo) e espaço utilizado 48 MB |
+| 11 | `GET /service-orders/{id}/attachments` | `id=OS-3`, token com acesso | 200; `video.jpg` não aparece e o espaço utilizado segue 10 MB |
 
 ## CT05 — API: remover anexo
 

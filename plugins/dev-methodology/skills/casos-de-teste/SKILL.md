@@ -39,7 +39,9 @@ fictício) — use a estrutura, não o domínio.
 4. **Entrega com API** (endpoint novo ou alterado): além dos CTs de
    tela, escreva CTs de endpoint cobrindo os mesmos CAs pelo contrato,
    um por rota/método que muda estado; rota de consulta pode entrar
-   como passo de verificação no CT da rota que ela confere:
+   como passo de verificação no CT da rota que ela confere. Rota de
+   consulta com CA próprio (filtro, paginação, permissão) ou entrega
+   só com rotas de consulta → um CT dedicado por rota de consulta:
    - Ação: `MÉTODO /rota` (ex: `POST /service-orders/{id}/attachments`).
    - Dados: parâmetros, corpo e autenticação usados.
    - Resultado esperado: status HTTP e o que o corpo da resposta deve
