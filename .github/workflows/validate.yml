@@ -1,0 +1,53 @@
+name: Validar plugins
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: JSON válidos
+        run: |
+          find . -name '*.json' -not -path './node_modules/*' -print0 |
+            xargs -0 -n1 sh -c 'jq empty "$0" || { echo "JSON inválido: $0"; exit 1; }'
+
+      - name: Validar marketplace e plugin
+        run: |
+          claude plugin validate .
+          claude plugin validate plugins/dev-methodology
+
+      - name: Versões Claude Code e Codex iguais e no CHANGELOG
+        run: |
+          dir=plugins/dev-methodology
+          claude_v=$(jq -r .version "$dir/.claude-plugin/plugin.json")
+          codex_v=$(jq -r .version "$dir/.codex-plugin/plugin.json")
+          if [ "$claude_v" != "$codex_v" ]; then
+            echo "Versões diferentes: Claude Code $claude_v, Codex $codex_v"
+            exit 1
+          fi
+          grep -q "^## $claude_v " "$dir/CHANGELOG.md" ||
+            { echo "CHANGELOG.md sem a versão $claude_v"; exit 1; }
+
+      - name: Skills pré-carregadas pelos agents existem
+        run: |
+          dir=plugins/dev-methodology
+          status=0
+          for agent in "$dir"/agents/*.md; do
+            for skill in $(awk '/^---$/{n++; next} n==1 && /^  - /{print $2}' "$agent"); do
+              [ -f "$dir/skills/$skill/SKILL.md" ] ||
+                { echo "$agent: skill $skill não existe"; status=1; }
+            done
+          done
+          exit $status
