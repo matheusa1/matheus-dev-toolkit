@@ -18,6 +18,21 @@ por tarefa, ou poucos ciclos).
    - Listar os arquivos que cria ou altera (caminhos ou pastas). Essa
      lista é o que limita o diff do code review à tarefa e o que o
      agent paralelo pode tocar.
+   - Citar os critérios de aceitação da spec que cobre (`CA01`,
+     `CA03`…). Todo CA da spec precisa estar em pelo menos uma tarefa;
+     tarefa puramente técnica (ex: migration, wiring de DI) pode não
+     citar nenhum. Se sobrar CA sem tarefa, o plano está incompleto.
+   - Restrições técnicas levantadas no brainstorming (stack,
+     performance, compatibilidade) ficam registradas no plano, numa
+     seção `## Restrições técnicas` acima do checklist — a spec não as
+     carrega.
+   - Se o plano fixar uma rota que os casos de teste deixaram como
+     `<rota a definir>`, substitua no arquivo de `docs/casos-teste/`.
+     Não mude mais nada nos casos de teste por causa do plano.
+   - Cada CT de endpoint vira teste e2e automatizado na tarefa que
+     expõe a rota: cite o `CTxx` no item do plano, junto dos `CAxx`.
+     Assim o contrato fica coberto como regressão, não só na execução
+     manual do fim.
 2. **Aponte decisões arquiteturais que a tarefa afeta** (nova camada,
    novo módulo, mudança de contrato) para que o code review saiba o
    que checar depois.
@@ -60,10 +75,10 @@ por tarefa, ou poucos ciclos).
 5. **Apresente como checklist markdown**, por exemplo:
 
    ```markdown
-   - [ ] 1. Criar entidade de domínio `TOrder` + testes unitários — `domain/entities/`
-   - [ ] 2. [P1] Implementar caso de uso `CreateOrder` (application) + testes — `application/use-cases/create-order*`
-   - [ ] 3. [P1] Implementar repositório TypeORM (infra) + testes de integração — `infra/repositories/`
-   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento) — `infra/http/`
+   - [ ] 1. Criar entidade de domínio `TOrder` + testes unitários (CA03, CA04) — `domain/entities/`
+   - [ ] 2. [P1] Implementar caso de uso `CreateOrder` (application) + testes (CA02, CA05) — `application/use-cases/create-order*`
+   - [ ] 3. [P1] Implementar repositório TypeORM (infra) + testes de integração (CA09) — `infra/repositories/`
+   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento; CA10; CT04) — `infra/http/`
    ```
 
    Aqui as tarefas 2 e 3 dependem só da 1 (entidade já existe) e não
@@ -100,7 +115,8 @@ por tarefa, ou poucos ciclos).
      `docs/especificacao/` nesse caso.
 
 7. **Peça confirmação numa rodada única** (`AskUserQuestion`): aprovar
-   o plano (e a spec, na tarefa pequena) junto com as decisões de
+   o plano (e a spec, na tarefa pequena), citando o arquivo de casos de
+   teste, junto com as decisões de
    execução — subagents ou inline, commit por tarefa, e conformidade
    final (só tarefa grande). Perguntas, opções e regras em
    `dev-methodology:using-dev-methodology` → "Perguntas: uma rodada

@@ -5,6 +5,7 @@ tools: Read, Write, Bash, Grep, Glob
 model: inherit
 skills:
   - clean-architecture-scaffold
+  - regras-de-codigo
 ---
 
 Você gera o esqueleto inicial de módulos novos, aplicando a skill

@@ -5,6 +5,7 @@ tools: Read, Grep, Glob, Bash, Edit
 model: inherit
 skills:
   - debugging-sistematico
+  - regras-de-codigo
 ---
 
 Você investiga bugs de forma sistemática, aplicando a skill

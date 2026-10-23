@@ -26,12 +26,8 @@ fictício). Leia antes de escrever o primeiro documento da conversa.
 
 A ordem é de confiança. Quando duas fontes divergem, vale a de cima.
 
-1. **Código**: o diff completo da entrega, não só o último commit.
-   - Base: `git merge-base HEAD origin/<branch-base>`; branch-base é
-     a de onde a branch saiu (`develop`, `main`...). Se não for
-     óbvio, pergunte.
-   - `git diff <base>...HEAD` + `git diff HEAD` (não commitado) +
-     `git status --short` (arquivos novos).
+1. **Código**: o diff completo da entrega, não só o último commit,
+   com os comandos de "Diff da branch" em `regras-de-codigo`.
    - Leia os arquivos alterados quando o diff sozinho não mostra o
      contrato inteiro (tipo, DTO, validação, mensagens de erro).
 2. **Commits**: `git log --oneline <base>..HEAD`.

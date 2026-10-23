@@ -5,7 +5,8 @@ Marketplace pessoal de plugins para o Claude Code e para o Codex CLI.
 ## Plugins
 
 - **dev-methodology** — metodologia de desenvolvimento agnóstica de
-  projeto: brainstorm→spec, TDD forçado, code review com gate de
+  projeto: brainstorm→spec, casos de teste derivados da spec e
+  executados no fim, TDD forçado, code review com gate de
   severidade (+ revisores de acessibilidade e responsividade em diff de
   UI), debugging sistemático, execução paralela em worktrees, commits
   em Conventional Commits, scaffolding de Clean Architecture/DDD e
@@ -71,14 +72,21 @@ chega a quem já tem o plugin instalado.** A cada mudança:
   **e** em `plugins/dev-methodology/.codex-plugin/plugin.json` (as duas
   sempre iguais): patch para ajuste/correção de regra, minor para
   skill/agent/etapa nova.
-- Registre a mudança no README do plugin (quando muda o que ele faz) e
-  no corpo do commit, citando a versão nova.
+- Registre a mudança em `plugins/dev-methodology/CHANGELOG.md`, no
+  README do plugin (quando muda o que ele faz) e no corpo do commit,
+  citando a versão nova.
 
 ### Validar antes de subir
 
 ```bash
 claude plugin validate .
 ```
+
+O CI (`.github/workflows/validate.yml`) roda isso em todo pull
+request, junto com a checagem dos JSON, das versões Claude Code ×
+Codex iguais, da entrada no CHANGELOG e das skills pré-carregadas pelos
+agents. Mudou uma regra do fluxo? Rode também as evals do plugin (ver
+"Evals" no README do plugin).
 
 ### Publicar uma mudança
 

@@ -10,11 +10,15 @@ criticidade, execução paralela com worktree, rastreio de progresso)
 que não existem em nenhuma outra skill.
 
 O tamanho da tarefa define o fluxo: trivial vai direto ao código;
-pequena junta spec e plano num arquivo com uma confirmação; grande
-segue `dev-methodology:brainstorming` → `dev-methodology:writing-plans`
+pequena junta spec e plano num arquivo com uma confirmação, com os
+casos de teste (`dev-methodology:casos-de-teste`) gerados logo após a
+spec e executados no fim (agent `executor-casos-teste`); grande
+segue `dev-methodology:brainstorming` → `dev-methodology:casos-de-teste`
+→ `dev-methodology:writing-plans`
 → (`dev-methodology:test-driven-development` +
 `dev-methodology:code-review-gate` + `dev-methodology:commit-conventions`
 por tarefa, tarefas `[P<n>]` em paralelo) → revisão de conformidade
+→ execução dos casos de teste (agent `executor-casos-teste`)
 → documentação final (`dev-methodology:documentacao-implementacao`),
 só se aceita.
 

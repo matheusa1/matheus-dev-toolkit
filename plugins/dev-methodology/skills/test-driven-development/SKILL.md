@@ -42,15 +42,20 @@ burocracia — é a garantia de que o teste realmente testa algo.
 
 - Um teste por comportamento/caso de borda, não um teste gigante
   cobrindo tudo.
+- Quando a tarefa cobre um critério de aceitação da spec, comece o
+  nome do teste pelo id dele (ex: `it('CA03: blocks saving without
+  required fields')`), para rastrear teste ↔ CA.
 - Nomeie o teste pelo comportamento esperado, não pelo nome do método
   (`should reject an order without items`, não `testCreateOrder2`).
-  Código e nomes de teste em inglês, e a implementação deve respeitar
-  SOLID e os limites de 150 linhas por arquivo e 20 por função (ver
-  `using-dev-methodology`, "Regras de código"). O REFACTOR é a hora de
-  extrair o que passou do limite.
+  A implementação segue `regras-de-codigo` (inglês, SOLID, limites de
+  tamanho). O REFACTOR é a hora de extrair o que passou do limite.
 - Em projetos TypeScript/NestJS: teste unitário para domain/application
   (mocks para os ports/interfaces `I*`), teste de integração para
   infra (banco real ou testcontainer), teste e2e para os endpoints.
+  O e2e de endpoint sai dos CTs de endpoint de `docs/casos-teste/`:
+  um `describe` por CT, nome começando pelo id
+  (`describe('CT04: POST /service-orders/:id/attachments')`), com os
+  passos na mesma ordem e os mesmos dados e resultados esperados.
 - Em projetos frontend: esta skill (e o agent `parceiro-tdd`) se aplica
   só à camada `core` (lógica de negócio, hooks com lógica, services,
   utils). Componentes de apresentação não recebem teste unitário e não

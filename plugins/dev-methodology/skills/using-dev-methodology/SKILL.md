@@ -21,32 +21,10 @@ e agents apontam para cá em vez de repeti-las.
 
 ## Regras de código (todo desenvolvimento, inline ou subagent)
 
-- **Código em inglês**: identificadores, arquivos, comentários,
-  mensagens de erro e nomes de teste. Specs, planos, conversa e
-  commits em português. Termos de domínio sem tradução natural podem
-  ficar no original, sem misturar idiomas no mesmo nome. Em código
-  existente em português, siga a convenção local e sinalize — não
-  renomeie fora do escopo.
-- **SOLID sempre**: uma responsabilidade por classe/módulo (S);
-  estender por abstração em vez de editar (O); implementações
-  substituíveis pelo contrato (L); interfaces pequenas (I); depender de
-  abstrações `I*`/ports, nunca de concretas (D). Se a tarefa parecer
-  exigir violar algum, pare e pergunte.
-- **Vizinho legado não é convenção.** Se o repo tem dois padrões para
-  a mesma coisa (ex: logger instanciado vs. telemetria injetada; import
-  relativo vs. path alias), siga o que está documentado no `CLAUDE.md`
-  do projeto ou, sem documentação, o que respeita as camadas/SOLID —
-  não o arquivo vizinho só por estar ao lado. Sinalize a divergência
-  no relatório em vez de escolher em silêncio.
-- **Arquivo com no máximo 150 linhas, função com no máximo 20.** Conta
-  a função inteira, da assinatura ao fechamento, inclusive método e
-  componente React. Passou do limite: extraia função, componente ou
-  arquivo com uma responsabilidade (anda junto com o S do SOLID).
-  Ficam de fora arquivos de teste, gerados, migrations, config e
-  documentação (`.md`); num `describe`/`it` longo, prefira helper ou
-  fixture. Arquivo legado já
-  acima do limite: não refatore fora do escopo, mas não o faça crescer
-  — o que você adicionar vai para um arquivo novo — e sinalize.
+Idioma, SOLID, vizinho legado e limite de 150 linhas por arquivo e 20
+por função ficam na skill `regras-de-codigo`: carregue-a antes de
+escrever ou revisar código inline. Os agents de implementação e review
+já a pré-carregam.
 
 ## Bug relatado? Investigue antes de corrigir
 
@@ -66,7 +44,7 @@ diga"). O Matheus pode reclassificar a qualquer momento.
 | Tamanho | Quando | Fluxo |
 |---|---|---|
 | **Trivial** | typo, ajuste de string/config, mudança de 1 a poucas linhas óbvias, sem lógica nova | Direto ao código. Sem spec, plano ou pergunta. Rode o teste/lint relacionado e revise você mesmo o diff antes de reportar. |
-| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando os critérios de aceite do arquivo. |
+| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), casos de teste em `docs/casos-teste/` logo após a spec, **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando cada `CAxx` da seção `## Spec` do arquivo, e execução dos casos de teste (passo 5b). |
 | **Grande** | mais de ~3 tarefas, vários módulos, decisão arquitetural, contrato público novo/alterado, ou qualquer tarefa `[alta]` (auth, pagamentos, migração/exclusão de dados, domínio central) | Fluxo completo abaixo: spec e plano em arquivos separados, duas confirmações. |
 
 Na dúvida entre dois tamanhos, escolha o maior. Bug com causa raiz
@@ -76,6 +54,11 @@ confirmada normalmente é trivial ou pequeno.
 
 1. **Spec** → `brainstorming`. Salva em
    `docs/especificacao/AAAA-MM-DD-nome-tarefa.md`, pede confirmação.
+   1b. **Casos de teste** → `casos-de-teste`, logo após a spec
+      confirmada e antes do plano, só a partir da spec (sem viés de
+      implementação; CTs de endpoint quando há API). Salva em
+      `docs/casos-teste/AAAA-MM-DD-nome-tarefa.md`, sem confirmação
+      separada: vai junto na rodada do plano.
 2. **Plano** → `writing-plans`. Checklist com tags `[P<n>]`,
    criticidade e arquivos de cada tarefa, salvo em
    `docs/planos/AAAA-MM-DD-nome-tarefa.md`, pede confirmação com a
@@ -101,6 +84,16 @@ confirmada normalmente é trivial ou pequeno.
    (inline ou agent `gerador-modulo`).
 5. **Fim do plano** → comparação com a spec (inline ou agent
    `revisor-conformidade`, recomendado). Feature pronta só sem crítico.
+   5b. **Execução dos casos de teste** → agent `executor-casos-teste`
+      (sem suporte a subagent, como no Codex: inline, seguindo o
+      mesmo roteiro do agent), sempre (pequena e grande), depois da
+      conformidade sem crítico.
+      CT que falhou = divergência: corrija (volta ao passo 3) ou, se o
+      Matheus aceitar o comportamento, atualize a spec, refaça os casos
+      afetados só a partir dela, ajuste no plano os `CAxx` de cada
+      tarefa, repita a conformidade e execute os casos de novo.
+      Feature pronta só sem CT falhando; CT "não executado" vai como
+      pendência manual no relatório final.
 6. **Documentação final** (opcional) → `documentacao-implementacao`,
    só se o Matheus aceitar (ver "Documentação final").
 
@@ -145,8 +138,8 @@ roda sem aceite:
 | Fluxo | Como oferecer |
 |---|---|
 | **Trivial** | Não oferece. Só gera se o Matheus pedir. |
-| **Pequena** | Pergunta 4 da rodada única. "Gerar no fim" → gera depois da conformidade inline. |
-| **Grande** | Não entra na rodada (já tem 4 perguntas). No relatório final, depois da conformidade sem crítico, uma linha: "Quer a documentação final da implementação?". |
+| **Pequena** | Pergunta 4 da rodada única. "Gerar no fim" → gera depois da conformidade inline e dos casos de teste executados. |
+| **Grande** | Não entra na rodada (já tem 4 perguntas). No relatório final, depois da conformidade sem crítico e dos casos de teste executados, uma linha: "Quer a documentação final da implementação?". |
 | **Bug** | Igual à grande: uma linha no relatório final, depois da correção revisada. |
 
 - Pedido explícito em qualquer momento ("documenta isso") → gera, sem
@@ -158,131 +151,29 @@ roda sem aceite:
 
 ## Diff da tarefa
 
-O review de uma tarefa olha **só** o que ela mudou — nunca `git diff`
-puro, que mistura mudanças de outras tarefas ainda não commitadas:
-
-- **Tarefa em worktree** (grupo paralelo): tudo na worktree é da
-  tarefa — `git -C <worktree> add -A ':(exclude,glob)**/node_modules'`
-  e depois `git -C <worktree> diff --staged`.
-- **Tarefa no diretório principal**: `git diff HEAD -- <arquivos da
-  tarefa>` (lista vinda do plano/resumo do agent), mais
-  `git status --short -- <arquivos>` para ver arquivos novos.
-
+O review de uma tarefa olha **só** o que ela mudou. Os comandos (worktree
+ou diretório principal) estão em "Diff da tarefa" de `regras-de-codigo`.
 Ao disparar o `revisor-arquiteto` (e os revisores de UI), passe no
 prompt o comando exato de diff (ou a worktree + lista de arquivos) —
 eles não adivinham o escopo.
 
 ## Diff de UI: revisores de acessibilidade e responsividade
 
-Uma tarefa **altera interface de frontend** quando o diff dela cria ou
-muda pelo menos um destes arquivos:
-
-- componente/tela: `.tsx`, `.jsx`, `.vue`, `.svelte`, `.html`;
-- estilo: `.css`, `.scss`, `.sass`, `.less`, CSS Modules,
-  `*.styles.ts`/`*.styled.ts` (styled-components/emotion), `StyleSheet`
-  do React Native;
-- tema/layout global: `tailwind.config.*`, `globals.css`, tokens de
-  tema do design system.
-
-Não conta: teste (`*.test.tsx`, `*.spec.tsx`), story
-(`*.stories.tsx`), arquivo de `core` sem JSX, ou `.tsx` cuja mudança é
-só em lógica/tipos sem tocar no JSX nem em estilo.
-
-Com diff de UI e execução por **subagents**, dispare no **mesmo turno**
-do `revisor-arquiteto`, cada um com o mesmo escopo de diff:
-
-- `revisor-acessibilidade` — semântica, teclado, leitor de tela,
-  contraste.
-- `revisor-responsividade` — mobile first, overflow, toque, telas
-  estreitas e largas.
-
-Regras:
-- **Sem diff de UI, não dispare** nenhum dos dois — nem "por garantia".
-- Tarefa **trivial** não dispara revisor (a autorrevisão do diff cobre).
-- Execução **inline**: o `code-review-gate` inline já cobre as regras
-  7 e 10 de `convencoes-frontend`; não dispare os agents.
-- Com eles no ar, o `revisor-arquiteto` deixa as regras 7 e 10 para os
-  especialistas, sem achado duplicado.
-- Crítico de qualquer um dos três bloqueia a próxima tarefa, como no
-  `code-review-gate`. Junte os achados dos três numa lista só antes de
-  corrigir.
-- Os revisores não contam no limite de 4 agents simultâneos de
-  "Execução em paralelo" — o limite é para implementação.
-- Se a tarefa reduziu acessibilidade por decisão confirmada pelo
-  Matheus, diga isso no prompt do `revisor-acessibilidade`.
-
-**Validação além do código** (fim de tarefa com diff de UI, inline ou
-subagent): revisor lê código, não ouve a tela. Antes de reportar:
-
-- No navegador, confira a ordem de Tab (o que recebe foco e em que
-  ordem) e o nome dos elementos novos na árvore de acessibilidade.
-- Entregue ao Matheus um roteiro curto de teste com leitor de tela
-  (VoiceOver/NVDA): onde focar, que tecla apertar e a frase esperada.
+Tarefa cujo diff cria ou muda componente/tela, estilo ou tema dispara,
+com execução por subagents, o `revisor-acessibilidade` e o
+`revisor-responsividade` no mesmo turno do `revisor-arquiteto`. Sem
+diff de UI, não dispare nenhum dos dois. Antes de revisar uma tarefa
+com arquivo de frontend, leia [`diff-de-ui.md`](diff-de-ui.md): o que
+conta como diff de UI, as regras de disparo e a validação no navegador.
 
 ## Execução em paralelo
 
 Tarefas do mesmo grupo `[P<n>]` rodam ao mesmo tempo, uma `Agent` por
-tarefa (`parceiro-tdd` para lógica, `implementador-frontend` para
-tela), **todas disparadas no mesmo turno**.
-
-- **Máximo de 4 simultâneas.** Grupo maior → lotes de até 4; o próximo
-  lote só sai depois que o anterior foi revisado e integrado.
-- Cada agent recebe só a sua tarefa: descrição, critérios de aceite,
-  arquivos que pode tocar e qualquer decisão combinada só na conversa
-  (ele não vê esta conversa nem os arquivos gitignored de spec/plano).
-- Marque cada task em andamento (`TaskUpdate`) ao disparar o agent.
-- Revise cada tarefa assim que o agent dela termina, sem esperar o
-  grupo. Tarefas dependentes do grupo só começam com **todas** as do
-  grupo revisadas sem crítico e integradas.
-- Dois agents tocando o mesmo arquivo apesar do plano = achado crítico:
-  resolva manualmente e corrija o agrupamento no plano.
-
-### Worktree por tarefa paralela
-
-Grupos com 2+ tarefas rodam cada agent em worktree própria
-(`isolation: "worktree"` na chamada `Agent`), para testes, build e diff
-não interferirem entre si.
-
-**Pré-condição**: a worktree nasce do `HEAD`, então o que o grupo usa
-(tarefas anteriores) precisa estar commitado. Se não estiver — porque o
-Matheus não está commitando por tarefa — rode o grupo no diretório
-principal, sem worktree, com o diff restrito por arquivos (ver "Diff da
-tarefa"). Não crie commit temporário por conta própria.
-
-**Antes de disparar**, detecte uma vez o gerenciador de pacotes e
-monte o bloco de preparo que vai no prompt de cada agent:
-
-| Detecção | Preparo na worktree |
-|---|---|
-| `bun.lock` / `bun.lockb` | `bun install --frozen-lockfile` |
-| `yarn.lock` + `.yarnrc.yml` sem `nodeLinker: node-modules` (PnP) | `yarn install --immutable` |
-| `yarn.lock` + `.yarnrc.yml` com `nodeLinker: node-modules` | `ln -s <raiz-principal>/node_modules node_modules` |
-| `yarn.lock` sem `.yarnrc.yml` (Classic) | `ln -s <raiz-principal>/node_modules node_modules` |
-| outro (`package-lock.json`, `pnpm-lock.yaml`) | `npm ci` / `pnpm install --frozen-lockfile` |
-
-Em monorepo com `node_modules` aninhados, prefira o install ao symlink.
-Some ao preparo: `cp <raiz-principal>/.env* . 2>/dev/null || true`.
-`<raiz-principal>` é o caminho absoluto do diretório principal
-(`git rev-parse --show-toplevel` antes de disparar).
-
-**O agent**: roda o preparo, implementa, roda só os testes da tarefa,
-**não commita**, e informa no resumo o caminho da worktree
-(`pwd`) e a branch (`git branch --show-current`).
-
-**Depois de cada agent**, o orquestrador:
-
-1. Revisa pelo diff da worktree (ver "Diff da tarefa").
-2. Integra no diretório principal, na ordem do plano:
-   - Commitando por tarefa: commit **na worktree** com a mensagem de
-     `commit-conventions` (escopo pela branch **principal**, não a da
-     worktree), depois `git cherry-pick <sha>` no principal.
-   - Sem commit: `git -C <worktree> diff --staged --binary | git apply`
-     no principal.
-3. Remove: `git worktree remove --force <worktree>` e
-   `git branch -D <branch-da-worktree>`.
-
-Depois de integrar o grupo inteiro, rode a suíte relacionada uma vez no
-diretório principal.
+tarefa, no máximo 4 por vez, cada uma em worktree própria quando o
+grupo tem 2+ tarefas. Antes de disparar um grupo, leia
+[`execucao-paralela.md`](execucao-paralela.md): o que cada agent
+recebe, o preparo da worktree por gerenciador de pacotes e como
+integrar e limpar depois.
 
 ## Modelo por criticidade
 
@@ -337,6 +228,8 @@ Todos respondem em português do Brasil:
   em diff de UI.
 - `gerador-modulo` — `clean-architecture-scaffold`.
 - `revisor-conformidade` — implementação vs. spec, no fim do plano.
+- `executor-casos-teste` — executa os casos de teste de
+  `docs/casos-teste/` (endpoints e telas), depois da conformidade.
 - `investigador-bugs` — causa raiz de bug relatado.
 
 Mensagem de commit não usa subagent: o orquestrador escreve.
