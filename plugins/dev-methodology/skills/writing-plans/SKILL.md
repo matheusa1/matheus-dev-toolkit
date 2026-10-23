@@ -29,6 +29,10 @@ por tarefa, ou poucos ciclos).
    - Se o plano fixar uma rota que os casos de teste deixaram como
      `<rota a definir>`, substitua no arquivo de `docs/casos-teste/`.
      Não mude mais nada nos casos de teste por causa do plano.
+   - Cada CT de endpoint vira teste e2e automatizado na tarefa que
+     expõe a rota: cite o `CTxx` no item do plano, junto dos `CAxx`.
+     Assim o contrato fica coberto como regressão, não só na execução
+     manual do fim.
 2. **Aponte decisões arquiteturais que a tarefa afeta** (nova camada,
    novo módulo, mudança de contrato) para que o code review saiba o
    que checar depois.
@@ -74,7 +78,7 @@ por tarefa, ou poucos ciclos).
    - [ ] 1. Criar entidade de domínio `TOrder` + testes unitários (CA03, CA04) — `domain/entities/`
    - [ ] 2. [P1] Implementar caso de uso `CreateOrder` (application) + testes (CA02, CA05) — `application/use-cases/create-order*`
    - [ ] 3. [P1] Implementar repositório TypeORM (infra) + testes de integração (CA09) — `infra/repositories/`
-   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento; CA10) — `infra/http/`
+   - [ ] 4. [alta] Expor endpoint REST no controller + testes e2e (depende de 2 e 3, valida pagamento; CA10; CT04) — `infra/http/`
    ```
 
    Aqui as tarefas 2 e 3 dependem só da 1 (entidade já existe) e não
