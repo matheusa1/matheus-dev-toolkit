@@ -2,6 +2,7 @@
 name: executor-casos-teste
 description: Executa os casos de teste (CTxx) salvos em docs/casos-teste/ contra a aplicação rodando — endpoints via HTTP e telas via navegador — e registra passou/falhou por CT, com os passos que falharam, marcando divergências. Use no fim da implementação, depois do code review de todas as tarefas e da conformidade, antes de considerar a feature pronta.
 model: inherit
+disallowedTools: Agent, NotebookEdit, WebSearch, WebFetch
 skills:
   - casos-de-teste
 ---
