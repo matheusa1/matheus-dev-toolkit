@@ -5,6 +5,7 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 model: inherit
 skills:
   - convencoes-frontend
+  - regras-de-codigo
 ---
 
 Você implementa componentes de apresentação de frontend aplicando
@@ -23,8 +24,8 @@ Ao receber uma tarefa:
    apresentação.
 2. **Detecte o design system** (seção 0 da skill) antes de escrever
    qualquer componente.
-3. Implemente seguindo a skill, começando pelo layout mobile, com
-   componente ≤ 20 linhas e arquivo ≤ 150 (divida o que passar).
+3. Implemente seguindo a skill, começando pelo layout mobile, dentro
+   dos limites de tamanho de `regras-de-codigo` (divida o que passar).
 4. **Se a tarefa, como descrita, reduzir acessibilidade** (tirar foco
    visível, `<div>` clicável, omitir `alt`/label, cor fora dos tokens),
    pare e pergunte se é intencional antes de implementar essa parte.

@@ -17,12 +17,8 @@ paralelo ao `revisor-arquiteto` (ver "Diff de UI" na mesma skill).
 
 ## Processo
 
-1. Veja **só o diff desta tarefa** — nunca `git diff` puro, que inclui
-   mudanças de outras tarefas não commitadas (ex: agents paralelos):
-   - Em worktree: `git -C <worktree> add -A ':(exclude,glob)**/node_modules'`
-     e `git -C <worktree> diff --staged`.
-   - No diretório principal: `git diff HEAD -- <arquivos da tarefa>` e
-     `git status --short -- <arquivos>` para arquivos novos.
+1. Veja **só o diff desta tarefa**, com os comandos de "Diff da
+   tarefa" em `regras-de-codigo` — nunca `git diff` puro.
    Se não souber quais arquivos são da tarefa, pergunte a quem pediu a
    revisão em vez de revisar o diff inteiro.
 2. Revise contra:
@@ -48,21 +44,9 @@ paralelo ao `revisor-arquiteto` (ver "Diff de UI" na mesma skill).
    - **Segurança básica**: segredos expostos, entrada não validada,
      SQL/queries não parametrizadas.
    - **Legibilidade**: nomes claros, sem duplicação óbvia.
-   - **Idioma**: identificadores, comentários e nomes de teste em
-     inglês (specs, planos e commits seguem em português). Nome em
-     português fora do padrão local é 🟡 aviso.
-   - **SOLID**: classe/módulo com mais de uma responsabilidade,
-     dependência de implementação concreta em vez de `I*`, interface
-     inchada, subtipo que quebra o contrato do pai, ou alteração de
-     código existente onde bastava estender. Violação clara é 🔴
-     crítico quando compromete a arquitetura; caso contrário 🟡.
-   - **Tamanho**: arquivo com no máximo 150 linhas e função (método,
-     componente) com no máximo 20, da assinatura ao fechamento. Meça
-     com `wc -l` nos arquivos do diff e olhando as funções que o diff
-     cria ou altera. Fora do limite: teste, gerado, migration, config
-     e documentação (`.md`). Arquivo ou função criado pelo diff acima
-     do limite é 🔴 crítico; legado que o diff fez crescer além do limite é 🟡 aviso,
-     com a extração sugerida.
+   - **Regras de código** (`regras-de-codigo`): idioma, SOLID,
+     vizinho legado e tamanho (150 linhas por arquivo, 20 por função),
+     com a severidade da tabela de lá.
    - **Só se o diff tiver `.tsx`/`.jsx`** (UI): carregue a skill
      `dev-methodology:convencoes-frontend` e revise contra ela. Diff
      sem arquivo de UI não carrega essa skill. Redução de

@@ -53,14 +53,18 @@ juntos, numa rodada única, e não se repetem durante a execução.
     contratos, rotas novas e alteradas, mudanças de tela, impacto) a
     partir do diff real da branch, salva em `docs/implementacao/`.
     Formato de referência em `exemplo.md`, com domínio fictício.
-- **Regras de código** (em `using-dev-methodology`, valem para todo
+  - `regras-de-codigo` — fonte única das regras de código e dos
+    comandos de diff, pré-carregada nos agents (ver abaixo).
+- **Regras de código** (skill `regras-de-codigo`, valem para todo
   desenvolvimento): código majoritariamente em inglês (specs, planos e
   commits seguem em português), sempre respeitando SOLID, e vizinho
   legado não é convenção: com dois padrões no repo, vale o documentado
   no `CLAUDE.md` ou o que respeita camadas/SOLID, com a divergência
   sinalizada. Arquivo com no máximo 150 linhas e função (inclusive
   componente) com no máximo 20, conferidos no `code-review-gate`:
-  excedente em código novo bloqueia a tarefa.
+  excedente em código novo bloqueia a tarefa. Os testes e2e de
+  endpoint saem dos CTs de endpoint, com o `CTxx` no nome, e ficam
+  como regressão.
 - **Subagents** (contexto isolado, mesmas regras das skills acima,
   sempre respondem em português do Brasil):
   - `revisor-arquiteto` — revisor read-only.
@@ -91,8 +95,8 @@ juntos, numa rodada única, e não se repetem durante a execução.
     divergências no próprio arquivo.
   - `investigador-bugs` — investiga um bug relatado até a causa raiz
     confirmada, sem sair corrigindo por tentativa e erro.
-- **Hook**: lembrete no início da sessão apontando para
-  `using-dev-methodology`.
+- **Hook**: lembrete no início da sessão (e depois de compactar o
+  contexto) apontando para `using-dev-methodology`.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
   `revisor-acessibilidade`, `revisor-responsividade`, `parceiro-tdd`, `implementador-frontend`, `gerador-modulo`,
   `revisor-conformidade`, `executor-casos-teste` e `investigador-bugs` não é fixo — varia entre
@@ -141,6 +145,27 @@ documentações finais em `docs/implementacao/` no projeto onde a
 metodologia é usada, cada um com seu próprio
 `.gitignore` contendo só `*` (sem `!.gitignore`), para que nem os
 arquivos nem o próprio `.gitignore` entrem no versionamento do projeto.
+
+## Evals
+
+`evals/` tem cenários de `claude plugin eval` que conferem o fluxo
+(endpoint novo gera spec, casos de teste e plano no formato certo;
+tarefa trivial vai direto; bug não gera spec nem plano). Rode a partir
+desta pasta:
+
+```bash
+claude plugin eval . --allow-tools Write Edit
+```
+
+Os cenários não usam `Bash`: sem sandbox (bubblewrap) a ferramenta é
+recusada. Mude uma regra do fluxo → rode as evals antes do PR.
+
+## Versões
+
+Histórico em [`CHANGELOG.md`](CHANGELOG.md), atualizado no mesmo commit
+que muda a versão. O CI (`.github/workflows/validate.yml` na raiz)
+valida o plugin, os JSON, a igualdade das versões Claude Code × Codex
+e a entrada do CHANGELOG.
 
 ## Instalar
 

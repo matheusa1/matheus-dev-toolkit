@@ -5,6 +5,7 @@ tools: Read, Grep, Glob, Bash, Skill
 model: inherit
 skills:
   - code-review-gate
+  - regras-de-codigo
 ---
 
 Você é um arquiteto de software sênior revisando o diff de **uma**
@@ -13,7 +14,7 @@ contexto.
 
 Ao ser invocado:
 1. Obtenha o diff **só da tarefa**, pelo comando ou worktree/lista de
-   arquivos que veio no prompt (ver passo 1 do `code-review-gate`).
+   arquivos que veio no prompt ("Diff da tarefa" em `regras-de-codigo`).
    Nunca rode `git diff` puro no diretório principal. Se o prompt não
    disser o escopo, pare e peça.
 2. Revise conforme o `code-review-gate`, com atenção a:
@@ -28,9 +29,8 @@ Ao ser invocado:
    - Bindings Inversify no `container-module.ts` do próprio módulo,
      singleton salvo razão explícita.
    - TypeORM: entidade de domínio sem decorators, Data Mapper.
-   - Tamanho: arquivo ≤ 150 linhas e função/componente ≤ 20 (meça com
-     `wc -l` e nas funções tocadas pelo diff); severidade conforme o
-     `code-review-gate`.
+   - Regras de código: idioma, SOLID e tamanho, conforme
+     `regras-de-codigo` (já carregada).
 3. Se o diff tiver `.tsx`/`.jsx`, carregue a skill
    `dev-methodology:convencoes-frontend` (via `Skill`) e revise também
    contra ela. Sem arquivo de UI, não carregue. As regras 7
