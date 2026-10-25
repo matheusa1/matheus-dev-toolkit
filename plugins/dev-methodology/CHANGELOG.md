@@ -5,6 +5,13 @@ duas manifests (`.claude-plugin/plugin.json` e
 `.codex-plugin/plugin.json`), que sobem sempre juntas. Atualize este
 arquivo no mesmo commit que muda a versão.
 
+## 0.21.0 — 2026-10-25
+
+- Documentação final (`documentacao-implementacao`) obrigatória no fim
+  de toda tarefa pequena, grande e bug, sem oferta nem pergunta; a
+  trivial só gera sob pedido. Sai da rodada única de perguntas.
+- Eval de bug confere que a correção termina com a documentação final.
+
 ## 0.20.0 — 2026-10-22
 
 - Spec sempre no formato história de usuário (Como/quero/para),

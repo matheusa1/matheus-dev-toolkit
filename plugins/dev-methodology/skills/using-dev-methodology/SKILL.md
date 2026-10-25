@@ -30,9 +30,9 @@ já a pré-carregam.
 
 Bug, erro ou comportamento inesperado → skill `debugging-sistematico`
 (inline ou agent `investigador-bugs`). Confirme a causa raiz com
-evidência; só então corrija entrando no passo 3 (TDD). Sem
-brainstorming/plano para bug pontual, a menos que a investigação
-revele algo maior.
+evidência; só então corrija entrando no passo 3 (TDD) e termine com a
+documentação final (passo 6). Sem brainstorming/plano para bug
+pontual, a menos que a investigação revele algo maior.
 
 ## Tamanho da tarefa define o fluxo
 
@@ -44,7 +44,7 @@ diga"). O Matheus pode reclassificar a qualquer momento.
 | Tamanho | Quando | Fluxo |
 |---|---|---|
 | **Trivial** | typo, ajuste de string/config, mudança de 1 a poucas linhas óbvias, sem lógica nova | Direto ao código. Sem spec, plano ou pergunta. Rode o teste/lint relacionado e revise você mesmo o diff antes de reportar. |
-| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), casos de teste em `docs/casos-teste/` logo após a spec, **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando cada `CAxx` da seção `## Spec` do arquivo, e execução dos casos de teste (passo 5b). |
+| **Pequena** | até ~3 tarefas, um módulo, sem decisão arquitetural nova nem mudança de contrato público, nenhuma tarefa `[alta]` | Spec + plano **num único arquivo** (`docs/planos/`), casos de teste em `docs/casos-teste/` logo após a spec, **uma** confirmação com as perguntas juntas. Depois passo 3 normal. Conformidade final inline, checando cada `CAxx` da seção `## Spec` do arquivo, e execução dos casos de teste (passo 5b) e documentação final (passo 6). |
 | **Grande** | mais de ~3 tarefas, vários módulos, decisão arquitetural, contrato público novo/alterado, ou qualquer tarefa `[alta]` (auth, pagamentos, migração/exclusão de dados, domínio central) | Fluxo completo abaixo: spec e plano em arquivos separados, duas confirmações. |
 
 Na dúvida entre dois tamanhos, escolha o maior. Bug com causa raiz
@@ -94,8 +94,9 @@ confirmada normalmente é trivial ou pequeno.
       tarefa, repita a conformidade e execute os casos de novo.
       Feature pronta só sem CT falhando; CT "não executado" vai como
       pendência manual no relatório final.
-6. **Documentação final** (opcional) → `documentacao-implementacao`,
-   só se o Matheus aceitar (ver "Documentação final").
+6. **Documentação final** (obrigatória) → `documentacao-implementacao`,
+   sempre, como última etapa (ver "Documentação final"). Sem ela a
+   entrega não está pronta.
 
 ## Perguntas: uma rodada só
 
@@ -112,15 +113,16 @@ espalhadas pelo fluxo:
    Define também como as worktrees paralelas são integradas.
 4. **Conformidade final** (só tarefa grande) — Agent
    `revisor-conformidade` (recomendado) / Inline.
-   **Documentação final** (só tarefa pequena, no lugar desta) —
-   Gerar no fim (recomendado quando a entrega tem ticket) / Não gerar.
+
+A documentação final não entra na rodada: é obrigatória (ver
+"Documentação final").
 
 Regras:
 - Sempre com a opção recomendada primeiro e o motivo na descrição.
 - Pule a pergunta cuja resposta o Matheus já deu nesta conversa
   (ex: "usa subagent pra tudo", "commita cada tarefa").
-- Depois dessa rodada, **não pergunte de novo** sobre execução, commit,
-  conformidade ou documentação — aplique as respostas até o fim do
+- Depois dessa rodada, **não pergunte de novo** sobre execução, commit
+  ou conformidade — aplique as respostas até o fim do
   plano. Só volte a perguntar se ele pedir para decidir tarefa a
   tarefa.
 - Grupos `[P<n>]` sempre usam agents, qualquer que seja a resposta 2.
@@ -132,21 +134,21 @@ Regras:
 ## Documentação final
 
 `documentacao-implementacao` gera um markdown da entrega (contratos,
-rotas, comportamento de tela, impacto) a partir do diff real. Nunca
-roda sem aceite:
+rotas, comportamento de tela, impacto) a partir do diff real. É
+**obrigatória** ao fim de toda implementação, sem oferta nem pergunta:
 
-| Fluxo | Como oferecer |
+| Fluxo | Quando gerar |
 |---|---|
-| **Trivial** | Não oferece. Só gera se o Matheus pedir. |
-| **Pequena** | Pergunta 4 da rodada única. "Gerar no fim" → gera depois da conformidade inline e dos casos de teste executados. |
-| **Grande** | Não entra na rodada (já tem 4 perguntas). No relatório final, depois da conformidade sem crítico e dos casos de teste executados, uma linha: "Quer a documentação final da implementação?". |
-| **Bug** | Igual à grande: uma linha no relatório final, depois da correção revisada. |
+| **Trivial** | Não gera. Só se o Matheus pedir. |
+| **Pequena** | Depois da conformidade inline e dos casos de teste executados. |
+| **Grande** | Depois da conformidade sem crítico e dos casos de teste executados. |
+| **Bug** | Depois da correção revisada (e commitada, se for o caso). |
 
-- Pedido explícito em qualquer momento ("documenta isso") → gera, sem
-  pergunta.
-- Resposta já dada nesta conversa (ex: "sempre gera a doc") → aplique
-  sem perguntar.
-- A oferta é feita uma vez. "Não" ou silêncio encerra o assunto.
+- Crítico aberto no review, na conformidade ou CT falhando → resolva
+  antes; a documentação descreve a entrega final.
+- Pule só com pedido explícito nesta conversa ("sem documentação
+  dessa vez"), e só naquela tarefa.
+- O relatório final cita o caminho do documento gerado.
 - Roda inline: quem orquestrou acompanhou a entrega inteira.
 
 ## Diff da tarefa
