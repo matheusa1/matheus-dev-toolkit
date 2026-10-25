@@ -1,5 +1,5 @@
 ---
-description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Etapa obrigatória no fim de toda implementação do fluxo de `using-dev-methodology` (tarefa pequena, grande ou bug), depois da conformidade e dos casos de teste executados. Use também quando o Matheus pedir "documentação final", "documenta a implementação" ou "gera a doc do que foi feito".
+description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Etapa obrigatória no fim de toda implementação do fluxo de `using-dev-methodology`: na tarefa pequena ou grande, depois da conformidade e dos casos de teste executados; em bug, depois da correção revisada. Use também quando o Matheus pedir "documentação final", "documenta a implementação" ou "gera a doc do que foi feito".
 ---
 
 # Documentação da implementação
