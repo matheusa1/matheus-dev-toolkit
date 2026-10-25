@@ -48,8 +48,8 @@ juntos, numa rodada única, e não se repetem durante a execução.
   - `debugging-sistematico` — investiga um bug relatado (reproduzir,
     coletar evidência, testar hipóteses, isolar causa raiz) antes de
     qualquer correção.
-  - `documentacao-implementacao` — gera, quando o Matheus aceita ou
-    pede, a documentação final da entrega em markdown (ticket,
+  - `documentacao-implementacao` — gera, como etapa obrigatória no fim
+    de toda implementação (ou sob pedido), a documentação final da entrega em markdown (ticket,
     contratos, rotas novas e alteradas, mudanças de tela, impacto) a
     partir do diff real da branch, salva em `docs/implementacao/`.
     Formato de referência em `exemplo.md`, com domínio fictício.
@@ -114,12 +114,12 @@ brainstorming (spec em docs/especificacao/AAAA-MM-DD-nome-tarefa.md)
   → (opcional) clean-architecture-scaffold
   → revisor-conformidade (compara implementação final x spec e x plano)
   → executor-casos-teste (executa os CTs na aplicação rodando)
-  → (opcional, se aceito) documentacao-implementacao (doc final em docs/implementacao/AAAA-MM-DD-ticket.md)
+  → documentacao-implementacao (obrigatória: doc final em docs/implementacao/AAAA-MM-DD-ticket.md)
 ```
 
-A documentação final nunca é gerada sem aceite: na tarefa pequena ela é
-a 4ª pergunta da rodada única; na grande e em bug, é oferecida em uma
-linha no relatório final; na trivial, só sob pedido.
+A documentação final é obrigatória: tarefa pequena, grande e bug
+terminam sempre com ela, sem pergunta; na trivial, só sob pedido. Só
+é pulada com pedido explícito na conversa.
 
 Para um **bug relatado** (em vez de feature nova), o fluxo entra por
 `debugging-sistematico` em vez de `brainstorming`:
@@ -127,6 +127,7 @@ Para um **bug relatado** (em vez de feature nova), o fluxo entra por
 ```
 debugging-sistematico (reproduzir → evidência → hipóteses → isolar → causa raiz confirmada)
   → TDD (teste que reproduz o bug → correção) → code-review-gate → commit-conventions
+  → documentacao-implementacao (obrigatória)
 ```
 
 Tarefas do mesmo grupo `[P<n>]` no plano — ex: domain/application/infra
@@ -150,7 +151,8 @@ arquivos nem o próprio `.gitignore` entrem no versionamento do projeto.
 
 `evals/` tem cenários de `claude plugin eval` que conferem o fluxo
 (endpoint novo gera spec, casos de teste e plano no formato certo;
-tarefa trivial vai direto; bug não gera spec nem plano). Rode a partir
+tarefa trivial vai direto; bug não gera spec nem plano e termina
+com a documentação final). Rode a partir
 desta pasta:
 
 ```bash

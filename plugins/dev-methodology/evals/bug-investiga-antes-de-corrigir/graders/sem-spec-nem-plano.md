@@ -1,7 +1,7 @@
 ---
 type: tool_used
 tool: Write
-input_match: "docs/"
+input_match: "docs/(especificacao|casos-teste|planos)/"
 min: 0
 max: 0
 weight: 1

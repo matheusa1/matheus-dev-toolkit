@@ -1,5 +1,5 @@
 ---
-description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Use quando o Matheus pedir "documentação final", "documenta a implementação", "gera a doc do que foi feito", ou quando ele aceitar a documentação final oferecida pelo fluxo de `using-dev-methodology`. Nunca gere sem esse pedido ou aceite.
+description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Etapa obrigatória no fim de toda implementação do fluxo de `using-dev-methodology` (tarefa pequena, grande ou bug), depois da conformidade e dos casos de teste executados. Use também quando o Matheus pedir "documentação final", "documenta a implementação" ou "gera a doc do que foi feito".
 ---
 
 # Documentação da implementação
@@ -15,9 +15,9 @@ fictício). Leia antes de escrever o primeiro documento da conversa.
 ## Quando gerar
 
 - **Pedido explícito**, em qualquer momento → gere.
-- **Dentro do fluxo** → só se o Matheus aceitou, conforme
-  "Documentação final" em `using-dev-methodology`. Sem aceite, não
-  gere nem pergunte de novo.
+- **Dentro do fluxo** → sempre, como última etapa, sem perguntar,
+  conforme "Documentação final" em `using-dev-methodology` (tarefa
+  trivial só sob pedido). Só pule com pedido explícito para não gerar.
 - Implementação ainda com crítico aberto no review ou na conformidade
   → avise e gere só depois de resolvido (ou se ele insistir, marcando
   o que está pendente).

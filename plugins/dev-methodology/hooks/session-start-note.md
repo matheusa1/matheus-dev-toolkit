@@ -12,7 +12,8 @@ que não existem em nenhuma outra skill.
 O tamanho da tarefa define o fluxo: trivial vai direto ao código;
 pequena junta spec e plano num arquivo com uma confirmação, com os
 casos de teste (`dev-methodology:casos-de-teste`) gerados logo após a
-spec e executados no fim (agent `executor-casos-teste`); grande
+spec e executados no fim (agent `executor-casos-teste`) e
+documentação final obrigatória; grande
 segue `dev-methodology:brainstorming` → `dev-methodology:casos-de-teste`
 → `dev-methodology:writing-plans`
 → (`dev-methodology:test-driven-development` +
@@ -20,7 +21,7 @@ segue `dev-methodology:brainstorming` → `dev-methodology:casos-de-teste`
 por tarefa, tarefas `[P<n>]` em paralelo) → revisão de conformidade
 → execução dos casos de teste (agent `executor-casos-teste`)
 → documentação final (`dev-methodology:documentacao-implementacao`),
-só se aceita.
+obrigatória. Bug corrigido também termina com a documentação final.
 
 Todas as skills deste plugin são invocadas com o prefixo
 `dev-methodology:`. Se uma chamada `Skill` falhar com "Unknown skill",
