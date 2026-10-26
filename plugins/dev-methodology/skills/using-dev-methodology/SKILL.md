@@ -149,6 +149,9 @@ rotas, comportamento de tela, impacto) a partir do diff real. É
 - Pule só com pedido explícito nesta conversa ("sem documentação
   dessa vez"), e só naquela tarefa.
 - O relatório final cita o caminho do documento gerado.
+- Título e descrição do MR/PR saem desse documento, sem "Generated
+  with Claude Code" nem outra atribuição (ver "Texto do MR" em
+  `documentacao-implementacao`).
 - Roda inline: quem orquestrou acompanhou a entrega inteira.
 
 ## Diff da tarefa

@@ -5,6 +5,12 @@ duas manifests (`.claude-plugin/plugin.json` e
 `.codex-plugin/plugin.json`), que sobem sempre juntas. Atualize este
 arquivo no mesmo commit que muda a versão.
 
+## 0.22.0 — 2026-10-26
+
+- Título e descrição do MR/PR gerados a partir da documentação final
+  (`documentacao-implementacao`), sem "Generated with Claude Code",
+  link de sessão, `Co-Authored-By` nem outra atribuição.
+
 ## 0.21.0 — 2026-10-25
 
 - Documentação final (`documentacao-implementacao`) obrigatória no fim

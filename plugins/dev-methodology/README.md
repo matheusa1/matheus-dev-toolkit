@@ -52,7 +52,9 @@ juntos, numa rodada única, e não se repetem durante a execução.
     de toda implementação (ou sob pedido), a documentação final da entrega em markdown (ticket,
     contratos, rotas novas e alteradas, mudanças de tela, impacto) a
     partir do diff real da branch, salva em `docs/implementacao/`.
-    Formato de referência em `exemplo.md`, com domínio fictício.
+    Formato de referência em `exemplo.md`, com domínio fictício. O
+    título e a descrição do MR/PR saem desse documento, sem "Generated
+    with Claude Code" nem outra atribuição.
   - `regras-de-codigo` — fonte única das regras de código e dos
     comandos de diff, pré-carregada nos agents (ver abaixo).
 - **Regras de código** (skill `regras-de-codigo`, valem para todo
