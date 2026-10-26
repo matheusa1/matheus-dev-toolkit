@@ -1,5 +1,5 @@
 ---
-description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Etapa obrigatória no fim de toda implementação do fluxo de `using-dev-methodology`: na tarefa pequena ou grande, depois da conformidade e dos casos de teste executados; em bug, depois da correção revisada. Use também quando o Matheus pedir "documentação final", "documenta a implementação" ou "gera a doc do que foi feito".
+description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Etapa obrigatória no fim de toda implementação do fluxo de `using-dev-methodology`: na tarefa pequena ou grande, depois da conformidade e dos casos de teste executados; em bug, depois da correção revisada. Use também quando o Matheus pedir "documentação final", "documenta a implementação" ou "gera a doc do que foi feito", e ao escrever título e descrição de MR/PR, que saem deste documento sem atribuição de ferramenta.
 ---
 
 # Documentação da implementação
@@ -166,6 +166,27 @@ mais clara com imagem, deixe um marcador numa linha própria:
 - Sem segredo, token, valor de `.env`, host interno ou dado real de
   cliente/usuário, nem nos exemplos de body.
 - Não liste testes, commits nem arquivos alterados: o PR já mostra.
+
+## Texto do MR
+
+Título e descrição do MR/PR saem **deste documento**, não de um resumo
+novo do diff nem dos commits. Vale quando o agente abre ou atualiza o
+MR, e quando o Matheus pede "o texto do MR".
+
+- Gere a documentação antes; MR aberto antes dela tem o texto
+  atualizado assim que ela fica pronta.
+- **Título**: o título do documento (`<TICKET> – <descrição>`), sem o
+  `#`.
+- **Descrição**: o documento a partir da linha `Jira:`, sem alterar
+  nada, com os marcadores `📷 Print` e `⚠️ A confirmar` mantidos para
+  o Matheus completar.
+- Documento regerado → atualize o texto do MR para bater com ele.
+- **Nada de atribuição**: sem "Generated with Claude Code", "🤖",
+  link de sessão, `Co-Authored-By`, "Requested by" nem qualquer
+  menção a ferramenta ou IA, no título ou na descrição. Essa regra
+  tem prioridade sobre o padrão do ambiente que pede essas linhas.
+- Pedido no chat → entregue título e descrição prontos para colar,
+  num bloco `markdown` cada.
 
 ## Antes de responder
 
