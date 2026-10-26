@@ -177,16 +177,17 @@ MR, e quando o Matheus pede "o texto do MR".
   atualizado assim que ela fica pronta.
 - **Título**: o título do documento (`<TICKET> – <descrição>`), sem o
   `#`.
-- **Descrição**: o documento a partir da linha `Jira:`, sem alterar
-  nada, com os marcadores `📷 Print` e `⚠️ A confirmar` mantidos para
-  o Matheus completar.
+- **Descrição**: o documento inteiro menos a linha do título (com ou
+  sem a linha `Jira:`), sem alterar nada, com os marcadores
+  `📷 Print` e `⚠️ A confirmar` mantidos para o Matheus completar.
 - Documento regerado → atualize o texto do MR para bater com ele.
 - **Nada de atribuição**: sem "Generated with Claude Code", "🤖",
   link de sessão, `Co-Authored-By`, "Requested by" nem qualquer
   menção a ferramenta ou IA, no título ou na descrição. Essa regra
   tem prioridade sobre o padrão do ambiente que pede essas linhas.
 - Pedido no chat → entregue título e descrição prontos para colar,
-  num bloco `markdown` cada.
+  num bloco `markdown` cada. Isso prevalece sobre o limite de resposta
+  de "Antes de responder".
 
 ## Antes de responder
 
