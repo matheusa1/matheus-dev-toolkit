@@ -98,8 +98,8 @@ juntos, numa rodada única, e não se repetem durante a execução.
   - `investigador-bugs` — investiga um bug relatado até a causa raiz
     confirmada, sem sair corrigindo por tentativa e erro.
 - **Hook**: lembrete de sessão apontando para `using-dev-methodology`.
-  No Codex desktop, o hook local requer revisão e confiança; a execução
-  após compactação depende do suporte do ambiente.
+  No Codex desktop, o hook local requer revisão e confiança. Sem matcher,
+  a configuração responde aos eventos de SessionStart, incluindo compactação.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
   `revisor-acessibilidade`, `revisor-responsividade`, `parceiro-tdd`, `implementador-frontend`, `gerador-modulo`,
   `revisor-conformidade`, `executor-casos-teste` e `investigador-bugs` não é fixo — varia entre

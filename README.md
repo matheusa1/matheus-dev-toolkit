@@ -80,12 +80,15 @@ chega a quem já tem o plugin instalado.** A cada mudança:
 
 ```bash
 claude plugin validate .
+claude plugin validate plugins/dev-methodology
+python3 scripts/validate-codex-plugin.py
 ```
 
 O CI (`.github/workflows/validate.yml`) roda isso em todo pull
 request, junto com a checagem dos JSON, das versões Claude Code ×
 Codex iguais, da entrada no CHANGELOG e das skills pré-carregadas pelos
-agents. Mudou uma regra do fluxo? Rode também as evals do plugin (ver
+agents, além do marketplace, hooks e metadados das skills do Codex.
+Mudou uma regra do fluxo? Rode também as evals do plugin (ver
 "Evals" no README do plugin).
 
 ### Publicar uma mudança
@@ -98,7 +101,7 @@ máquina:
 /reload-plugins
 ```
 
-## Codex CLI
+## Codex
 
 Este repo também expõe um marketplace pro [Codex CLI](https://developers.openai.com/codex)
 (`.agents/plugins/marketplace.json` na raiz + `.codex-plugin/plugin.json`
@@ -121,6 +124,7 @@ codex plugin add dev-methodology@matheus-toolkit
 ### Atualizar depois do merge
 
 ```bash
+codex plugin marketplace upgrade matheus-toolkit
 codex plugin add dev-methodology@matheus-toolkit
 ```
 

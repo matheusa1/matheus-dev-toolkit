@@ -16,9 +16,12 @@ e agents apontam para cá em vez de repeti-las.
 Siga as instruções do usuário e as capacidades e restrições do harness.
 No Claude Code, use os agents e ferramentas próprios quando disponíveis.
 No Codex, as definições em `agents/*.md` não são registradas como agentes
-nomeados: leia o arquivo correspondente e transmita seu roteiro e contexto
-quando a delegação estiver disponível e autorizada; caso contrário execute
-inline. Não presuma que delegação, worktrees ou seleção de modelo estão
+nomeados: leia `../../agents/<nome>.md`, relativo a esta skill. Para cada
+skill listada no campo `skills` do frontmatter do agent, transmita suas
+instruções ao subagent ou peça que ele carregue o `SKILL.md` correspondente
+antes de agir. Quando executar inline, carregue essas skills você mesmo.
+Transmita o roteiro e contexto quando a delegação estiver disponível e
+autorizada; caso contrário execute inline. Não presuma que delegação, worktrees ou seleção de modelo estão
 habilitadas. Use as ferramentas de perguntas e progresso disponíveis; se não
 houver equivalente, registre o progresso no plano e na conversa.
 Consulte `AGENTS.md` no Codex e `CLAUDE.md` no Claude Code.
@@ -139,8 +142,9 @@ Regras:
   ou conformidade — aplique as respostas até o fim do
   plano. Só volte a perguntar se ele pedir para decidir tarefa a
   tarefa.
-- Grupos `[P<n>]` usam agents quando a delegação estiver disponível e
-  autorizada; caso contrário, execute as tarefas inline e em sequência.
+- Grupos `[P<n>]` usam agents em paralelo quando delegação e worktrees
+  estiverem disponíveis e autorizadas; caso contrário, execute as tarefas
+  em sequência, inline ou com delegação disponível e autorizada.
 - Etapas fora de plano (ex: investigar bug) perguntam inline vs.
   agent na primeira vez que forem necessárias, e a resposta vale para
   o resto da conversa.
@@ -188,10 +192,10 @@ conta como diff de UI, as regras de disparo e a validação no navegador.
 
 ## Execução em paralelo
 
-Quando disponíveis e autorizados, tarefas do mesmo grupo `[P<n>]` rodam
-ao mesmo tempo, um agent por
-tarefa, no máximo 4 por vez, cada uma em worktree própria quando o
-grupo tem 2+ tarefas. Antes de disparar um grupo, leia
+Quando delegação e worktrees estiverem disponíveis e autorizadas, tarefas
+do mesmo grupo `[P<n>]` rodam ao mesmo tempo, um agent por tarefa, no
+máximo 4 por vez, cada uma em worktree própria. Caso contrário, execute
+as tarefas em sequência. Antes de disparar um grupo, leia
 [`execucao-paralela.md`](execucao-paralela.md): o que cada agent
 recebe, o preparo da worktree por gerenciador de pacotes e como
 integrar e limpar depois.

@@ -71,8 +71,8 @@ por tarefa, ou poucos ciclos).
    domínio central; baixa é para tarefa mecânica sem lógica de negócio
    (ex: ajuste de string, tipagem). Essa tag é o que a skill
    `using-dev-methodology` ("Modelo por criticidade") usa para decidir
-   se o `Agent` de implementação/revisão da tarefa roda em `haiku`,
-   herda o modelo padrão, ou roda em `opus`.
+   como selecionar o modelo no Claude Code; no Codex, herde o modelo da
+   conversa salvo pedido explícito do usuário.
 5. **Apresente como checklist markdown**, por exemplo:
 
    ```markdown
@@ -86,8 +86,8 @@ por tarefa, ou poucos ciclos).
    compartilham arquivo entre si, então podem ser disparadas juntas
    (`[P1]`), ambas com criticidade média (sem tag). A tarefa 4 depende
    das duas, fica fora do grupo paralelo, e é `[alta]` porque valida
-   pagamento — o agente que a implementar/revisar deve rodar em
-   `opus`.
+   pagamento — no Claude Code o agente de implementação/revisão usa
+   `opus`; no Codex, herda o modelo salvo pedido explícito.
 
 6. **Salve o plano em arquivo**, não só na conversa:
    `docs/planos/AAAA-MM-DD-nome-tarefa.md`, usando a data atual e o
@@ -106,7 +106,7 @@ por tarefa, ou poucos ciclos).
      `!.gitignore` nem qualquer outra exceção: o próprio `.gitignore`
      também deve ficar fora do versionamento, junto com os planos.
    - Este arquivo é a fonte de verdade do plano durante toda a
-     implementação — as tasks do `TaskCreate`/`TaskUpdate` espelham
+     implementação — as ferramentas de progresso disponíveis espelham
      esse checklist, mas o arquivo é o que sobrevive a uma
      compactação de contexto ou a uma nova sessão.
 

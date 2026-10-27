@@ -3,6 +3,11 @@
 Referência de `using-dev-methodology`, lida só antes de disparar um
 grupo `[P<n>]`.
 
+Este roteiro só se aplica quando delegação e worktrees estão disponíveis
+e autorizadas. Use as ferramentas equivalentes do harness; os exemplos
+`Agent`, `isolation` e `TaskUpdate` abaixo são do Claude Code. Se não
+houver worktrees, execute as tarefas sequencialmente.
+
 Tarefas do mesmo grupo `[P<n>]` rodam ao mesmo tempo, uma `Agent` por
 tarefa (`parceiro-tdd` para lógica, `implementador-frontend` para
 tela), **todas disparadas no mesmo turno**.
@@ -29,8 +34,8 @@ não interferirem entre si.
 
 **Pré-condição**: a worktree nasce do `HEAD`, então o que o grupo usa
 (tarefas anteriores) precisa estar commitado. Se não estiver — porque o
-Matheus não está commitando por tarefa — rode o grupo no diretório
-principal, sem worktree, com o diff restrito por arquivos (ver "Diff da
+Matheus não está commitando por tarefa — execute as tarefas em sequência
+no diretório principal, com o diff restrito por arquivos (ver "Diff da
 tarefa"). Não crie commit temporário por conta própria.
 
 **Antes de disparar**, detecte uma vez o gerenciador de pacotes e
