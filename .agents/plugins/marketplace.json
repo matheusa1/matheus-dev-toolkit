@@ -9,7 +9,7 @@
       "name": "dev-methodology",
       "source": {
         "source": "local",
-        "path": "../../plugins/dev-methodology"
+        "path": "./plugins/dev-methodology"
       },
       "policy": {
         "installation": "AVAILABLE",

@@ -1,4 +1,5 @@
 ---
+name: commit-conventions
 description: Define o padrão de commit do Matheus — Conventional Commits com emoji e escopo = identificador da tarefa extraído da branch (sem prefixo de tipo), mensagem em português. Use sempre que for criar um commit git neste projeto, especialmente ao final de uma tarefa do plano (depois do code-review-gate passar sem crítico).
 ---
 

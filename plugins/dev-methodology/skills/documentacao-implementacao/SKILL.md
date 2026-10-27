@@ -1,4 +1,5 @@
 ---
+name: documentacao-implementacao
 description: Gera a documentação final de uma implementação concluída — um arquivo markdown no formato padrão do Matheus (ticket, detalhes do back e do web, contratos, rotas, impacto), escrito a partir do diff real da branch. Etapa obrigatória no fim de toda implementação do fluxo de `using-dev-methodology`: na tarefa pequena ou grande, depois da conformidade e dos casos de teste executados; em bug, depois da correção revisada. Use também quando o Matheus pedir "documentação final", "documenta a implementação" ou "gera a doc do que foi feito", e ao escrever título e descrição de MR/PR, que saem deste documento sem atribuição de ferramenta.
 ---
 
@@ -52,7 +53,7 @@ na lista de pendências da resposta.
   ticket na spec/conversa; se não houver, descreva o problema
   resolvido (não a solução) em uma frase.
 - Link do Jira: reaproveite a URL base de documentos anteriores em
-  `docs/implementacao/` ou do `CLAUDE.md`. Não achou → pergunte uma
+  `docs/implementacao/` ou do `AGENTS.md` ou `CLAUDE.md`. Não achou → pergunte uma
   vez; sem resposta, omita a linha.
 
 ## Onde salvar

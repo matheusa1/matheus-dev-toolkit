@@ -1,4 +1,5 @@
 ---
+name: writing-plans
 description: Transforma uma especificação já aprovada em um plano de implementação dividido em tarefas pequenas, ordenadas e testáveis. Use depois da skill brainstorming e antes de escrever qualquer código de implementação.
 ---
 
@@ -114,7 +115,7 @@ por tarefa, ou poucos ciclos).
      abaixo dela em `## Plano`. Não existe arquivo em
      `docs/especificacao/` nesse caso.
 
-7. **Peça confirmação numa rodada única** (`AskUserQuestion`): aprovar
+7. **Peça confirmação numa rodada única** (use a ferramenta de perguntas disponível): aprovar
    o plano (e a spec, na tarefa pequena), citando o arquivo de casos de
    teste, junto com as decisões de
    execução — subagents ou inline, commit por tarefa, e conformidade
@@ -138,12 +139,11 @@ por tarefa, ou poucos ciclos).
   como sequencial. Conflito de merge custa mais caro que rodar em
   série.
 
-## Use a interface do Claude Code para rastrear o progresso
+## Rastreie o progresso no harness
 
-Assim que o plano for confirmado, registre as tarefas com a ferramenta
-`TaskCreate` (não só no markdown da conversa). Isso faz o progresso
-aparecer tanto na interface do app quanto no terminal, permitindo que
-o Matheus acompanhe em tempo real sem precisar reler a conversa.
+Assim que o plano for confirmado, use `TaskCreate`/`TaskUpdate` no Claude
+Code ou ferramentas equivalentes disponíveis no Codex. Se não existirem,
+mantenha o checklist do arquivo atualizado e informe o progresso na conversa.
 
 - Crie uma task por item do checklist, na mesma ordem/dependência do
   plano.

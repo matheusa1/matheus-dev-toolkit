@@ -1,4 +1,5 @@
 ---
+name: code-review-gate
 description: Revisa o código de uma tarefa recém-concluída contra o plano e as convenções do projeto, classificando problemas por severidade e bloqueando avanço em caso de problema crítico. Use ao final de cada tarefa do plano, antes de marcá-la como concluída ou seguir para a próxima.
 ---
 

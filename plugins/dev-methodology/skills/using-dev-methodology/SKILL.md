@@ -1,4 +1,5 @@
 ---
+name: using-dev-methodology
 description: Explica a metodologia de desenvolvimento pessoal do Matheus e a ordem em que as outras skills deste plugin devem ser usadas. É o padrão para QUALQUER tarefa de desenvolvimento (implementar, corrigir, refatorar, revisar, commitar) neste projeto — consulte sempre no início da tarefa, mesmo que o pedido não mencione spec, plano ou TDD explicitamente. Só não se aplica se o Matheus disser explicitamente para não usar a metodologia/o plugin desta vez.
 ---
 
@@ -9,6 +10,19 @@ ajustada ao Matheus: full-stack TypeScript (NestJS, React, React
 Native), Clean Architecture + DDD, TDD e processo antes de codar. Esta
 skill é a **fonte única** das regras de orquestração — as outras skills
 e agents apontam para cá em vez de repeti-las.
+
+## Compatibilidade entre Claude Code e Codex
+
+Siga as instruções do usuário e as capacidades e restrições do harness.
+No Claude Code, use os agents e ferramentas próprios quando disponíveis.
+No Codex, as definições em `agents/*.md` não são registradas como agentes
+nomeados: leia o arquivo correspondente e transmita seu roteiro e contexto
+quando a delegação estiver disponível e autorizada; caso contrário execute
+inline. Não presuma que delegação, worktrees ou seleção de modelo estão
+habilitadas. Use as ferramentas de perguntas e progresso disponíveis; se não
+houver equivalente, registre o progresso no plano e na conversa.
+Consulte `AGENTS.md` no Codex e `CLAUDE.md` no Claude Code.
+As instruções do harness e o pedido explícito do usuário prevalecem.
 
 ## Regra padrão: use sempre
 
@@ -85,8 +99,8 @@ confirmada normalmente é trivial ou pequeno.
 5. **Fim do plano** → comparação com a spec (inline ou agent
    `revisor-conformidade`, recomendado). Feature pronta só sem crítico.
    5b. **Execução dos casos de teste** → agent `executor-casos-teste`
-      (sem suporte a subagent, como no Codex: inline, seguindo o
-      mesmo roteiro do agent), sempre (pequena e grande), depois da
+      (quando a delegação não estiver disponível ou autorizada: inline,
+      seguindo o mesmo roteiro do agent), sempre (pequena e grande), depois da
       conformidade sem crítico.
       CT que falhou = divergência: corrija (volta ao passo 3) ou, se o
       Matheus aceitar o comportamento, atualize a spec, refaça os casos
@@ -101,7 +115,7 @@ confirmada normalmente é trivial ou pequeno.
 ## Perguntas: uma rodada só
 
 Todas as decisões de execução vão **junto com a confirmação do plano**,
-numa única `AskUserQuestion` (até 4 perguntas), em vez de pausas
+numa única rodada usando a ferramenta de perguntas disponível, em vez de pausas
 espalhadas pelo fluxo:
 
 1. **Plano** — Aprovar / Ajustar (na tarefa pequena, isso aprova spec
@@ -125,7 +139,8 @@ Regras:
   ou conformidade — aplique as respostas até o fim do
   plano. Só volte a perguntar se ele pedir para decidir tarefa a
   tarefa.
-- Grupos `[P<n>]` sempre usam agents, qualquer que seja a resposta 2.
+- Grupos `[P<n>]` usam agents quando a delegação estiver disponível e
+  autorizada; caso contrário, execute as tarefas inline e em sequência.
 - Etapas fora de plano (ex: investigar bug) perguntam inline vs.
   agent na primeira vez que forem necessárias, e a resposta vale para
   o resto da conversa.
@@ -173,7 +188,8 @@ conta como diff de UI, as regras de disparo e a validação no navegador.
 
 ## Execução em paralelo
 
-Tarefas do mesmo grupo `[P<n>]` rodam ao mesmo tempo, uma `Agent` por
+Quando disponíveis e autorizados, tarefas do mesmo grupo `[P<n>]` rodam
+ao mesmo tempo, um agent por
 tarefa, no máximo 4 por vez, cada uma em worktree própria quando o
 grupo tem 2+ tarefas. Antes de disparar um grupo, leia
 [`execucao-paralela.md`](execucao-paralela.md): o que cada agent
@@ -182,8 +198,9 @@ integrar e limpar depois.
 
 ## Modelo por criticidade
 
-Agents herdam o modelo da conversa (`model: inherit`); passe `model` no
-`Agent` conforme a tag de criticidade do plano:
+No Claude Code, agents herdam o modelo da conversa (`model: inherit`);
+passe `model` no `Agent` conforme a tag de criticidade do plano. No Codex,
+herde o modelo da conversa, salvo pedido explícito do usuário:
 
 - `[baixa]` (mecânica, sem regra de negócio) → `haiku`.
 - média (padrão, sem tag) → não passe `model`.
@@ -194,7 +211,8 @@ Criticidade incerta = média.
 
 ## Contexto que o subagent recebe
 
-- **Automático**: `CLAUDE.md` do projeto (e aninhados).
+- **Instruções do projeto**: `CLAUDE.md` no Claude Code; `AGENTS.md`
+  no Codex. Confirme quais instruções o harness fornece ao subagent.
 - **Precisa ler o repo**: padrões que só existem no código.
 - **Só se estiver no prompt**: tudo que foi combinado nesta conversa e
   não está em arquivo. Na dúvida, inclua.
@@ -218,8 +236,9 @@ saída de ferramenta:
 
 ## Progresso na interface
 
-Plano com mais de uma tarefa → `TaskCreate`/`TaskUpdate`, espelhando o
-checklist de `docs/planos/` (detalhes em `writing-plans`).
+Plano com mais de uma tarefa → use as ferramentas de progresso disponíveis
+no harness, espelhando o checklist de `docs/planos/` (detalhes em
+`writing-plans`). Se não houver ferramenta equivalente, mantenha o checklist.
 
 ## Subagents disponíveis
 

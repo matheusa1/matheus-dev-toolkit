@@ -28,6 +28,9 @@ jobs:
           claude plugin validate .
           claude plugin validate plugins/dev-methodology
 
+      - name: Validar marketplace e skills do Codex
+        run: python3 scripts/validate-codex-plugin.py
+
       - name: Versões Claude Code e Codex iguais e no CHANGELOG
         run: |
           dir=plugins/dev-methodology

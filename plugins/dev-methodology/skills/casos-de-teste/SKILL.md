@@ -1,4 +1,5 @@
 ---
+name: casos-de-teste
 description: Gera os casos de teste (formato Xray manual, CTxx com pré-condição, requisitos CA e passos Ação | Dados | Resultado esperado) a partir da especificação aprovada, sem viés de implementação, incluindo testes de endpoint quando a entrega tem API. Use logo depois que a spec do brainstorming for salva, antes do plano, ou quando o Matheus pedir casos de teste de uma spec.
 ---
 

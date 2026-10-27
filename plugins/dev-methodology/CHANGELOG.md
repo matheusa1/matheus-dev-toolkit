@@ -5,6 +5,12 @@ duas manifests (`.claude-plugin/plugin.json` e
 `.codex-plugin/plugin.json`), que sobem sempre juntas. Atualize este
 arquivo no mesmo commit que muda a versão.
 
+## 0.23.0 — 2026-10-27
+
+- Compatibilidade com Codex: marketplace, metadados das skills, hook
+  próprio e alternativas para ferramentas e agentes do Claude.
+- Validação automatizada da estrutura compartilhada entre os harnesses.
+
 ## 0.22.0 — 2026-10-26
 
 - Título e descrição do MR/PR gerados a partir da documentação final

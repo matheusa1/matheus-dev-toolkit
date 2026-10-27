@@ -1,4 +1,5 @@
 ---
+name: clean-architecture-scaffold
 description: Gera o esqueleto de um módulo novo seguindo Clean Architecture + DDD (domain/application/infra), convenções de nomenclatura T/I/E e injeção de dependência com Inversify. Use ao criar um módulo ou feature nova em um projeto TypeScript (NestJS, Next.js, React, React Native). Adapte os mesmos princípios de camadas quando o projeto não for TypeScript.
 ---
 

@@ -124,14 +124,19 @@ codex plugin add dev-methodology@matheus-toolkit
 codex plugin add dev-methodology@matheus-toolkit
 ```
 
-### Limitações atuais
+### Compatibilidade e limitações
 
-O Codex CLI reaproveita as `skills/` (formato `SKILL.md` é portável entre
-Claude Code e Codex), mas ainda **não** tem equivalente pra:
+As skills são compartilhadas. No Claude Code, o plugin carrega os agents
+nomeados e seu hook de sessão. No Codex, os roteiros em `agents/*.md` são
+consultados pelas skills e podem ser repassados a subagentes disponíveis e
+autorizados, ou executados inline. A disponibilidade de ferramentas e de
+modelos depende do ambiente.
 
-- `hooks/hooks.json` (hook de `SessionStart` do Claude Code) — não
-  referenciado no `plugin.json` do Codex.
-- `agents/*.md` (subagents do Claude Code) — o manifesto de plugin do
-  Codex não tem um campo pra subagents hoje.
+O Codex desktop suporta o hook de sessão de plugins locais após revisão e
+confiança explícita na definição do hook. A disponibilidade em outras
+superfícies pode variar; sem o hook, invoque `using-dev-methodology`
+explicitamente no início da tarefa. Inicie uma nova conversa após instalar.
 
-Essas partes continuam existindo só na versão Claude Code do plugin.
+O caminho de `source.path` do marketplace é relativo à raiz do repositório.
+Depois de alterar o plugin, atualize a instalação e reinicie o aplicativo
+para carregar a cópia atualizada.
