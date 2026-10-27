@@ -1,4 +1,5 @@
 ---
+name: debugging-sistematico
 description: Investiga um bug ou comportamento inesperado relatado pelo usuário de forma sistemática — reproduzir, coletar evidência, formular e testar hipóteses, isolar a causa raiz — antes de qualquer correção. Use sempre que o Matheus relatar "isso não está funcionando", um erro, um comportamento inesperado, ou pedir para investigar/corrigir um bug, em vez de já sair editando código.
 ---
 

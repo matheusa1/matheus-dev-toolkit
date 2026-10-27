@@ -23,7 +23,7 @@ por tarefa, tarefas `[P<n>]` em paralelo) → revisão de conformidade
 → documentação final (`dev-methodology:documentacao-implementacao`),
 obrigatória. Bug corrigido também termina com a documentação final.
 
-Todas as skills deste plugin são invocadas com o prefixo
-`dev-methodology:`. Se uma chamada `Skill` falhar com "Unknown skill",
-tente de novo com o prefixo `dev-methodology:` antes de seguir sem ela
-— nunca prossiga com o fluxo pulando uma skill que falhou em carregar.
+Carregue as skills deste plugin usando o mecanismo disponível no ambiente.
+No Claude Code, use o prefixo `dev-methodology:` se a chamada `Skill`
+retornar "Unknown skill". Se uma skill necessária não puder ser carregada,
+informe a limitação antes de continuar.

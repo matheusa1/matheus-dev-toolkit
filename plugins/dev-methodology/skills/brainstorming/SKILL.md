@@ -1,4 +1,5 @@
 ---
+name: brainstorming
 description: Refina um pedido de feature vago ou high-level em uma especificação clara antes de qualquer código ser escrito. Use no início de qualquer tarefa de desenvolvimento nova, quando o pedido for ambíguo, quando faltarem critérios de aceite, ou quando o Matheus disser algo como "quero implementar X" sem detalhar como.
 ---
 

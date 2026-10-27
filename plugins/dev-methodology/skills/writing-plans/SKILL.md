@@ -1,4 +1,5 @@
 ---
+name: writing-plans
 description: Transforma uma especificação já aprovada em um plano de implementação dividido em tarefas pequenas, ordenadas e testáveis. Use depois da skill brainstorming e antes de escrever qualquer código de implementação.
 ---
 
@@ -70,8 +71,8 @@ por tarefa, ou poucos ciclos).
    domínio central; baixa é para tarefa mecânica sem lógica de negócio
    (ex: ajuste de string, tipagem). Essa tag é o que a skill
    `using-dev-methodology` ("Modelo por criticidade") usa para decidir
-   se o `Agent` de implementação/revisão da tarefa roda em `haiku`,
-   herda o modelo padrão, ou roda em `opus`.
+   como selecionar o modelo no Claude Code; no Codex, herde o modelo da
+   conversa salvo pedido explícito do usuário.
 5. **Apresente como checklist markdown**, por exemplo:
 
    ```markdown
@@ -85,8 +86,8 @@ por tarefa, ou poucos ciclos).
    compartilham arquivo entre si, então podem ser disparadas juntas
    (`[P1]`), ambas com criticidade média (sem tag). A tarefa 4 depende
    das duas, fica fora do grupo paralelo, e é `[alta]` porque valida
-   pagamento — o agente que a implementar/revisar deve rodar em
-   `opus`.
+   pagamento — no Claude Code o agente de implementação/revisão usa
+   `opus`; no Codex, herda o modelo salvo pedido explícito.
 
 6. **Salve o plano em arquivo**, não só na conversa:
    `docs/planos/AAAA-MM-DD-nome-tarefa.md`, usando a data atual e o
@@ -105,7 +106,7 @@ por tarefa, ou poucos ciclos).
      `!.gitignore` nem qualquer outra exceção: o próprio `.gitignore`
      também deve ficar fora do versionamento, junto com os planos.
    - Este arquivo é a fonte de verdade do plano durante toda a
-     implementação — as tasks do `TaskCreate`/`TaskUpdate` espelham
+     implementação — as ferramentas de progresso disponíveis espelham
      esse checklist, mas o arquivo é o que sobrevive a uma
      compactação de contexto ou a uma nova sessão.
 
@@ -114,7 +115,7 @@ por tarefa, ou poucos ciclos).
      abaixo dela em `## Plano`. Não existe arquivo em
      `docs/especificacao/` nesse caso.
 
-7. **Peça confirmação numa rodada única** (`AskUserQuestion`): aprovar
+7. **Peça confirmação numa rodada única** (use a ferramenta de perguntas disponível): aprovar
    o plano (e a spec, na tarefa pequena), citando o arquivo de casos de
    teste, junto com as decisões de
    execução — subagents ou inline, commit por tarefa, e conformidade
@@ -138,12 +139,11 @@ por tarefa, ou poucos ciclos).
   como sequencial. Conflito de merge custa mais caro que rodar em
   série.
 
-## Use a interface do Claude Code para rastrear o progresso
+## Rastreie o progresso no harness
 
-Assim que o plano for confirmado, registre as tarefas com a ferramenta
-`TaskCreate` (não só no markdown da conversa). Isso faz o progresso
-aparecer tanto na interface do app quanto no terminal, permitindo que
-o Matheus acompanhe em tempo real sem precisar reler a conversa.
+Assim que o plano for confirmado, use `TaskCreate`/`TaskUpdate` no Claude
+Code ou ferramentas equivalentes disponíveis no Codex. Se não existirem,
+mantenha o checklist do arquivo atualizado e informe o progresso na conversa.
 
 - Crie uma task por item do checklist, na mesma ordem/dependência do
   plano.

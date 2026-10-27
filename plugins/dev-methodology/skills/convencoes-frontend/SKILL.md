@@ -1,4 +1,5 @@
 ---
+name: convencoes-frontend
 description: Convenções de código para frontend (React) — implementação mobile first obrigatória (layout base para telas pequenas, breakpoints maiores só como exceção via min-width), escopo de teste unitário, preferência pelos componentes do design system em vez de elementos HTML crus, tokens de tema em vez de valores fixos, proibição de ternário/condicional dentro do return e de estilo inline, componentização simples, acessibilidade mínima obrigatória, proibição de lógica de negócio em .tsx/useEffect, e restrição de import de use case só em *.registry.ts da infra. Adapta-se ao design system do projeto (antd, tailwind+shadcn, etc). Use ao implementar ou revisar componentes de UI em projetos frontend — a implementação isolada de telas/componentes de apresentação usa o agent implementador-frontend, sem TDD.
 ---
 

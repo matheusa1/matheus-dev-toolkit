@@ -19,7 +19,7 @@ Ao ser invocado:
    nada e reporte o motivo. Leia também a spec de mesmo nome, só para
    contexto dos CAs.
 2. Suba a aplicação do jeito que o projeto documenta (`README`,
-   `CLAUDE.md`, scripts do `package.json`) e prepare as pré-condições
+   `AGENTS.md` ou `CLAUDE.md`, scripts do `package.json`) e prepare as pré-condições
    de cada CT (usuário, permissão, dados). Se não for possível subir
    ou preparar algo (serviço externo, credencial ausente), não
    invente: marque os CTs afetados como **Não executado** com o motivo.

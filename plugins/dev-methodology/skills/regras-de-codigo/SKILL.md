@@ -1,4 +1,5 @@
 ---
+name: regras-de-codigo
 description: Regras de código que valem para todo desenvolvimento do Matheus (idioma, SOLID, vizinho legado, limite de 150 linhas por arquivo e 20 por função) com a severidade de cada uma no review, e os comandos para obter o diff de uma tarefa ou da branch. Use antes de escrever, refatorar ou revisar qualquer código, inline ou em subagent.
 ---
 
@@ -22,7 +23,7 @@ repeti-las. Os agents de implementação e review já carregam esta skill.
   exigir violar algum, pare e pergunte.
 - **Vizinho legado não é convenção.** Se o repo tem dois padrões para
   a mesma coisa (ex: logger instanciado vs. telemetria injetada; import
-  relativo vs. path alias), siga o que está documentado no `CLAUDE.md`
+  relativo vs. path alias), siga o que está documentado no `AGENTS.md` ou `CLAUDE.md`
   do projeto ou, sem documentação, o que respeita as camadas/SOLID —
   não o arquivo vizinho só por estar ao lado. Sinalize a divergência
   no relatório em vez de escolher em silêncio.

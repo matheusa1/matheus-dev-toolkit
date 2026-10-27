@@ -1,4 +1,5 @@
 ---
+name: test-driven-development
 description: Força o ciclo RED-GREEN-REFACTOR ao implementar qualquer lógica de negócio nova. Use sempre que for implementar uma tarefa do plano, corrigir um bug com lógica testável, ou escrever qualquer função/caso de uso novo.
 ---
 

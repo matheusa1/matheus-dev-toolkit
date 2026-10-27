@@ -1,6 +1,6 @@
 # dev-methodology
 
-Metodologia de desenvolvimento pessoal para o Claude Code, inspirada no
+Metodologia de desenvolvimento pessoal para Claude Code e Codex, inspirada no
 [Superpowers](https://github.com/obra/superpowers) (obra), mas ajustada
 ao fluxo de trabalho do Matheus: TypeScript full-stack (NestJS, React,
 React Native), Clean Architecture + DDD, TDD e disciplina de processo
@@ -97,8 +97,9 @@ juntos, numa rodada única, e não se repetem durante a execução.
     divergências no próprio arquivo.
   - `investigador-bugs` — investiga um bug relatado até a causa raiz
     confirmada, sem sair corrigindo por tentativa e erro.
-- **Hook**: lembrete no início da sessão (e depois de compactar o
-  contexto) apontando para `using-dev-methodology`.
+- **Hook**: lembrete de sessão apontando para `using-dev-methodology`.
+  No Codex desktop, o hook local requer revisão e confiança. Sem matcher,
+  a configuração responde aos eventos de SessionStart, incluindo compactação.
 - **Modelo por criticidade**: o modelo de `revisor-arquiteto`,
   `revisor-acessibilidade`, `revisor-responsividade`, `parceiro-tdd`, `implementador-frontend`, `gerador-modulo`,
   `revisor-conformidade`, `executor-casos-teste` e `investigador-bugs` não é fixo — varia entre
