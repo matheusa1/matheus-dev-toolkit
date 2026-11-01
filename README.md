@@ -131,10 +131,10 @@ codex plugin add dev-methodology@matheus-toolkit
 ### Compatibilidade e limitações
 
 As skills são compartilhadas. No Claude Code, o plugin carrega os agents
-nomeados e seu hook de sessão. No Codex, os roteiros em `agents/*.md` são
-consultados pelas skills e podem ser repassados a subagentes disponíveis e
-autorizados, ou executados inline. A disponibilidade de ferramentas e de
-modelos depende do ambiente.
+nomeados e seus hooks (início de sessão e lembrete a cada mensagem). No
+Codex, os roteiros em `agents/*.md` são consultados pelas skills e podem
+ser repassados a subagentes disponíveis e autorizados, ou executados
+inline. A disponibilidade de ferramentas e de modelos depende do ambiente.
 
 O Codex desktop suporta o hook de sessão de plugins locais após revisão e
 confiança explícita na definição do hook. A disponibilidade em outras

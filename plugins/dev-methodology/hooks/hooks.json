@@ -1,14 +1,25 @@
 {
-  "description": "Reforça a metodologia de desenvolvimento no início de cada sessão.",
+  "description": "Reforça a metodologia de desenvolvimento no início de cada sessão e a cada mensagem.",
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup|resume|clear|compact",
+        "matcher": "startup|resume|clear|compact|fork",
         "hooks": [
           {
             "type": "command",
             "command": "cat",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/session-start-note.md"]
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/user-prompt-note.md"]
           }
         ]
       }
