@@ -5,6 +5,14 @@ duas manifests (`.claude-plugin/plugin.json` e
 `.codex-plugin/plugin.json`), que sobem sempre juntas. Atualize este
 arquivo no mesmo commit que muda a versão.
 
+## 0.24.0 — 2026-11-01
+
+- Hook `UserPromptSubmit` (Claude Code) reinjeta a cada mensagem o
+  lembrete de carregar `using-dev-methodology`, para sessões em que o
+  contexto do `SessionStart` não chega (threads do Projects no Claude
+  Desktop).
+- Matcher do `SessionStart` passa a incluir `fork`.
+
 ## 0.23.0 — 2026-10-27
 
 - Compatibilidade com Codex: marketplace, metadados das skills, hook
