@@ -5,6 +5,13 @@ duas manifests (`.claude-plugin/plugin.json` e
 `.codex-plugin/plugin.json`), que sobem sempre juntas. Atualize este
 arquivo no mesmo commit que muda a versão.
 
+## 0.24.1 — 2026-11-02
+
+- Lembrete do `UserPromptSubmit` passa a valer para pedidos repassados
+  por outra sessão (coordenador do Projects, relay) e para tarefas de
+  CI, configuração, infra e docs do repositório, que as threads
+  tratavam como fora da metodologia.
+
 ## 0.24.0 — 2026-11-01
 
 - Hook `UserPromptSubmit` (Claude Code) reinjeta a cada mensagem o
